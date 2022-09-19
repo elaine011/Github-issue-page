@@ -1,13 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { createStore } from "redux";
 
 import App from "./App";
 import Issues from "./components/Issues";
 import Labels from "./components/Labels";
 import Login from "./components/Login";
+import reducer from "./reducers/reducer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+// const store = createStore(reducer);
+
 root.render(
   <BrowserRouter>
     <Routes>
