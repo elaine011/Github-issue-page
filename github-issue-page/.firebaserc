@@ -1,0 +1,19 @@
+{
+  "projects": {
+    "default": "github-issue-page-a06e9",
+    "staging": "github-issue-page-a06e9"
+  },
+  "targets": {
+    "github-issue-page-a06e9": {
+      "hosting": {
+        "default": [
+          "github-issue-page-a06e9"
+        ],
+        "storybook": [
+          "githubstorybook"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
