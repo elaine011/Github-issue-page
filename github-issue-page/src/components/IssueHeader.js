@@ -22,6 +22,7 @@ const Container = styled.div`
 `;
 const Header = styled.section`
   display: flex;
+  align-items: center;
   height: 32px;
   font-size: 20px;
   padding: 0 32px;
@@ -38,6 +39,9 @@ const Seperate = styled.span`
 `;
 const Repo = styled.span`
   margin-right: 8px;
+`;
+const Strong = styled.strong`
+  font-weight: 600;
 `;
 const Private = styled.span`
   border: 1px solid #d0d7de;
@@ -72,6 +76,17 @@ const RepoProjectList = styled.li`
   width: 100%;
   white-space: nowrap;
 `;
+const IssuesNumber = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  background-color: rgba(175, 184, 193, 0.2);
+  color: #24292f;
+  border-radius: 1em;
+  min-width: 20px;
+  font-size: 12px;
+`;
 
 export default function IssueHeader() {
   return (
@@ -83,9 +98,9 @@ export default function IssueHeader() {
           </div>
           <User>elaine011</User>
           <Seperate>/</Seperate>
-          <strong>
+          <Strong>
             <Repo>github-issue-page</Repo>
-          </strong>
+          </Strong>
           <Private>Public</Private>
         </Header>
         <nav>
@@ -101,7 +116,7 @@ export default function IssueHeader() {
                 <IssueOpenedIcon size={16} fill="#57606a" />
               </RepoProjectLink>
               Issues
-              <span>3</span>
+              <IssuesNumber>3</IssuesNumber>
             </RepoProjectList>
             <RepoProjectList>
               <RepoProjectLink>
@@ -148,23 +163,6 @@ export default function IssueHeader() {
           </RepoProject>
         </nav>
       </Container>
-      <div>
-        <div>
-          <nav>
-            <a href="#/">
-              <TagIcon size={16} />
-            </a>
-            <a href="#/">
-              <MilestoneIcon size={16} />
-            </a>
-          </nav>
-          <div>
-            <SearchIcon size={16} />
-            <input></input>
-          </div>
-          <button>New label</button>
-        </div>
-      </div>
     </>
   );
 }
