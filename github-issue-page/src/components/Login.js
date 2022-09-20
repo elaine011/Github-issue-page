@@ -6,10 +6,11 @@ import { supabase } from "../utils/client";
 
 const Header = styled.header`
   background-color: #24292f;
-  padding: 16px;
+  padding: 32px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 30px;
 `;
 const SignInBtn = styled.button`
   color: #fff;
@@ -21,6 +22,8 @@ const SignInBtn = styled.button`
 
 function Login() {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState();
+
   useEffect(() => {
     /* when the app loads, check to see if the user is signed in */
     checkUser();
@@ -40,11 +43,16 @@ function Login() {
       provider: "github",
     });
   }
+
+  const session = supabase.auth.session();
+  console.log(session.provider_token);
+
   async function signOut() {
     /* sign the user out */
     await supabase.auth.signOut();
     setUser(null);
   }
+
   if (user) {
     return (
       <Header>

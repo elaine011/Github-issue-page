@@ -1,3 +1,11 @@
+import IssueHeader from "./IssueHeader";
+import Login from "./Login";
+
 export default function Issues() {
-  return <div>Issues</div>;
+  return (
+    <>
+      <Login />
+      <IssueHeader />
+    </>
+  );
 }
