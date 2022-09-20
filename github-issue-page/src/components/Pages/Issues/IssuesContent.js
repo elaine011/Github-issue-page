@@ -97,7 +97,8 @@ const SortLink = styled.a`
   border-bottom: 1px solid hsla(210, 18%, 87%, 1);
 `;
 const SortText = styled.span`
-  padding-left: 8px;
+  position: absolute;
+  left: 30px;
 `;
 const TagWrap = styled.div`
   width: 24.99999997%;
@@ -114,33 +115,104 @@ const Tag = styled.a`
 `;
 const Description = styled.span`
   width: 33.33333332%;
+
+  @media screen and (max-width: 767.9px) {
+    display: none;
+  }
 `;
 const State = styled.span`
   width: 24.99999999%;
+
+  @media screen and (max-width: 767.9px) {
+    display: none;
+  }
 `;
 const Revise = styled.div`
   width: 16.66666666%;
   display: flex;
   justify-content: flex-end;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1011.9px) {
     display: none;
+  }
+`;
+const ReviseSection = styled.div`
+  @media screen and (max-width: 1011.9px) {
+    width: 16.66666666%;
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+  }
+  @media screen and (max-width: 767.9px) {
+    width: 88%;
+    display: flex;
+    justify-content: flex-end;
   }
 `;
 const ReviseBtn = styled.button`
   display: none;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1011.9px) {
     display: block;
     border-radius: 6px;
     border: 1px solid rgba(27, 31, 60, 0.15);
     padding: 3px 12px;
-    float: right;
+  }
+`;
+const ReviseMenu = styled.div`
+  display: none;
+
+  @media screen and (max-width: 1011.9px) {
+    width: 158px;
+    margin-top: 2px;
+    padding: 0 4px;
+    line-height: 1.5;
+    position: absolute;
+    font-size: 12px;
+    top: 100%;
+    display: ${(props) => props.display};
+  }
+`;
+const ReviseMenuContainer = styled.div`
+  @media screen and (max-width: 1011.9px) {
+    z-index: 100;
+    width: 158px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    color: #24292f;
+    border-color: #d0d7de;
+    margin-top: 2px;
+    padding: 0 4px;
+    line-height: 1.5;
+    box-shadow: 0 8px 24px rgba(140, 149, 159, 20%);
+    border-radius: 6px;
+
+    &::after {
+      top: -12px;
+      right: 10px;
+      left: auto;
+      border: 7px solid transparent;
+      position: absolute;
+      display: inline-block;
+      border-bottom-color: #fff;
+      content: "";
+    }
+  }
+`;
+const ReviseMenuBtn = styled.button`
+  @media screen and (max-width: 1011.9px) {
+    text-align: start;
+    background-color: transparent;
+    border: none;
+    padding: 4px 8px 4px 16px;
   }
 `;
 
 export default function IssuesContent() {
   const [selectedSort, setSelectedSort] = useState(false);
+  const [selectedEditBtn, setSelectedEditBtn] = useState(false);
+
   return (
     <>
       <Container>
@@ -159,15 +231,15 @@ export default function IssuesContent() {
                   <SortText>Alphabetically</SortText>
                 </SortLink>
                 <SortLink href="#/">
-                  <CheckIcon size={16} />
+                  {/* <CheckIcon size={16} /> */}
                   <SortText>Reverse alphabetically</SortText>
                 </SortLink>
                 <SortLink href="#/">
-                  <CheckIcon size={16} />
+                  {/* <CheckIcon size={16} /> */}
                   <SortText>Most issues</SortText>
                 </SortLink>
                 <SortLink href="#/">
-                  <CheckIcon size={16} />
+                  {/* <CheckIcon size={16} /> */}
                   <SortText>Fewest issues</SortText>
                 </SortLink>
               </SortList>
@@ -182,11 +254,19 @@ export default function IssuesContent() {
           <State>2 open issues and pull requests</State>
           <Revise>
             <Edit />
-            <Delete>Delete</Delete>
+            <Delete />
           </Revise>
-          <ReviseBtn>
-            <KebabHorizontalIcon size={16} fill="#57606a" />
-          </ReviseBtn>
+          <ReviseSection>
+            <ReviseBtn onClick={() => setSelectedEditBtn(!selectedEditBtn)}>
+              <KebabHorizontalIcon size={16} fill="#57606a" />
+            </ReviseBtn>
+            <ReviseMenu display={selectedEditBtn ? "block" : "none"}>
+              <ReviseMenuContainer>
+                <ReviseMenuBtn>Edit</ReviseMenuBtn>
+                <ReviseMenuBtn>Delete</ReviseMenuBtn>
+              </ReviseMenuContainer>
+            </ReviseMenu>
+          </ReviseSection>
         </LabelList>
       </Container>
     </>
