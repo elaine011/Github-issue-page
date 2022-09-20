@@ -6,7 +6,7 @@ import { Reset } from "styled-reset";
 import { createGlobalStyle } from "styled-components";
 
 import App from "./App";
-import Issues from "./components/Issues";
+import Issues from "./components/Pages/Issues/Issues";
 import Labels from "./components/Labels";
 import Login from "./components/Login";
 import reducer from "./reducers/reducer";
