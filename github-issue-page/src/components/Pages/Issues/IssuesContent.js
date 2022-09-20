@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import Edit from "./Edit";
 import Delete from "./Delete";
+import { useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -78,6 +79,11 @@ const Revise = styled.div`
 `;
 
 export default function IssuesContent() {
+  const [sort, setSort] = useState(false);
+
+  const handleSort = () => {
+    setSort(true);
+  };
   return (
     <>
       <Container>
@@ -86,7 +92,7 @@ export default function IssuesContent() {
             <LabelNums>12</LabelNums>
             labels
           </H3>
-          <Labels>Sort</Labels>
+          <Labels onClick={handleSort}>Sort</Labels>
         </LabelsHeader>
         <LabelList>
           <TagWrap>

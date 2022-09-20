@@ -19,14 +19,36 @@ const FooterContent = styled.div`
   }
 `;
 const Nav = styled.nav`
-  width: 64%;
+  width: 60%;
   height: 26px;
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: 1011px) {
+    width: 80%;
+    min-width: 70%;
+    display: flex;
+  }
 `;
 const FooterLists = styled.ul`
   display: flex;
   color: #0969da;
-  align-items: center;
+  align-items: flex-start;
+  width: 85%;
   justify-content: space-between;
+
+  @media screen and (max-width: 1011px) {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: start;
+  }
+`;
+const FooterList = styled.li`
+  @media screen and (max-width: 1011px) {
+    flex: 1;
+    line-height: 1.5;
+  }
 `;
 const CopyRight = styled.div`
   display: flex;
@@ -37,6 +59,10 @@ const CopyRight = styled.div`
   @media screen and (max-width: 1011px) {
     order: 2;
     line-height: 1.5;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 16px;
   }
 `;
 const Logo = styled(MarkGithubIcon)`
@@ -53,17 +79,17 @@ export default function Footer() {
         </CopyRight>
         <Nav>
           <FooterLists>
-            <li>Terms</li>
-            <li>Privacy</li>
-            <li>Security</li>
-            <li>Status</li>
-            <li>Docs</li>
-            <li>Contact GitHub</li>
-            <li>Pricing</li>
-            <li>API</li>
-            <li>Trining</li>
-            <li>Blog</li>
-            <li>About</li>
+            <FooterList>Terms</FooterList>
+            <FooterList>Privacy</FooterList>
+            <FooterList>Security</FooterList>
+            <FooterList>Status</FooterList>
+            <FooterList>Docs</FooterList>
+            <FooterList>Contact GitHub</FooterList>
+            <FooterList>Pricing</FooterList>
+            <FooterList>API</FooterList>
+            <FooterList>Trining</FooterList>
+            <FooterList>Blog</FooterList>
+            <FooterList>About</FooterList>
           </FooterLists>
         </Nav>
       </FooterContent>

@@ -14,6 +14,7 @@ import {
   GraphIcon,
   GearIcon,
 } from "@primer/octicons-react";
+import RepoHeader from "../../RepoHeader";
 
 const Container = styled.div`
   background-color: #f6f8fa;
@@ -65,6 +66,7 @@ const RepoProject = styled.ul`
   overflow-x: auto;
   justify-content: start;
   max-width: 882px;
+  position: relative;
 `;
 const RepoProjectNav = styled.nav`
   width: 100%;
@@ -78,6 +80,12 @@ const RepoProjectList = styled.li`
   flex-wrap: nowrap;
   width: 100%;
   white-space: nowrap;
+  height: 100%;
+  align-items: center;
+
+  &:nth-child(2) {
+    border-bottom: 2px solid #fd8c73;
+  }
 `;
 const IssuesNumber = styled.span`
   display: flex;
@@ -166,88 +174,19 @@ const NewLabelBtn = styled.button`
   background-color: #2da44e;
   color: #fff;
   height: 30px;
-  border: none;
+  border: 1px solid rgba(27, 31, 36, 0.15);
   border-radius: 6px;
   padding: 5px 16px;
   margin-left: auto;
   font-size: 14px;
+  box-shadow: 0 1px 0 rgba(27, 31, 36, 0.1);
+  cursor: pointer;
 `;
 
 export default function IssueHeader() {
   return (
     <>
-      <Container>
-        <Header>
-          <div>
-            <RepoIcon size={16} fill="#57606a" />
-          </div>
-          <User>elaine011</User>
-          <Seperate>/</Seperate>
-          <Strong>
-            <Repo>github-issue-page</Repo>
-          </Strong>
-          <Private>Public</Private>
-        </Header>
-        <RepoProjectNav>
-          <RepoProject>
-            <RepoProjectList>
-              <RepoProjectLink>
-                <CodeIcon size={16} fill="#57606a" />
-              </RepoProjectLink>
-              Code
-            </RepoProjectList>
-            <RepoProjectList>
-              <RepoProjectLink>
-                <IssueOpenedIcon size={16} fill="#57606a" />
-              </RepoProjectLink>
-              Issues
-              <IssuesNumber>3</IssuesNumber>
-            </RepoProjectList>
-            <RepoProjectList>
-              <RepoProjectLink>
-                <GitPullRequestIcon size={16} fill="#57606a" />
-              </RepoProjectLink>
-              Pull requests
-            </RepoProjectList>
-            <RepoProjectList>
-              <RepoProjectLink>
-                <PlayIcon size={16} fill="#57606a" />
-              </RepoProjectLink>
-              Actions
-            </RepoProjectList>
-            <RepoProjectList>
-              <RepoProjectLink>
-                <TableIcon size={16} fill="#57606a" />
-              </RepoProjectLink>
-              Projects
-            </RepoProjectList>
-            <RepoProjectList>
-              <RepoProjectLink>
-                <BookIcon size={16} fill="#57606a" />
-              </RepoProjectLink>
-              Wiki
-            </RepoProjectList>
-            <RepoProjectList>
-              <RepoProjectLink>
-                <ShieldIcon size={16} fill="#57606a" />
-              </RepoProjectLink>
-              Security
-            </RepoProjectList>
-            <RepoProjectList>
-              <RepoProjectLink>
-                <GraphIcon size={16} fill="#57606a" />
-              </RepoProjectLink>
-              Insights
-            </RepoProjectList>
-            <RepoProjectList>
-              <RepoProjectLink>
-                <GearIcon size={16} fill="#57606a" />
-              </RepoProjectLink>
-              Settings
-            </RepoProjectList>
-          </RepoProject>
-        </RepoProjectNav>
-      </Container>
+      <RepoHeader />
       <LabelsContainer>
         <LabelandSearch>
           <LabelNav>
