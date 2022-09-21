@@ -9,8 +9,11 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 24px;
-  margin-top: 20px;
   font-size: 14px;
+  max-width: 1280px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 0 24px;
 `;
 const LabelsHeader = styled.div`
   display: flex;
@@ -25,6 +28,9 @@ const LabelsHeader = styled.div`
 `;
 const Labels = styled.div`
   cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
   &::after {
     display: inline-block;
     border: 4px solid;
@@ -52,10 +58,16 @@ const LabelList = styled.div`
   border: 1px solid #d0d7de;
   border-top: none;
   color: #57606a;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
   &:last-child {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-wrap: nowrap;
   }
 `;
 const LabelsList = styled.div`
@@ -95,6 +107,11 @@ const SortLink = styled.a`
   height: 32px;
   width: 100%;
   border-bottom: 1px solid hsla(210, 18%, 87%, 1);
+
+  &:hover {
+    background-color: #0969da;
+    color: #fff;
+  }
 `;
 const SortText = styled.span`
   position: absolute;
@@ -115,24 +132,27 @@ const Tag = styled.a`
 `;
 const Description = styled.span`
   width: 33.33333332%;
+  display: ${(props) => props.display};
 
+  @media screen and (max-width: 1011.9px) {
+    display: block;
+  }
   @media screen and (max-width: 767.9px) {
     display: none;
   }
 `;
 const State = styled.span`
+  display: ${(props) => props.display};
+
   width: 24.99999999%;
-
-  @media screen and (max-width: 767.9px) {
-    display: none;
+  &:hover {
+    cursor: pointer;
+    color: #0969da;
   }
-`;
-const Revise = styled.div`
-  width: 16.66666666%;
-  display: flex;
-  justify-content: flex-end;
-
   @media screen and (max-width: 1011.9px) {
+    display: block;
+  }
+  @media screen and (max-width: 767.9px) {
     display: none;
   }
 `;
@@ -157,6 +177,19 @@ const ReviseBtn = styled.button`
     border-radius: 6px;
     border: 1px solid rgba(27, 31, 60, 0.15);
     padding: 3px 12px;
+    background-color: ${(props) => props.selected};
+
+    &:hover {
+      background-color: #0969da;
+    }
+  }
+`;
+const MenuBtn = styled(KebabHorizontalIcon)`
+  @media screen and (max-width: 1011.9px) {
+    fill: ${(props) => props.selected};
+    &:hover {
+      fill: #fff;
+    }
   }
 `;
 const ReviseMenu = styled.div`
@@ -201,6 +234,13 @@ const ReviseMenuContainer = styled.div`
   }
 `;
 const ReviseMenuBtn = styled.button`
+  justify-content: flex-end;
+
+  &:hover {
+    background-color: #0969da;
+    color: #fff;
+  }
+
   @media screen and (max-width: 1011.9px) {
     text-align: start;
     background-color: transparent;
@@ -209,10 +249,14 @@ const ReviseMenuBtn = styled.button`
   }
 `;
 
-export default function IssuesContent() {
-  const [selectedSort, setSelectedSort] = useState(false);
-  const [selectedEditBtn, setSelectedEditBtn] = useState(false);
-
+export default function IssuesContent({
+  selectedSort,
+  setSelectedSort,
+  selectedEditBtn,
+  setSelectedEditBtn,
+  mobileEditBtn,
+  setMobileEditBtn,
+}) {
   return (
     <>
       <Container>
@@ -250,15 +294,26 @@ export default function IssuesContent() {
           <TagWrap>
             <Tag href="#/">bug</Tag>
           </TagWrap>
-          <Description>Something isn't working</Description>
-          <State>2 open issues and pull requests</State>
-          <Revise>
-            <Edit />
-            <Delete />
-          </Revise>
+          <Description display={selectedEditBtn ? "none" : "block"}>
+            Something isn't working
+          </Description>
+          <State display={selectedEditBtn ? "none" : "block"}>
+            2 open issues and pull requests
+          </State>
+          <Edit
+            selectedEditBtn={selectedEditBtn}
+            setSelectedEditBtn={setSelectedEditBtn}
+          />
+          <Delete selectedEditBtn={selectedEditBtn} />
           <ReviseSection>
-            <ReviseBtn onClick={() => setSelectedEditBtn(!selectedEditBtn)}>
-              <KebabHorizontalIcon size={16} fill="#57606a" />
+            <ReviseBtn
+              onClick={() => setSelectedEditBtn(!selectedEditBtn)}
+              selected={selectedEditBtn ? "#0969da" : "none"}
+            >
+              <MenuBtn
+                size={16}
+                selected={selectedEditBtn ? "#fff" : "#57606a"}
+              />
             </ReviseBtn>
             <ReviseMenu display={selectedEditBtn ? "block" : "none"}>
               <ReviseMenuContainer>

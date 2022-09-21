@@ -45,7 +45,7 @@ function Login() {
   }
 
   const session = supabase.auth.session();
-  console.log(session.provider_token);
+  // console.log(session.provider_token);
 
   async function signOut() {
     /* sign the user out */

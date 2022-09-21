@@ -30,12 +30,22 @@ const Header = styled.section`
 `;
 const User = styled.span`
   margin-left: 8px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 const Seperate = styled.span`
   margin: 0 4px;
 `;
 const Repo = styled.span`
   margin-right: 8px;
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 const Strong = styled.strong`
   font-weight: 600;
@@ -49,6 +59,10 @@ const Private = styled.span`
   border-radius: 2em;
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 const RepoProject = styled.ul`
   display: flex;
@@ -106,7 +120,7 @@ export default function RepoHeader() {
           <User>elaine011</User>
           <Seperate>/</Seperate>
           <Strong>
-            <Repo>github-issue-page</Repo>
+            <Repo>test-issue</Repo>
           </Strong>
           <Private>Public</Private>
         </Header>

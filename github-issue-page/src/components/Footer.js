@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { MarkGithubIcon } from "@primer/octicons-react";
 
 const Container = styled.div`
-  padding: 0 16px;
-  margin-top: 40px;
   font-size: 12px;
+  max-width: 1280px;
+  margin: 0 auto;
+  margin-top: 40px;
+  padding: 0 16px;s
 `;
 const FooterContent = styled.div`
   padding-top: 40px;
@@ -41,13 +43,18 @@ const FooterLists = styled.ul`
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: center;
   }
 `;
 const FooterList = styled.li`
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
   @media screen and (max-width: 1011px) {
-    flex: 1;
     line-height: 1.5;
+    margin-right: 16px;
   }
 `;
 const CopyRight = styled.div`
@@ -67,6 +74,10 @@ const CopyRight = styled.div`
 `;
 const Logo = styled(MarkGithubIcon)`
   margin-right: 8px;
+
+  &:hover {
+    fill: #000;
+  }
 `;
 
 export default function Footer() {
