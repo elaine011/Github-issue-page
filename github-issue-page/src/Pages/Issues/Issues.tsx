@@ -8,7 +8,6 @@ import { SelectContext } from "../../utils/SelectContext";
 
 export default function Issues() {
   const [selectedSort, setSelectedSort] = useState<Boolean>(false);
-  const [selectedEditBtn, setSelectedEditBtn] = useState<Boolean>(false);
   const [createLabel, setCreateLabel] = useState<Boolean>(false);
   return (
     <>
@@ -16,7 +15,6 @@ export default function Issues() {
       <SelectContext.Provider
         value={{
           sort: [selectedSort, setSelectedSort],
-          edit: [selectedEditBtn, setSelectedEditBtn],
           create: [createLabel, setCreateLabel],
         }}
       >

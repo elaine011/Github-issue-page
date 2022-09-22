@@ -59,6 +59,11 @@ export default function IssuesContent() {
           defaultDesc={defaultDesc}
           defaultState={defaultState}
         />
+        <LabelList
+          defaultLabelTag={defaultLabelTag}
+          defaultDesc={defaultDesc}
+          defaultState={defaultState}
+        />
       </Container>
     </>
   );

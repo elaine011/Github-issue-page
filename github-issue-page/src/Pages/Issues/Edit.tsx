@@ -99,9 +99,7 @@ const Change = styled(Cancel)`
   margin-right: 0px;
 `;
 
-export default function Edit() {
-  const [selectedEditBtn, setSelectedEditBtn] = useContext(SelectContext).edit;
-
+export default function Edit({ selectedEditBtn, setSelectedEditBtn }) {
   return (
     <Container
       order={selectedEditBtn ? 1 : 0}

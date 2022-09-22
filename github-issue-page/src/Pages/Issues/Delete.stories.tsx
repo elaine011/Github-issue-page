@@ -12,14 +12,12 @@ export default {
   decorators: [
     (Story) => {
       const [selectedSort, setSelectedSort] = useState(false);
-      const [selectedEditBtn, setSelectedEditBtn] = useState(false);
       const [createLabel, setCreateLabel] = useState(false);
 
       return (
         <SelectContext.Provider
           value={{
             sort: [selectedSort, setSelectedSort],
-            edit: [selectedEditBtn, setSelectedEditBtn],
             create: [createLabel, setCreateLabel],
           }}
         >

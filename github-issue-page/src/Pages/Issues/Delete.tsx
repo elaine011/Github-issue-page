@@ -18,9 +18,7 @@ const Container = styled.div<MarginProps>`
   }
 `;
 
-export default function Delete() {
-  const [selectedEditBtn] = useContext(SelectContext)["edit"];
-
+export default function Delete({ selectedEditBtn }) {
   const handleDelete = () => {
     alert(
       "Are you sure? Deleting a label will remove it from all issues and pull requests"

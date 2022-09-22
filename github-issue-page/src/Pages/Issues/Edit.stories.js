@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import Edit from "./Edit";
-import { SelectContext } from "../../SelectContext";
+import { SelectContext } from "../../utils/SelectContext";
 
 export default {
   title: "Label/Edit",

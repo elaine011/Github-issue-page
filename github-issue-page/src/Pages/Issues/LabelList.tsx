@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { KebabHorizontalIcon } from "@primer/octicons-react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import LabelTag from "../../components/LabelTag";
 import Edit from "./Edit";
 import Delete from "./Delete";
-import { SelectContext } from "../../utils/SelectContext";
 
 type SelectedProps = {
   selected: string;
@@ -105,11 +104,11 @@ const ReviseMenu = styled.div<DisplayProps>`
     font-size: 12px;
     top: 100%;
     display: ${(props) => props.display};
+    z-index: 100;
   }
 `;
 const ReviseMenuContainer = styled.div`
   @media screen and (max-width: 1011.9px) {
-    z-index: 100;
     width: 158px;
     display: flex;
     flex-direction: column;
@@ -154,7 +153,8 @@ export default function LabelList({
   defaultDesc,
   defaultState,
 }) {
-  const [selectedEditBtn, setSelectedEditBtn] = useContext(SelectContext).edit;
+  const [selectedEditBtn, setSelectedEditBtn] = useState<Boolean>(false);
+
   return (
     <List>
       <LabelTag
@@ -167,8 +167,11 @@ export default function LabelList({
       <State display={selectedEditBtn ? "none" : "block"}>
         {defaultState.state}
       </State>
-      <Edit />
-      <Delete />
+      <Edit
+        selectedEditBtn={selectedEditBtn}
+        setSelectedEditBtn={setSelectedEditBtn}
+      />
+      <Delete selectedEditBtn={selectedEditBtn} />
       <ReviseSection>
         <ReviseBtn
           onClick={() => setSelectedEditBtn(!selectedEditBtn)}
