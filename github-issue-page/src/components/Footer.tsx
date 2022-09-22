@@ -38,6 +38,7 @@ const FooterLists = styled.ul`
   align-items: flex-start;
   width: 85%;
   justify-content: space-between;
+  list-style: none;
 
   @media screen and (max-width: 1011px) {
     display: flex;

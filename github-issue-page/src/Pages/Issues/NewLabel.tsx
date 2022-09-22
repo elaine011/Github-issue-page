@@ -1,31 +1,40 @@
+import { useContext } from "react";
 import styled from "styled-components";
 import { SyncIcon } from "@primer/octicons-react";
 
-const Container = styled.div`
-  margin-left: 16px;
-  order: ${(props) => props.order};
-  width: ${(props) => props.width};
-  margin-left: auto;
+import { SelectContext } from "../../utils/SelectContext";
+import LabelTag from "../../components/LabelTag";
 
-  @media screen and (max-width: 1011.9px) {
-    display: none;
-  }
-`;
-const Title = styled.span`
-  cursor: pointer;
-  display: ${(props) => props.display};
+type DisplayProps = {
+  display: string;
+};
 
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-const EditContainer = styled.div`
+const Container = styled.div<DisplayProps>`
+  padding: 0 24px;
   display: ${(props) => props.display};
+`;
+const CreateLabel = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+  max-width: 1280px;
+  margin: 0 auto;
+  margin-top: 24px;
+  padding: 16px;
+  border: 1px solid #d0d7de;
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  font-weight: 600;
 `;
 const EditMenu = styled.div`
   display: flex;
   color: #24292f;
   margin-top: 8px;
+
+  @media screen and (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 const LabelName = styled.div`
   display: flex;
@@ -34,12 +43,24 @@ const LabelName = styled.div`
   margin-top: 16px;
   margin-bottom: 16px;
   width: 20.99999999%;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 const Description = styled(LabelName)`
-  width: 30.33333332%;
+  width: 20.99999999%;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 const ColorBox = styled(LabelName)`
   width: 16.66666666%;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 const Color = styled.div`
@@ -61,6 +82,12 @@ const CheckBtn = styled.div`
   margin-bottom: 16px;
   margin-left: auto;
   width: 24.99999999%;
+  white-space: nowrap;
+
+  @media screen and (max-width: 767px) {
+    justify-content: flex-start;
+    margin-left: 0;
+  }
 `;
 const Input = styled.input`
   margin-top: 8px;
@@ -68,6 +95,17 @@ const Input = styled.input`
   padding: 5px 12px;
   border: 1px solid #d0d7de;
   border-radius: 6px;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
+`;
+const ColorInput = styled(Input)`
+  width: 60%;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 const Cancel = styled.button`
   padding: 5px 16px;
@@ -83,35 +121,36 @@ const Cancel = styled.button`
   align-self: flex-end;
   font-weight: 500;
 `;
-const Change = styled(Cancel)`
-  background-color: #2da44e;
+const Submit = styled(Cancel)`
+  background-color: #94d3a2;
   color: #fff;
   margin-right: 0px;
+
+  @media screen and (max-width: 767px) {
+    order: -1;
+    margin-right: 8px;
+  }
 `;
 
-export default function Edit({ selectedEditBtn, setSelectedEditBtn }) {
-  return (
-    <Container
-      order={selectedEditBtn ? 1 : 0}
-      width={selectedEditBtn ? "100%" : "none"}
-    >
-      <Title
-        onClick={() => setSelectedEditBtn(!selectedEditBtn)}
-        display={selectedEditBtn ? "none" : "block"}
-      >
-        Edit
-      </Title>
+export default function NewLabel() {
+  const [createLabel, setCreateLabel] = useContext(SelectContext).create;
 
-      <form>
-        <EditContainer display={selectedEditBtn ? "block" : "none"}>
+  return (
+    <Container display={createLabel ? "block" : "none"}>
+      <CreateLabel>
+        <LabelTag
+          tagName={"Label preview"}
+          backgroundColor={"rgb(215, 58, 74)"}
+        />
+        <form>
           <EditMenu>
             <LabelName>
               <span>Label name</span>
               <Input
                 type="text"
+                name="label[name]"
                 data-maxlength="50"
                 pattern="^(?!(\.|\.\.)$).*$"
-                defaultValue="bug"
                 placeholder="Label name"
                 required
               />
@@ -120,8 +159,8 @@ export default function Edit({ selectedEditBtn, setSelectedEditBtn }) {
               <span>Description</span>
               <Input
                 type="text"
-                defaultValue="Something isn't working"
-                maxlength="100"
+                name="label[description]"
+                maxLength={100}
                 placeholder="Description (optional)"
               />
             </Description>
@@ -131,23 +170,24 @@ export default function Edit({ selectedEditBtn, setSelectedEditBtn }) {
                 <ColorBtn>
                   <SyncIcon size={16} fill="#fff" />
                 </ColorBtn>
-                <Input
+                <ColorInput
                   type="text"
                   defaultValue="#d73a4a"
-                  maxLength="7"
-                  pattern="#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3}"
+                  name="label[color]"
+                  maxLength={7}
+                  pattern="#?([a-fA-F0-9]{6})"
                 />
               </Color>
             </ColorBox>
             <CheckBtn>
-              <Cancel onClick={() => setSelectedEditBtn(!selectedEditBtn)}>
+              <Cancel onClick={() => setCreateLabel(!createLabel)}>
                 Cancel
               </Cancel>
-              <Change>Save changes</Change>
+              <Submit disabled>Create label</Submit>
             </CheckBtn>
           </EditMenu>
-        </EditContainer>
-      </form>
+        </form>
+      </CreateLabel>
     </Container>
   );
 }

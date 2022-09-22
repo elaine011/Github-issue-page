@@ -13,9 +13,11 @@ const api = {
     const response = await fetch(
       `${this.OAuthHostname}/access_token?client_id=${client_id}&client_secret=${client_secret}&${code}`,
       {
-        mode: "no-cors",
-        method: "POST",
-        Accept: "application/json",
+        headers: new Headers({
+          mode: "no-cors",
+          method: "POST",
+          Accept: "application/json",
+        }),
       }
     );
     token = await response.json();
@@ -25,7 +27,9 @@ const api = {
     const response =
       token ??
       (await fetch(`${this.githubHostname}/user`, {
-        Authorization: `Bearer ${token}`,
+        headers: new Headers({
+          Authorization: `Bearer ${token}`,
+        }),
       }));
     return await response.json();
   },

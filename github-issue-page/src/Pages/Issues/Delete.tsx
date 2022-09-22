@@ -1,6 +1,12 @@
+import { useContext } from "react";
 import styled from "styled-components";
 
-const Container = styled.div`
+import { SelectContext } from "../../utils/SelectContext";
+
+type MarginProps = {
+  margin: string;
+};
+const Container = styled.div<MarginProps>`
   margin-left: ${(props) => props.margin};
   cursor: pointer;
   &:hover {
@@ -12,7 +18,9 @@ const Container = styled.div`
   }
 `;
 
-export default function Delete({ selectedEditBtn }) {
+export default function Delete() {
+  const [selectedEditBtn] = useContext(SelectContext)["edit"];
+
   const handleDelete = () => {
     alert(
       "Are you sure? Deleting a label will remove it from all issues and pull requests"

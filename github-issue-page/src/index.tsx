@@ -1,15 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import * as React from "react";
+import * as ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createStore } from "redux";
 import { Reset } from "styled-reset";
 import { createGlobalStyle } from "styled-components";
 
 import App from "./App";
-import Issues from "./components/Pages/Issues/Issues";
-import Labels from "./components/Labels";
+import Issues from "./Pages/Issues/Issues";
+import Labels from "./Pages/Labels/Labels";
 import Login from "./components/Login";
-import reducer from "./reducers/reducer";
+// import reducer from "./reducers/reducer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

@@ -1,6 +1,11 @@
+import { useContext } from "react";
 import styled from "styled-components";
-import { TagIcon, MilestoneIcon, SearchIcon } from "@primer/octicons-react";
-import RepoHeader from "../../RepoHeader";
+import { TagIcon, MilestoneIcon } from "@primer/octicons-react";
+
+import RepoHeader from "../../components/RepoHeader";
+import SearchBar from "../../components/SearchBar";
+import NewLabel from "./NewLabel";
+import { SelectContext } from "../../utils/SelectContext";
 
 const LabelsContainer = styled.div`
   display: flex;
@@ -46,30 +51,6 @@ const LabelNav = styled.nav`
 const LabelsText = styled.span`
   margin-left: 3px;
 `;
-const LabelSearch = styled.input`
-  width: 320px;
-  height: 30px;
-  padding: 5px 12px 5px 32px;
-  color: #57606a;
-  background-color: #f6f8fa;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
-  box-shadow: inset 0 1px 0 rgba(208, 215, 222, 0.2);
-`;
-const SearchBar = styled.div`
-  position: relative;
-  margin-left: 8px;
-
-  @media screen and (max-width: 767px) {
-    margin-top: 16px;
-    margin-left: 0;
-  }
-`;
-const Search = styled(SearchIcon)`
-  position: absolute;
-  top: 9px;
-  left: 8px;
-`;
 const LabelandSearch = styled.div`
   display: flex;
 
@@ -93,6 +74,8 @@ const NewLabelBtn = styled.button`
 `;
 
 export default function IssueHeader() {
+  const [createLabel, setCreateLabel] = useContext(SelectContext).create;
+
   return (
     <>
       <RepoHeader />
@@ -108,13 +91,13 @@ export default function IssueHeader() {
               <LabelsText>Milestones</LabelsText>
             </MilestonesBtn>
           </LabelNav>
-          <SearchBar>
-            <Search size={16} fill="#57606a" />
-            <LabelSearch type="text" placeholder="Search all labels" />
-          </SearchBar>
+          <SearchBar />
         </LabelandSearch>
-        <NewLabelBtn>New label</NewLabelBtn>
+        <NewLabelBtn onClick={() => setCreateLabel(!createLabel)}>
+          New label
+        </NewLabelBtn>
       </LabelsContainer>
+      <NewLabel />
     </>
   );
 }
