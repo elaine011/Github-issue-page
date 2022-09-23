@@ -18,16 +18,11 @@ const Container = styled.div<MarginProps>`
   }
 `;
 
-export default function Delete({ selectedEditBtn }) {
-  const handleDelete = () => {
-    alert(
-      "Are you sure? Deleting a label will remove it from all issues and pull requests"
-    );
-  };
+export default function Delete({ selectedMobileEditBtn, onClick }) {
   return (
     <Container
-      margin={selectedEditBtn ? "auto" : "16px"}
-      onClick={handleDelete}
+      margin={selectedMobileEditBtn ? "auto" : "16px"}
+      onClick={onClick}
     >
       Delete
     </Container>

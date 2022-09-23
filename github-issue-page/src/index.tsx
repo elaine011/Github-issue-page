@@ -2,7 +2,6 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createStore } from "redux";
-import { Reset } from "styled-reset";
 import { createGlobalStyle } from "styled-components";
 
 import App from "./App";
@@ -19,12 +18,12 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
     font-family: '-apple-system','BlinkMacSystemFont',"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    margin: 0;
   }
 `;
 
 root.render(
   <BrowserRouter>
-    <Reset />
     <GlobalStyle />
     <Routes>
       <Route path="/" element={<App />}></Route>

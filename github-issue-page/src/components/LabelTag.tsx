@@ -10,7 +10,7 @@ type TagProps = {
 
 const Tag = styled.a<TagProps>`
   text-decoration: none;
-  background-color: ${(props) => props.bac};
+  background-color: ${(props) => "#" + props.bac};
   color: rgb(255, 255, 255);
   padding: 6px 10px;
   font-size: 12px;
