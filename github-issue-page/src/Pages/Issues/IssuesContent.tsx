@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import { useContext } from "react";
 
+import { SelectContext } from "../../utils/SelectContext";
 import SortList from "../../components/SortList";
 import LabelList from "./LabelList";
 
@@ -44,6 +46,9 @@ export default function IssuesContent() {
   const defaultState = {
     state: "2 open issues and pull requests",
   };
+
+  const [labels, setLabels] = useContext(SelectContext).labels;
+
   return (
     <>
       <Container>
@@ -54,16 +59,19 @@ export default function IssuesContent() {
           </H3>
           <SortList />
         </LabelsHeader>
-        <LabelList
-          defaultLabelTag={defaultLabelTag}
-          defaultDesc={defaultDesc}
-          defaultState={defaultState}
-        />
-        <LabelList
-          defaultLabelTag={defaultLabelTag}
-          defaultDesc={defaultDesc}
-          defaultState={defaultState}
-        />
+        {labels &&
+          labels.map((item, index) => {
+            console.log(item.color);
+
+            return (
+              <LabelList
+                LabelTagColor={item.color}
+                LableTagName={item.name}
+                LabelDesc={item.description}
+                defaultState={defaultState}
+              />
+            );
+          })}
       </Container>
     </>
   );

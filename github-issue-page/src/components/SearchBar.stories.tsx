@@ -1,7 +1,7 @@
 import SearchBar from "./SearchBar";
 
 export default {
-  title: "Pages/SearchBar",
+  title: "Components/SearchBar",
   component: SearchBar,
   parameters: {
     layout: "centered",

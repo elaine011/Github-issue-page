@@ -36,7 +36,7 @@ const api = {
   async getListIssues() {
     const owner = "elaine011";
     const repo = "test-issue";
-    const githubToken = "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";
+    const githubToken = JSON.parse(localStorage.getItem("loginToken"));
     const response = await fetch(
       `${this.githubHostname}/repos/${owner}/${repo}/issues`,
       {
@@ -51,7 +51,7 @@ const api = {
   async getLabels() {
     const owner = "elaine011";
     const repo = "test-issue";
-    const githubToken = "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";
+    const githubToken = JSON.parse(localStorage.getItem("loginToken"));
     const response = await fetch(
       `${this.githubHostname}/repos/${owner}/${repo}/labels`,
       {

@@ -7,7 +7,6 @@ import { createGlobalStyle } from "styled-components";
 import App from "./App";
 import Issues from "./Pages/Issues/Issues";
 import Labels from "./Pages/Labels/Labels";
-import Login from "./components/Login";
 // import reducer from "./reducers/reducer";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -32,7 +31,6 @@ root.render(
         <Route path="/issues/:id" element={<Issues />}></Route>
         <Route path="/issues/new" element={<Issues />}></Route>
       </Route>
-      <Route path="/login" element={<Login />}></Route>
     </Routes>
   </BrowserRouter>
 );

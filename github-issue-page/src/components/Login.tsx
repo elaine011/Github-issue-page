@@ -20,9 +20,8 @@ const SignInBtn = styled.button`
   font-size: 16px;
 `;
 
-function Login() {
+function Login({ setTokenFn }) {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState();
 
   useEffect(() => {
     /* when the app loads, check to see if the user is signed in */
@@ -32,20 +31,33 @@ function Login() {
       checkUser();
     });
   }, []);
+
   async function checkUser() {
     /* if a user is signed in, update local state */
     const user = supabase.auth.user();
     setUser(user);
   }
+
   async function signInWithGithub() {
     /* authenticate with GitHub */
+    console.log(123);
+
     await supabase.auth.signIn({
       provider: "github",
     });
+    supabase.auth.session();
   }
 
-  const session = supabase.auth.session();
-  // console.log(session.provider_token);
+  const testuser = JSON.parse(localStorage.getItem("supabase.auth.token"));
+
+  if (testuser) {
+    const token = testuser.currentSession.provider_token;
+    window.localStorage.setItem(
+      "loginToken",
+      JSON.stringify(testuser.currentSession.provider_token)
+    );
+    setTokenFn(token);
+  }
 
   async function signOut() {
     /* sign the user out */
@@ -57,14 +69,27 @@ function Login() {
     return (
       <Header>
         <MarkGithubIcon size={32} fill={"#fff"} />
-        <SignInBtn onClick={signOut}>Sign out</SignInBtn>
+        <SignInBtn
+          onClick={() => {
+            signOut();
+            setTokenFn("");
+          }}
+        >
+          Sign out
+        </SignInBtn>
       </Header>
     );
   }
   return (
     <Header>
       <MarkGithubIcon size={32} fill={"#fff"} />
-      <SignInBtn onClick={signInWithGithub}>Sign in</SignInBtn>
+      <SignInBtn
+        onClick={() => {
+          signInWithGithub();
+        }}
+      >
+        Sign in
+      </SignInBtn>
     </Header>
   );
 }

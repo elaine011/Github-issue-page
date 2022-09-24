@@ -4,7 +4,7 @@ import { SelectContext } from "../utils/SelectContext";
 import SortList from "./SortList";
 
 export default {
-  title: "Label/SortList",
+  title: "Components/SortList",
   component: SortList,
   parameters: {
     layout: "centered",
@@ -16,12 +16,14 @@ export default {
     (Story) => {
       const [selectedSort, setSelectedSort] = useState(false);
       const [createLabel, setCreateLabel] = useState(false);
+      const [labels, setLabels] = useState(null);
 
       return (
         <SelectContext.Provider
           value={{
             sort: [selectedSort, setSelectedSort],
             create: [createLabel, setCreateLabel],
+            labels: [labels, setLabels],
           }}
         >
           <Story />

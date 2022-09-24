@@ -17,12 +17,14 @@ export default {
     (Story) => {
       const [selectedSort, setSelectedSort] = useState(false);
       const [createLabel, setCreateLabel] = useState(false);
+      const [labels, setLabels] = useState(null);
 
       return (
         <SelectContext.Provider
           value={{
             sort: [selectedSort, setSelectedSort],
             create: [createLabel, setCreateLabel],
+            labels: [labels, setLabels],
           }}
         >
           <Story />
@@ -37,7 +39,7 @@ const Template = (args) => <LabelList {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   labelTag: LabelTag,
-  defaultLabelTag: "",
-  defaultDesc: "",
-  defaultState: "",
+  defaultLabelTag: "bug",
+  defaultDesc: "Something isn't working",
+  defaultState: "2 open issues and pull requests",
 };

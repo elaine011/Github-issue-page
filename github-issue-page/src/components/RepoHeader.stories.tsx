@@ -1,7 +1,7 @@
 import RepoHeader from "./RepoHeader";
 
 export default {
-  title: "Pages/RepoHeader",
+  title: "Components/RepoHeader",
   component: RepoHeader,
   parameters: {
     layout: "fullscreen",

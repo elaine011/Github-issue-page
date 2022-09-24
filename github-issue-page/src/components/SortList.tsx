@@ -30,7 +30,7 @@ const Labels = styled.div`
   }
 `;
 const LabelsList = styled.div<DisplayProps>`
-  z-index: 99;
+  z-index: 100;
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -76,6 +76,15 @@ const SortText = styled.span`
   position: absolute;
   left: 30px;
 `;
+const OutSideWrapper = styled.div<DisplayProps>`
+  display: ${(props) => props.display};
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 99;
+`;
 
 export default function SortList() {
   const [selectedSort, setSelectedSort] = useContext(SelectContext)["sort"];
@@ -104,6 +113,10 @@ export default function SortList() {
           </SortLink>
         </SortListMenu>
       </LabelsList>
+      <OutSideWrapper
+        display={selectedSort ? "block" : "none"}
+        onClick={() => setSelectedSort(!selectedSort)}
+      />
     </Container>
   );
 }

@@ -80,7 +80,7 @@ const ColorBtn = styled.button<backgroundColorProps>`
   padding: 0 7px;
   border: none;
   border-radius: 6px;
-  background-color: ${(props) => "#" + props.backgroundColor};
+  background-color: ${(props) => props.backgroundColor};
   cursor: pointer;
   height: 29px;
   margin-top: 8px;
@@ -189,13 +189,21 @@ const Change = styled(Cancel)`
   margin-right: 0px;
   white-space: nowrap;
 `;
+const Sync = styled(SyncIcon)`
+  fill: ${(props) => props.fill};
+`;
 
 export default function Edit({
   selectedMobileEditBtn,
   setSelectedMobileEditBtn,
-  color,
-  setColor,
   handleColor,
+  inputColor,
+  setInputColor,
+  setInputTagName,
+  lightOrDark,
+  LabelTagColor,
+  LableTagName,
+  LabelDesc,
 }) {
   const ButtonColor = {
     darkColors: [
@@ -240,11 +248,12 @@ export default function Edit({
             <span>Label name</span>
             <Input
               type="text"
-              defaultValue="bug"
+              defaultValue={LableTagName}
               name="label[name]"
               data-maxlength="50"
               pattern="^(?!(\.|\.\.)$).*$"
               placeholder="Label name"
+              onChange={(e) => setInputTagName(e.target.value)}
               required
             />
           </LabelName>
@@ -252,7 +261,7 @@ export default function Edit({
             <span>Description</span>
             <Input
               type="text"
-              defaultValue="Something isn't working"
+              defaultValue={LabelDesc}
               name="label[description]"
               maxLength={100}
               placeholder="Description (optional)"
@@ -263,21 +272,22 @@ export default function Edit({
             <Color>
               <ColorBtn
                 onClick={() => {
-                  setColor(handleColor());
+                  setInputColor(handleColor());
                 }}
-                backgroundColor={color}
+                backgroundColor={inputColor}
               >
-                <SyncIcon size={16} fill="#fff" />
+                <SyncIcon size={16} fill={lightOrDark(inputColor)} />
               </ColorBtn>
               <ColorInput
                 type="text"
-                defaultValue={`#${color}`}
-                value={`#${color}`}
+                defaultValue={`#${LabelTagColor}`}
+                value={inputColor}
                 name="label[color]"
                 maxLength={7}
                 pattern="#?([a-fA-F0-9]{6})"
                 onFocus={() => setInputFocus(true)}
                 onBlur={() => setInputFocus(false)}
+                onChange={(e) => setInputColor(e.target.value)}
               />
               <ColorMenu display={inputFocus ? "block" : "none"}>
                 <p>Choose from default colors:</p>

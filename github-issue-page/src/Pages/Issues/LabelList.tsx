@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { KebabHorizontalIcon } from "@primer/octicons-react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import LabelTag from "../../components/LabelTag";
 import Edit from "./Edit";
@@ -190,18 +190,23 @@ const DeleteBtn = styled.button`
 `;
 
 export default function LabelList({
-  defaultLabelTag,
-  defaultDesc,
+  LabelTagColor,
+  LableTagName,
+  LabelDesc,
   defaultState,
 }) {
   const [selectedEditBtn, setSelectedEditBtn] = useState<Boolean>(false);
   const [selectedMobileEditBtn, setSelectedMobileEditBtn] =
     useState<Boolean>(false);
   const [color, setColor] = useState("d73a4a");
+  const [inputColor, setInputColor] = useState(`#${LabelTagColor}`);
+  const [inputTagName, setInputTagName] = useState("");
+  const [inputDes, setInputDes] = useState("");
 
   const handleColor = () => {
-    const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-    return randomColor;
+    let randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    while (randomColor.length < 6) randomColor = handleColor();
+    return "#" + randomColor;
   };
 
   const handleDelete = () => {
@@ -210,13 +215,30 @@ export default function LabelList({
     );
   };
 
+  const lightOrDark = (bgcolor) => {
+    const r = parseInt(bgcolor.slice(1, 3), 16);
+    const g = parseInt(bgcolor.slice(3, 5), 16);
+    const b = parseInt(bgcolor.slice(5, 7), 16);
+    const hsp = r * 0.3 + g * 0.6 + b * 0.1;
+    if (hsp > 127.5) {
+      return "black";
+    } else {
+      return "white";
+    }
+  };
+
   return (
     <List flexWrap={selectedEditBtn ? "nowrap" : "wrap"}>
-      <LabelTag tagName={defaultLabelTag.tagName} backgroundColor={color} />
+      <LabelTag
+        tagName={LableTagName}
+        backgroundColor={inputColor}
+        lightOrDark={lightOrDark}
+        inputTagName={inputTagName}
+      />
       <Description
         display={selectedMobileEditBtn || selectedEditBtn ? "none" : "block"}
       >
-        {defaultDesc.description}
+        {LabelDesc}
       </Description>
       <State
         display={selectedMobileEditBtn || selectedEditBtn ? "none" : "block"}
@@ -226,9 +248,14 @@ export default function LabelList({
       <Edit
         selectedMobileEditBtn={selectedMobileEditBtn}
         setSelectedMobileEditBtn={setSelectedMobileEditBtn}
-        color={color}
-        setColor={setColor}
         handleColor={handleColor}
+        inputColor={inputColor}
+        setInputColor={setInputColor}
+        setInputTagName={setInputTagName}
+        lightOrDark={lightOrDark}
+        LabelTagColor={LabelTagColor}
+        LableTagName={LableTagName}
+        LabelDesc={LabelDesc}
       />
       <Delete
         selectedMobileEditBtn={selectedMobileEditBtn}

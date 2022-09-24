@@ -1,7 +1,7 @@
 import Footer from "./Footer";
 
 export default {
-  title: "Pages/Footer",
+  title: "Components/Footer",
   component: Footer,
   parameters: {
     layout: "fullscreen",
