@@ -5,6 +5,7 @@ import { SyncIcon } from "@primer/octicons-react";
 import { SelectContext } from "../../utils/SelectContext";
 import LabelTag from "../../components/LabelTag";
 import api from "../../utils/api";
+import ColorMenuBar from "../../components/ColorMenu";
 
 type DisplayProps = {
   display: string;
@@ -69,6 +70,7 @@ const ColorBox = styled(LabelName)`
 
 const Color = styled.div`
   display: flex;
+  position: relative;
 `;
 const ColorBtn = styled.button<backgroundColorProps>`
   padding: 0 7px;
@@ -232,6 +234,10 @@ export default function NewLabel() {
                 onFocus={() => setInputFocus(true)}
                 onBlur={() => setInputFocus(false)}
                 onChange={(e) => setInputColor(e.target.value)}
+              />
+              <ColorMenuBar
+                inputFocus={inputFocus}
+                setInputColor={setInputColor}
               />
             </Color>
           </ColorBox>

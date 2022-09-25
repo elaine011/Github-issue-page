@@ -1,7 +1,7 @@
 import { Octokit } from "octokit";
 
 const octokit = new Octokit({
-  auth: "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",
+  auth: "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",
 });
 const api = {
   githubHostname: "https://api.github.com",
@@ -49,7 +49,7 @@ const api = {
       owner: data.owner,
       repo: data.repo,
       name: data.name,
-      new_name: `${data.name} :${data.new_name}`,
+      new_name: data.new_name,
       description: data.description,
       color: data.color,
     });
