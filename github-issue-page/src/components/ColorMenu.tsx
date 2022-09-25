@@ -105,7 +105,10 @@ export default function ColorMenuBar({ inputFocus, setInputColor }) {
         </ColorMenuContainer>
         <ColorMenuContainer>
           {ButtonColor.lightColors.map((item) => (
-            <ColorMenuBtn backgroundColor={item}></ColorMenuBtn>
+            <ColorMenuBtn
+              backgroundColor={item}
+              onMouseDown={() => setInputColor(item)}
+            ></ColorMenuBtn>
           ))}
         </ColorMenuContainer>
       </ColorMenu>

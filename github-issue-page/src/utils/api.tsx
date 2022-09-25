@@ -1,7 +1,7 @@
 import { Octokit } from "octokit";
 
 const octokit = new Octokit({
-  auth: "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",
+  auth: "",
 });
 const api = {
   githubHostname: "https://api.github.com",
@@ -14,7 +14,7 @@ const api = {
       {
         headers: new Headers({
           Accept: "application/vnd.github+json",
-          Authorization: `Bearer ${githubToken}`,
+          Authorization: `Bearer `,
         }),
       }
     );

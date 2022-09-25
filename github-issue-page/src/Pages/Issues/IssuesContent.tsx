@@ -46,10 +46,10 @@ export default function IssuesContent() {
   const defaultState = {
     state: "2 open issues and pull requests",
   };
-  const userInfo = {
-    owner: "elaine011",
-    repo: "test-issue",
-  };
+  // const userInfo = {
+  //   owner: "elaine011",
+  //   repo: "test-issue",
+  // };
   const [labels, setLabels] = useContext(SelectContext).labels;
 
   // const data = useGetLabelsQuery(userInfo);

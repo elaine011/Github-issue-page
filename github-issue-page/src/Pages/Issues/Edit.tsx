@@ -13,8 +13,11 @@ type OrderProps = {
 type DisplayProps = {
   display: string;
 };
-type backgroundColorProps = {
+type BackgroundColorProps = {
   backgroundColor: string;
+};
+type ColorProps = {
+  color: string;
 };
 const Container = styled.div<OrderProps>`
   margin-left: 16px;
@@ -78,7 +81,7 @@ const Color = styled.div`
   display: flex;
   position: relative;
 `;
-const ColorBtn = styled.button<backgroundColorProps>`
+const ColorBtn = styled.button<BackgroundColorProps>`
   padding: 0 7px;
   border: none;
   border-radius: 6px;
@@ -102,7 +105,8 @@ const Input = styled.input`
   border: 1px solid #d0d7de;
   border-radius: 6px;
 `;
-const ColorInput = styled(Input)`
+const ColorInput = styled(Input)<ColorProps>`
+  color: ${(props) => props.color};
   @media screen and (max-width: 1011.9px) {
     width: 60%;
   }
@@ -221,7 +225,14 @@ export default function Edit({
                 pattern="#?([a-fA-F0-9]{6})"
                 onFocus={() => setInputFocus(true)}
                 onBlur={() => setInputFocus(false)}
-                onChange={(e) => setInputColor(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value.length === 0) {
+                    e.target.value = "#";
+                    return;
+                  }
+                  setInputColor(e.target.value.split("#")[1]);
+                }}
+                color={inputColor.length < 6 ? "red" : "#24292f"}
               />
               <ColorMenuBar
                 inputFocus={inputFocus}

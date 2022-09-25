@@ -1,7 +1,7 @@
 import Delete from "./Delete";
 
 export default {
-  title: "Label/Delete",
+  title: "Label/LabelList/Delete",
   component: Delete,
   parameters: {
     layout: "centered",

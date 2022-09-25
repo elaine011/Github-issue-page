@@ -10,19 +10,21 @@ import ColorMenuBar from "../../components/ColorMenu";
 type DisplayProps = {
   display: string;
 };
-type backgroundColorProps = {
+type BackgroundColorProps = {
   backgroundColor: string;
+};
+type ColorProps = {
+  color: string;
 };
 
 const Container = styled.div<DisplayProps>`
-  padding: 0 24px;
   display: ${(props) => props.display};
 `;
 const CreateLabel = styled.div`
   display: flex;
   flex-direction: column;
   align-items: space-between;
-  max-width: 1280px;
+  max-width: 1232px;
   margin: 0 auto;
   margin-top: 24px;
   padding: 16px;
@@ -72,7 +74,7 @@ const Color = styled.div`
   display: flex;
   position: relative;
 `;
-const ColorBtn = styled.button<backgroundColorProps>`
+const ColorBtn = styled.button<BackgroundColorProps>`
   padding: 0 7px;
   border: none;
   border-radius: 6px;
@@ -106,8 +108,9 @@ const Input = styled.input`
     width: 100%;
   }
 `;
-const ColorInput = styled(Input)`
+const ColorInput = styled(Input)<ColorProps>`
   width: 60%;
+  color: ${(props) => props.color};
 
   @media screen and (max-width: 767px) {
     width: 100%;
@@ -143,7 +146,8 @@ export default function NewLabel() {
   const token = JSON.parse(localStorage.getItem("loginToken"));
   const [inputTagName, setInputTagName] = useState("");
   const [inputDes, setInputDes] = useState("");
-  const [inputColor, setInputColor] = useState(`d73a4a`);
+  const [inputColor, setInputColor] = useState("d73a4a");
+
   const [inputFocus, setInputFocus] = useState<Boolean>(false);
   const [labels, setLabels] = useContext(SelectContext).labels;
 
@@ -169,9 +173,9 @@ export default function NewLabel() {
     const b = parseInt(bgcolor.slice(4, 6), 16);
     const hsp = r * 0.3 + g * 0.6 + b * 0.1;
     if (hsp > 127.5) {
-      return "black";
-    } else {
       return "white";
+    } else {
+      return "black";
     }
   };
   const handleColor = () => {
@@ -222,18 +226,25 @@ export default function NewLabel() {
                 }}
                 backgroundColor={inputColor}
               >
-                <SyncIcon size={16} fill="#fff" />
+                <SyncIcon size={16} fill={lightOrDark(inputColor)} />
               </ColorBtn>
               <ColorInput
                 type="text"
                 defaultValue={`#d73a4a`}
-                value={"#" + inputColor}
+                value={`#` + inputColor}
                 name="label[color]"
                 maxLength={7}
                 pattern="#?([a-fA-F0-9]{6})"
                 onFocus={() => setInputFocus(true)}
                 onBlur={() => setInputFocus(false)}
-                onChange={(e) => setInputColor(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value.length === 0) {
+                    e.target.value = "#";
+                    return;
+                  }
+                  setInputColor(e.target.value.split("#")[1]);
+                }}
+                color={inputColor.length < 6 ? "red" : "#24292f"}
               />
               <ColorMenuBar
                 inputFocus={inputFocus}

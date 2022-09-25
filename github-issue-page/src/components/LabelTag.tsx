@@ -9,7 +9,7 @@ type TagProps = {
   color: string;
 };
 
-const Tag = styled.a<TagProps>`
+const Tag = styled.div<TagProps>`
   text-decoration: none;
   background-color: ${(props) => "#" + props.backgroundColor};
   color: ${(props) => props.color};
@@ -18,6 +18,7 @@ const Tag = styled.a<TagProps>`
   font-weight: 500;
   line-height: 22px;
   border-radius: 2em;
+  display: inline-block;
 `;
 
 export default function LabelTag({
@@ -29,7 +30,6 @@ export default function LabelTag({
   return (
     <TagWrap>
       <Tag
-        href="#/"
         backgroundColor={backgroundColor}
         color={lightOrDark(backgroundColor)}
       >

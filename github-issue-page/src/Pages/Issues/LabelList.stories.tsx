@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { SelectContext } from "../../utils/SelectContext";
 import LabelList from "./LabelList";
-import LabelTag from "../../components/LabelTag.stories";
 
 export default {
   title: "Label/LabelList",
@@ -34,12 +33,23 @@ export default {
   ],
 };
 
-const Template = (args) => <LabelList {...args} />;
+const Template = (args) => (
+  <div
+    style={{
+      position: "absolute",
+      left: "0",
+      right: "0",
+      transform: "translateY(50vh)",
+    }}
+  >
+    <LabelList {...args} />
+  </div>
+);
 
-export const Default = Template.bind({});
-Default.args = {
-  labelTag: LabelTag,
-  defaultLabelTag: "bug",
-  defaultDesc: "Something isn't working",
+export const List = Template.bind({});
+List.args = {
+  LabelTagColor: "D4C5F9",
+  LableTagName: "bug",
+  LabelDesc: "Further information is requested",
   defaultState: "2 open issues and pull requests",
 };
