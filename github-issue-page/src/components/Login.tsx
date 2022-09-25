@@ -40,7 +40,6 @@ function Login({ setTokenFn }) {
 
   async function signInWithGithub() {
     /* authenticate with GitHub */
-    console.log(123);
 
     await supabase.auth.signIn({
       provider: "github",

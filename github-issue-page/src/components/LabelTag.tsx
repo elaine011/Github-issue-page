@@ -11,7 +11,7 @@ type TagProps = {
 
 const Tag = styled.a<TagProps>`
   text-decoration: none;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => "#" + props.backgroundColor};
   color: ${(props) => props.color};
   padding: 6px 10px;
   font-size: 12px;

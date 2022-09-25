@@ -1,38 +1,10 @@
-let token;
+import { Octokit } from "octokit";
 
+const octokit = new Octokit({
+  auth: "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",
+});
 const api = {
-  OAuthHostname: "https://github.com/login/oauth",
   githubHostname: "https://api.github.com",
-  async getLoginCode() {
-    const response = await fetch(`${this.OAuthHostname}/authorize`);
-    return await response.json();
-  },
-  async getAccessToken(code) {
-    const client_id = "e6aa5b4f42aeefb5b861";
-    const client_secret = "3655d4e368d66951624fcf01a787bd43fccddbf9";
-    const response = await fetch(
-      `${this.OAuthHostname}/access_token?client_id=${client_id}&client_secret=${client_secret}&${code}`,
-      {
-        headers: new Headers({
-          mode: "no-cors",
-          method: "POST",
-          Accept: "application/json",
-        }),
-      }
-    );
-    token = await response.json();
-    return await token;
-  },
-  async accessLogin() {
-    const response =
-      token ??
-      (await fetch(`${this.githubHostname}/user`, {
-        headers: new Headers({
-          Authorization: `Bearer ${token}`,
-        }),
-      }));
-    return await response.json();
-  },
   async getListIssues() {
     const owner = "elaine011";
     const repo = "test-issue";
@@ -64,55 +36,30 @@ const api = {
     return await response.json();
   },
   async createLabels(data) {
-    const owner = "elaine011";
-    const repo = "test-issue";
-    const githubToken = "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";
-    const response = await fetch(
-      `${this.githubHostname}/repos/${owner}/${repo}/labels`,
-      {
-        body: JSON.stringify(data),
-        headers: new Headers({
-          Accept: "application/vnd.github+json",
-          Authorization: `Bearer ${githubToken}`,
-        }),
-        method: "POST",
-      }
-    );
-    return await response.json();
+    await octokit.request("POST /repos/{owner}/{repo}/labels", {
+      owner: data.owner,
+      repo: data.repo,
+      name: data.name,
+      description: data.description,
+      color: data.color,
+    });
   },
-  async updateLabels(data, labelName) {
-    const owner = "elaine011";
-    const repo = "test-issue";
-    const githubToken = "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";
-    const response = await fetch(
-      `${this.githubHostname}/repos/${owner}/${repo}/labels/${labelName}`,
-      {
-        body: JSON.stringify(data),
-        headers: new Headers({
-          Accept: "application/vnd.github+json",
-          Authorization: `Bearer ${githubToken}`,
-        }),
-        method: "PATCH",
-      }
-    );
-    return await response.json();
+  async updateLabels(data) {
+    await octokit.request("PATCH /repos/{owner}/{repo}/labels/{name}", {
+      owner: data.owner,
+      repo: data.repo,
+      name: data.name,
+      new_name: `${data.name} :${data.new_name}`,
+      description: data.description,
+      color: data.color,
+    });
   },
-  async deleteLabels(data, labelName) {
-    const owner = "elaine011";
-    const repo = "test-issue";
-    const githubToken = "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";
-    const response = await fetch(
-      `${this.githubHostname}/repos/${owner}/${repo}/labels/${labelName}`,
-      {
-        body: JSON.stringify(data),
-        headers: new Headers({
-          Accept: "application/vnd.github+json",
-          Authorization: `Bearer ${githubToken}`,
-        }),
-        method: "DELETE",
-      }
-    );
-    return await response.json();
+  async deleteLabels(data) {
+    await octokit.request("DELETE /repos/{owner}/{repo}/labels/{name}", {
+      owner: data.owner,
+      repo: data.repo,
+      name: data.labelName,
+    });
   },
   async getFilters(filters) {
     const owner = "elaine011";

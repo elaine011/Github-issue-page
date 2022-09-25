@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { SyncIcon } from "@primer/octicons-react";
-import { useContext, useRef, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 
 import { SelectContext } from "../../utils/SelectContext";
+import api from "../../utils/api";
 
 type OrderProps = {
   order: number;
@@ -80,7 +81,7 @@ const ColorBtn = styled.button<backgroundColorProps>`
   padding: 0 7px;
   border: none;
   border-radius: 6px;
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => "#" + props.backgroundColor};
   cursor: pointer;
   height: 29px;
   margin-top: 8px;
@@ -199,6 +200,7 @@ export default function Edit({
   handleColor,
   inputColor,
   setInputColor,
+  inputTagName,
   setInputTagName,
   lightOrDark,
   LabelTagColor,
@@ -229,6 +231,23 @@ export default function Edit({
   };
 
   const [inputFocus, setInputFocus] = useState<Boolean>(false);
+  const [inputDes, setInputDes] = useState("");
+  const token = JSON.parse(localStorage.getItem("loginToken"));
+  const [labels, setLabels] = useContext(SelectContext).labels;
+  const updateInfo = {
+    owner: "elaine011",
+    repo: "test-issue",
+    userToken: token,
+    name: LableTagName,
+    description: inputDes,
+    color: inputColor,
+    new_name: inputTagName,
+  };
+
+  async function updateLabels() {
+    await api.updateLabels(updateInfo);
+    setSelectedMobileEditBtn(false);
+  }
 
   return (
     <Container
@@ -265,6 +284,7 @@ export default function Edit({
               name="label[description]"
               maxLength={100}
               placeholder="Description (optional)"
+              onChange={(e) => setInputDes(e.target.value)}
             />
           </Description>
           <ColorBox>
@@ -280,8 +300,8 @@ export default function Edit({
               </ColorBtn>
               <ColorInput
                 type="text"
-                defaultValue={`#${LabelTagColor}`}
-                value={inputColor}
+                defaultValue={"#" + `${LabelTagColor}`}
+                value={"#" + `${inputColor}`}
                 name="label[color]"
                 maxLength={7}
                 pattern="#?([a-fA-F0-9]{6})"
@@ -310,7 +330,7 @@ export default function Edit({
             >
               Cancel
             </Cancel>
-            <Change>Save changes</Change>
+            <Change onClick={updateLabels}>Save changes</Change>
           </CheckBtn>
         </EditMenu>
       </EditContainer>

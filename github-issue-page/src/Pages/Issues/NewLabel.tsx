@@ -1,12 +1,16 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { SyncIcon } from "@primer/octicons-react";
 
 import { SelectContext } from "../../utils/SelectContext";
 import LabelTag from "../../components/LabelTag";
+import api from "../../utils/api";
 
 type DisplayProps = {
   display: string;
+};
+type backgroundColorProps = {
+  backgroundColor: string;
 };
 
 const Container = styled.div<DisplayProps>`
@@ -66,11 +70,11 @@ const ColorBox = styled(LabelName)`
 const Color = styled.div`
   display: flex;
 `;
-const ColorBtn = styled.button`
+const ColorBtn = styled.button<backgroundColorProps>`
   padding: 0 7px;
   border: none;
   border-radius: 6px;
-  background-color: #d73a4a;
+  background-color: ${(props) => "#" + props.backgroundColor};
   cursor: pointer;
   height: 29px;
   margin-top: 8px;
@@ -122,7 +126,7 @@ const Cancel = styled.button`
   font-weight: 500;
 `;
 const Submit = styled(Cancel)`
-  background-color: #94d3a2;
+  background-color: #2da44e;
   color: #fff;
   margin-right: 0px;
 
@@ -134,6 +138,29 @@ const Submit = styled(Cancel)`
 
 export default function NewLabel() {
   const [createLabel, setCreateLabel] = useContext(SelectContext).create;
+  const token = JSON.parse(localStorage.getItem("loginToken"));
+  const [inputTagName, setInputTagName] = useState("");
+  const [inputDes, setInputDes] = useState("");
+  const [inputColor, setInputColor] = useState(`d73a4a`);
+  const [inputFocus, setInputFocus] = useState<Boolean>(false);
+  const [labels, setLabels] = useContext(SelectContext).labels;
+
+  const createInfo = {
+    owner: "elaine011",
+    repo: "test-issue",
+    userToken: token,
+    name: inputTagName,
+    description: inputDes,
+    color: inputColor,
+  };
+
+  async function getLabels() {
+    await api.createLabels(createInfo);
+    setCreateLabel(false);
+    const data = await api.getLabels();
+    setLabels(data);
+  }
+
   const lightOrDark = (bgcolor = "000080") => {
     const r = parseInt(bgcolor.slice(0, 2), 16);
     const g = parseInt(bgcolor.slice(2, 4), 16);
@@ -145,61 +172,74 @@ export default function NewLabel() {
       return "white";
     }
   };
+  const handleColor = () => {
+    let randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    while (randomColor.length < 6) randomColor = handleColor();
+    return randomColor;
+  };
 
   return (
     <Container display={createLabel ? "block" : "none"}>
       <CreateLabel>
         <LabelTag
           tagName={"Label preview"}
-          backgroundColor={"rgb(215, 58, 74)"}
+          backgroundColor={inputColor}
           lightOrDark={lightOrDark}
           inputTagName={"Label preview"}
         />
-        <form>
-          <EditMenu>
-            <LabelName>
-              <span>Label name</span>
-              <Input
+
+        <EditMenu>
+          <LabelName>
+            <span>Label name</span>
+            <Input
+              type="text"
+              name="label[name]"
+              data-maxlength="50"
+              pattern="^(?!(\.|\.\.)$).*$"
+              placeholder="Label name"
+              onChange={(e) => setInputTagName(e.target.value)}
+              required
+            />
+          </LabelName>
+          <Description>
+            <span>Description</span>
+            <Input
+              type="text"
+              name="label[description]"
+              maxLength={100}
+              placeholder="Description (optional)"
+              onChange={(e) => setInputDes(e.target.value)}
+            />
+          </Description>
+          <ColorBox>
+            <span>Color</span>
+            <Color>
+              <ColorBtn
+                onClick={() => {
+                  setInputColor(handleColor());
+                }}
+                backgroundColor={inputColor}
+              >
+                <SyncIcon size={16} fill="#fff" />
+              </ColorBtn>
+              <ColorInput
                 type="text"
-                name="label[name]"
-                data-maxlength="50"
-                pattern="^(?!(\.|\.\.)$).*$"
-                placeholder="Label name"
-                required
+                defaultValue={`#d73a4a`}
+                value={"#" + inputColor}
+                name="label[color]"
+                maxLength={7}
+                pattern="#?([a-fA-F0-9]{6})"
+                onFocus={() => setInputFocus(true)}
+                onBlur={() => setInputFocus(false)}
+                onChange={(e) => setInputColor(e.target.value)}
               />
-            </LabelName>
-            <Description>
-              <span>Description</span>
-              <Input
-                type="text"
-                name="label[description]"
-                maxLength={100}
-                placeholder="Description (optional)"
-              />
-            </Description>
-            <ColorBox>
-              <span>Color</span>
-              <Color>
-                <ColorBtn>
-                  <SyncIcon size={16} fill="#fff" />
-                </ColorBtn>
-                <ColorInput
-                  type="text"
-                  defaultValue="#d73a4a"
-                  name="label[color]"
-                  maxLength={7}
-                  pattern="#?([a-fA-F0-9]{6})"
-                />
-              </Color>
-            </ColorBox>
-            <CheckBtn>
-              <Cancel onClick={() => setCreateLabel(!createLabel)}>
-                Cancel
-              </Cancel>
-              <Submit disabled>Create label</Submit>
-            </CheckBtn>
-          </EditMenu>
-        </form>
+            </Color>
+          </ColorBox>
+          <CheckBtn>
+            <Cancel onClick={() => setCreateLabel(false)}>Cancel</Cancel>
+            <Submit onClick={getLabels}>Create label</Submit>
+          </CheckBtn>
+        </EditMenu>
       </CreateLabel>
     </Container>
   );

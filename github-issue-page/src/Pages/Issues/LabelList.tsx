@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import { KebabHorizontalIcon } from "@primer/octicons-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import LabelTag from "../../components/LabelTag";
 import Edit from "./Edit";
 import Delete from "./Delete";
+import api from "../../utils/api";
+import { SelectContext } from "../../utils/SelectContext";
 
 type SelectedProps = {
   selected: string;
@@ -198,21 +200,32 @@ export default function LabelList({
   const [selectedEditBtn, setSelectedEditBtn] = useState<Boolean>(false);
   const [selectedMobileEditBtn, setSelectedMobileEditBtn] =
     useState<Boolean>(false);
-  const [color, setColor] = useState("d73a4a");
-  const [inputColor, setInputColor] = useState(`#${LabelTagColor}`);
+  const [inputColor, setInputColor] = useState(LabelTagColor);
   const [inputTagName, setInputTagName] = useState("");
-  const [inputDes, setInputDes] = useState("");
+  const token = JSON.parse(localStorage.getItem("loginToken"));
+  const [labels, setLabels] = useContext(SelectContext).labels;
 
   const handleColor = () => {
     let randomColor = Math.floor(Math.random() * 16777215).toString(16);
     while (randomColor.length < 6) randomColor = handleColor();
-    return "#" + randomColor;
+    return randomColor;
   };
 
-  const handleDelete = () => {
+  const deleteInfo = {
+    owner: "elaine011",
+    repo: "test-issue",
+    userToken: token,
+    labelName: LableTagName,
+  };
+
+  const handleDelete = async () => {
     alert(
       "Are you sure? Deleting a label will remove it from all issues and pull requests"
     );
+    await api.deleteLabels(deleteInfo);
+    const data = await api.getLabels();
+    setLabels(data);
+    setSelectedMobileEditBtn(false);
   };
 
   const lightOrDark = (bgcolor) => {
@@ -251,6 +264,7 @@ export default function LabelList({
         handleColor={handleColor}
         inputColor={inputColor}
         setInputColor={setInputColor}
+        inputTagName={inputTagName}
         setInputTagName={setInputTagName}
         lightOrDark={lightOrDark}
         LabelTagColor={LabelTagColor}

@@ -18,7 +18,6 @@ export default function Issues() {
     }
     getLabels();
   }, []);
-  // console.log(labels);
 
   return (
     <>

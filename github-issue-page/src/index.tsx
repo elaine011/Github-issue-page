@@ -3,15 +3,14 @@ import * as ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createStore } from "redux";
 import { createGlobalStyle } from "styled-components";
+import { ApiProvider } from "@reduxjs/toolkit/query/react";
 
 import App from "./App";
 import Issues from "./Pages/Issues/Issues";
 import Labels from "./Pages/Labels/Labels";
-// import reducer from "./reducers/reducer";
+// import { apiSlice } from "./redux/apiSlices";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
-// const store = createStore(reducer);
 
 const GlobalStyle = createGlobalStyle`
   * {
