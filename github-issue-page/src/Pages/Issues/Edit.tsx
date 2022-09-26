@@ -165,6 +165,8 @@ export default function Edit({
   async function updateLabels() {
     await api.updateLabels(updateInfo);
     setSelectedMobileEditBtn(false);
+    const data = await api.getLabels();
+    setLabels(data);
   }
 
   return (

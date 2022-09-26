@@ -1,7 +1,7 @@
 import { Octokit } from "octokit";
 
 const octokit = new Octokit({
-  auth: "",
+  auth: process.env.REACT_APP_PASSWORD,
 });
 const api = {
   githubHostname: "https://api.github.com",
@@ -14,7 +14,7 @@ const api = {
       {
         headers: new Headers({
           Accept: "application/vnd.github+json",
-          Authorization: `Bearer `,
+          Authorization: `Bearer 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`,
         }),
       }
     );

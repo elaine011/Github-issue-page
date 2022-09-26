@@ -19,6 +19,7 @@ type ColorProps = {
 
 const Container = styled.div<DisplayProps>`
   display: ${(props) => props.display};
+  padding: 0 24px;
 `;
 const CreateLabel = styled.div`
   display: flex;
