@@ -6,7 +6,7 @@ const Container = styled.div`
   max-width: 1280px;
   margin: 0 auto;
   margin-top: 40px;
-  padding: 0 16px;s
+  padding: 0 16px;
 `;
 const FooterContent = styled.div`
   padding-top: 40px;

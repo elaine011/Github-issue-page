@@ -5,7 +5,7 @@ import { SyncIcon } from "@primer/octicons-react";
 import { SelectContext } from "../../utils/SelectContext";
 import LabelTag from "../../components/LabelTag";
 import api from "../../utils/api";
-import ColorMenuBar from "../../components/ColorMenu";
+import ColorMenuBar from "./ColorMenu";
 
 type DisplayProps = {
   display: string;

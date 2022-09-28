@@ -1,4 +1,4 @@
-import Delete from "./Delete";
+import Delete from "../Pages/Issues/Delete";
 
 export default {
   title: "Label/LabelList/Delete",

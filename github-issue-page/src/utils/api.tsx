@@ -8,13 +8,13 @@ const api = {
   async getListIssues() {
     const owner = "elaine011";
     const repo = "test-issue";
-    const githubToken = JSON.parse(localStorage.getItem("loginToken"));
+    const githubToken = localStorage.getItem("loginToken");
     const response = await fetch(
       `${this.githubHostname}/repos/${owner}/${repo}/issues`,
       {
         headers: new Headers({
           Accept: "application/vnd.github+json",
-          Authorization: `Bearer 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`,
+          Authorization: `Bearer ${githubToken}`,
         }),
       }
     );
@@ -23,13 +23,12 @@ const api = {
   async getLabels() {
     const owner = "elaine011";
     const repo = "test-issue";
-    const githubToken = JSON.parse(localStorage.getItem("loginToken"));
+    const githubToken = localStorage.getItem("loginToken");
     const response = await fetch(
       `${this.githubHostname}/repos/${owner}/${repo}/labels`,
       {
         headers: new Headers({
           Accept: "application/vnd.github+json",
-          Authorization: `Bearer ${githubToken}`,
         }),
       }
     );

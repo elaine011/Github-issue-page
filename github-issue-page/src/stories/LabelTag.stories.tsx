@@ -1,4 +1,4 @@
-import LabelTag from "./LabelTag";
+import LabelTag from "../components/LabelTag";
 
 export default {
   title: "Label/LabelList/LabelTag",

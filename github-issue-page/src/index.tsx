@@ -9,6 +9,7 @@ import App from "./App";
 import Issues from "./Pages/Issues/Issues";
 import Labels from "./Pages/Labels/Labels";
 // import { apiSlice } from "./redux/apiSlices";
+import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -25,10 +26,10 @@ root.render(
     <GlobalStyle />
     <Routes>
       <Route path="/" element={<App />}></Route>
-      <Route path="/labels" element={<Labels />}></Route>
-      <Route path="/issues" element={<Issues />}>
-        <Route path="/issues/:id" element={<Issues />}></Route>
-        <Route path="/issues/new" element={<Issues />}></Route>
+      <Route path="/issues" element={<Labels />}></Route>
+      <Route path="/labels" element={<Issues />}>
+        <Route path="/labels/:id" element={<Issues />}></Route>
+        <Route path="/labels/new" element={<Issues />}></Route>
       </Route>
     </Routes>
   </BrowserRouter>

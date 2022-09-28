@@ -1,4 +1,4 @@
-import RepoHeader from "./RepoHeader";
+import RepoHeader from "../components/RepoHeader";
 
 export default {
   title: "Components/RepoHeader",

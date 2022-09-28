@@ -1,4 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import {
   RepoIcon,
   CodeIcon,
@@ -75,7 +77,7 @@ const RepoProject = styled.ul`
   line-height: 1.5;
   overflow-x: auto;
   justify-content: start;
-  max-width: 882px;
+  max-width: 900px;
   position: relative;
 `;
 const RepoProjectNav = styled.nav`
@@ -92,9 +94,14 @@ const RepoProjectList = styled.li`
   white-space: nowrap;
   height: 100%;
   align-items: center;
+  padding: 0 2px;
+  cursor: pointer;
 
   &:nth-child(2) {
     border-bottom: 2px solid #fd8c73;
+  }
+  &:hover {
+    background-color: rgba(208, 215, 222, 0.32);
   }
 `;
 const IssuesNumber = styled.span`
@@ -110,6 +117,8 @@ const IssuesNumber = styled.span`
 `;
 
 export default function RepoHeader() {
+  const Navigate = useNavigate();
+
   return (
     <>
       <Container>
@@ -132,7 +141,11 @@ export default function RepoHeader() {
               </RepoProjectLink>
               Code
             </RepoProjectList>
-            <RepoProjectList>
+            <RepoProjectList
+              onClick={() => {
+                Navigate("/issues");
+              }}
+            >
               <RepoProjectLink>
                 <IssueOpenedIcon size={16} fill="#57606a" />
               </RepoProjectLink>

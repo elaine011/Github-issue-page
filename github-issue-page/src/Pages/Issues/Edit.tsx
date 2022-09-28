@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 
 import { SelectContext } from "../../utils/SelectContext";
 import api from "../../utils/api";
-import ColorMenuBar from "../../components/ColorMenu";
+import ColorMenuBar from "./ColorMenu";
 
 type OrderProps = {
   order: number;

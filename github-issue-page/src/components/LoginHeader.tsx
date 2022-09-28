@@ -41,9 +41,14 @@ function Login({ setTokenFn }) {
   async function signInWithGithub() {
     /* authenticate with GitHub */
 
-    await supabase.auth.signIn({
-      provider: "github",
-    });
+    await supabase.auth.signIn(
+      {
+        provider: "github",
+      },
+      {
+        scopes: "repo gist notifications",
+      }
+    );
     supabase.auth.session();
   }
 

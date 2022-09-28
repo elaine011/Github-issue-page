@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-import { SelectContext } from "../utils/SelectContext";
-import SortList from "./SortList";
+import { SelectContext } from "../../src/utils/SelectContext";
+import LabelList from "../Pages/Issues/LabelList";
 
 export default {
-  title: "Components/SortList",
-  component: SortList,
+  title: "Label/LabelList",
+  component: LabelList,
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
   },
   argTypes: {
     backgroundColor: { control: "color" },
@@ -33,7 +33,23 @@ export default {
   ],
 };
 
-const Template = (args) => <SortList {...args} />;
+const Template = (args) => (
+  <div
+    style={{
+      position: "absolute",
+      left: "0",
+      right: "0",
+      transform: "translateY(50vh)",
+    }}
+  >
+    <LabelList {...args} />
+  </div>
+);
 
-export const Default = Template.bind({});
-Default.args = {};
+export const List = Template.bind({});
+List.args = {
+  LabelTagColor: "D4C5F9",
+  LableTagName: "bug",
+  LabelDesc: "Further information is requested",
+  defaultState: "2 open issues and pull requests",
+};
