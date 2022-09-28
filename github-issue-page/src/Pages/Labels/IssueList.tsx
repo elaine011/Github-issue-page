@@ -51,7 +51,13 @@ export default function IssueList() {
                 .map((img, index) => {
                   return (
                     <img
-                      className={`ml-[-11px] mr-0 h-[20px] w-[20px] rounded-[50%] z-${index} hover:ml-0`}
+                      className={`${
+                        index === 2
+                          ? "mr-[-6px]"
+                          : index > 2
+                          ? "ml-[-11px]"
+                          : "mr-[-18px]"
+                      } mr-0 h-[20px] w-[20px] rounded-[50%] z-${index} hover:ml-auto`}
                       src={img.avatar_url}
                       alt=""
                     />
@@ -89,7 +95,13 @@ export default function IssueList() {
                 .map((img, index) => {
                   return (
                     <img
-                      className={`mr-0 ml-[-11px] h-[20px] w-[20px] rounded-[50%] z-${index} hover:ml-0`}
+                      className={`${
+                        index === 2
+                          ? "mr-[-6px]"
+                          : index > 2
+                          ? "ml-[-11px]"
+                          : "mr-[-18px]"
+                      } mr-0 h-[20px] w-[20px] rounded-[50%] z-${index} hover:ml-auto`}
                       src={img.avatar_url}
                       alt=""
                     />
