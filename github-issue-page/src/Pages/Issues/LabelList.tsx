@@ -219,6 +219,8 @@ export default function LabelList({
   };
 
   const handleDelete = async () => {
+    console.log(process.env.REACT_APP_PASSWORD);
+
     alert(
       "Are you sure? Deleting a label will remove it from all issues and pull requests"
     );

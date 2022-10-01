@@ -36,23 +36,10 @@ const LabelNums = styled.span`
 `;
 
 export default function IssuesContent() {
-  // const defaultLabelTag = {
-  //   tagName: "bug",
-  //   backgroundColor: "rgb(215, 58, 74)",
-  // };
-  // const defaultDesc = {
-  //   description: "Something isn't working",
-  // };
   const defaultState = {
     state: "2 open issues and pull requests",
   };
-  // const userInfo = {
-  //   owner: "elaine011",
-  //   repo: "test-issue",
-  // };
   const [labels, setLabels] = useContext(SelectContext).labels;
-
-  // const data = useGetLabelsQuery(userInfo);
 
   return (
     <>

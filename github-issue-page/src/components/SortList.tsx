@@ -87,7 +87,7 @@ const OutSideWrapper = styled.div<DisplayProps>`
 `;
 
 export default function SortList() {
-  const [selectedSort, setSelectedSort] = useContext(SelectContext)["sort"];
+  const [selectedSort, setSelectedSort] = useContext(SelectContext).sort;
 
   return (
     <Container>

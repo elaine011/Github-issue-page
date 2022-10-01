@@ -1,31 +1,42 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { CheckIcon, IssueOpenedIcon } from "@primer/octicons-react";
-import IssueList from "./IssueList";
 import LabelsMenu from "./LabelsMenu";
 import AssigneeMenu from "./AssigneeMenu";
 import SortMenu from "./SortMenu";
+import { actionType } from "../../redux/reducer";
+import { IssueContext } from "../../utils/SelectContext";
 
 export default function LabelContent() {
-  const [displayLabelsMenu, setDisplayLabelsMenu] = useState(false);
-  const [displayAssigneeMenu, setDisplayAsigneeMenu] = useState(false);
-  const [displaySortMenu, setDisplaySortMenu] = useState(false);
+  const dispatch = useDispatch();
+  const isDisplayAssignee = useSelector((state) => state["assignee"]);
+  const isDisplayLabels = useSelector((state) => state["label"]);
+  const isDisplaySort = useSelector((state) => state["sort"]);
+  const [query, setQuery] = useContext(IssueContext)["query"];
 
   return (
     <div className="mx-auto max-w-7xl rounded-none sm:rounded-md sm:px-4 ">
       <div className="flex justify-between border border-solid border-primary-border bg-primary-bg p-4 sm:rounded-tl-md sm:rounded-tr-md">
         <div className="hidden text-sm lg:block">
-          <a href="#/">
+          <a
+            href="#/"
+            onClick={() => setQuery({ owner: "elaine011", repo: "test-issue" })}
+          >
             <IssueOpenedIcon size={16} className="mr-1" />
-            <span className="font-semibold text-primary-text">5 Open</span>
+            <span className="font-semibold text-primary-text">Open</span>
           </a>
-          <a href="#/" className="ml-2.5">
+          <a
+            href="#/"
+            className="ml-2.5"
+            onClick={() => setQuery({ ...query, state: "closed" })}
+          >
             <CheckIcon
               size={16}
               className="mr-1 fill-fg-muted hover:fill-primary-text"
             />
             <span className="text-fg-muted hover:text-primary-text">
-              1 Closed
+              Closed
             </span>
           </a>
         </div>
@@ -36,14 +47,11 @@ export default function LabelContent() {
           </div>
           <div
             className="relative cursor-pointer px-4 hover:text-primary-text"
-            onClick={() => setDisplayLabelsMenu(!displayLabelsMenu)}
+            onClick={() => dispatch({ type: actionType.labelType })}
           >
             Label
             <span className="ml-1 hidden border-x-4 border-t-4 border-solid border-fg-muted border-x-transparent border-b-transparent align-middle sm:inline-block"></span>
-            <LabelsMenu
-              displayLabelsMenu={displayLabelsMenu}
-              setDisplayLabelsMenu={setDisplayLabelsMenu}
-            />
+            <LabelsMenu isDisplayLabels={isDisplayLabels} />
           </div>
           <div className="hidden cursor-pointer px-4 hover:text-primary-text md:block">
             Projects
@@ -55,29 +63,22 @@ export default function LabelContent() {
           </div>
           <div
             className="relative cursor-pointer px-4 hover:text-primary-text"
-            onClick={() => setDisplayAsigneeMenu(!displayAssigneeMenu)}
+            onClick={() => dispatch({ type: actionType.assigneeType })}
           >
             Assignee
             <span className="ml-1 hidden border-x-4 border-t-4 border-solid border-fg-muted border-x-transparent border-b-transparent align-middle sm:inline-block"></span>
-            <AssigneeMenu
-              displayAssigneeMenu={displayAssigneeMenu}
-              setDisplayAsigneeMenu={setDisplayAsigneeMenu}
-            />
+            <AssigneeMenu isDisplayAssignee={isDisplayAssignee} />
           </div>
           <div
             className="relative cursor-pointer px-4 hover:text-primary-text"
-            onClick={() => setDisplaySortMenu(!displaySortMenu)}
+            onClick={() => dispatch({ type: actionType.sortType })}
           >
             Sort
             <span className="ml-1 hidden border-x-4 border-t-4 border-solid border-fg-muted border-x-transparent border-b-transparent align-middle sm:inline-block"></span>
-            <SortMenu
-              displaySortMenu={displaySortMenu}
-              setDisplaySortMenu={setDisplaySortMenu}
-            />
+            <SortMenu isDisplaySort={isDisplaySort} />
           </div>
         </div>
       </div>
-      <IssueList />
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   CheckIcon,
   IssueOpenedIcon,
@@ -6,11 +8,18 @@ import {
   TagIcon,
   XIcon,
 } from "@primer/octicons-react";
-import { useState } from "react";
 import FiltersMenu from "./FiltersMenu";
+import { actionType } from "../../redux/reducer";
+import { useContext, useState } from "react";
+import { IssueContext } from "../../utils/SelectContext";
 
-export default function () {
-  const [displayFiltersMenu, setDisplayFiltersMenu] = useState(false);
+export default function ({ issuesLength }) {
+  const dispatch = useDispatch();
+  const filters = useSelector((state) => state["filter"]);
+  const [hoverClearQuery, setHoverClearQuery] = useState(false);
+  const [query, setQuery] = useContext(IssueContext)["query"];
+  const [labelQuery, setLabelQuery] = useContext(IssueContext)["label"];
+  const [searchQuery, setSearchQuery] = useContext(IssueContext)["searchQuery"];
 
   return (
     <div className="mx-auto mt-6 flex max-w-7xl flex-wrap justify-between px-4 text-sm">
@@ -22,7 +31,7 @@ export default function () {
                 <TagIcon size={16} className="left-2 top-9px" />
                 <span className="mx-3px">Labels</span>
                 <span className="hidden rounded-[2em] border border-solid border-counter-border bg-neutral-muted px-1.5 text-center	text-xs font-medium leading-18px text-primary-text md:block">
-                  7
+                  {issuesLength}
                 </span>
               </button>
             </div>
@@ -44,14 +53,11 @@ export default function () {
         <div className="my-6 flex w-full md:order-first md:mt-0 md:w-auto md:grow">
           <button
             className="relative flex h-8 items-center rounded-l-md border border-solid border-secondary-border bg-primary-bg py-5px  px-4 font-medium text-primary-text shadow-shadow hover:bg-[#f3f4f6]"
-            onClick={() => setDisplayFiltersMenu(!displayFiltersMenu)}
+            onClick={() => dispatch({ type: actionType.filtersType })}
           >
             Filters
             <span className="ml-1 mt-1 inline-block h-0 w-0 border-4 border-b-0 border-solid border-transparent border-t-fg-muted content-str"></span>
-            <FiltersMenu
-              displayFiltersMenu={displayFiltersMenu}
-              setDisplayFiltersMenu={setDisplayFiltersMenu}
-            />
+            <FiltersMenu />
           </button>
           <div className="relative w-full">
             <SearchIcon
@@ -61,34 +67,59 @@ export default function () {
             <input
               type="text"
               placeholder="Search all issues"
-              value="is:issue is:open"
+              value={searchQuery.join(" ")}
               className="w-full rounded-r-md border border-solid border-secondary-border bg-primary-bg py-5px pl-8 pr-3 text-fg-muted shadow-input-shadow"
             ></input>
           </div>
         </div>
       </div>
       <div className="order-last mb-4 lg:hidden">
-        <a href="#/">
+        <a
+          href="#/"
+          onClick={() => setQuery({ owner: "elaine011", repo: "test-issue" })}
+        >
           <IssueOpenedIcon size={16} className="mr-1" />
-          <span className="font-semibold text-primary-text">5 Open</span>
+          <span className="font-semibold text-primary-text">Open</span>
         </a>
-        <a href="#/" className="ml-2.5">
+        <a
+          href="#/"
+          className="ml-2.5"
+          onClick={() => setQuery({ ...query, state: "closed" })}
+        >
           <CheckIcon size={16} className="mr-1 fill-fg-muted" />
-          <span className="text-fg-muted hover:text-primary-text">
-            1 Closed
-          </span>
+          <span className="text-fg-muted hover:text-primary-text">Closed</span>
         </a>
       </div>
-      <a
-        href="#/"
-        className="mx-auto mb-4 flex w-full max-w-7xl items-center font-semibold text-fg-muted hover:fill-inherit hover:text-[#0969da]"
-      >
-        <XIcon
-          size={16}
-          className="mr-1 rounded-md bg-[#6e7781] fill-white hover:bg-[#0969da]"
-        />
-        <span>Clear current search query, filters, and sorts</span>
-      </a>
+
+      {(query.label ||
+        query.assignee ||
+        query.sort ||
+        query.created ||
+        query.mentioned ||
+        query.state) && (
+        <a
+          href="#/"
+          className="mx-auto mb-4 flex w-full max-w-7xl items-center font-semibold text-fg-muted hover:fill-inherit hover:text-[#0969da]"
+          onMouseEnter={() => setHoverClearQuery(true)}
+          onMouseLeave={() => setHoverClearQuery(false)}
+        >
+          <XIcon
+            size={16}
+            className={`mr-1 rounded-md bg-[#6e7781] fill-white ${
+              hoverClearQuery ? "bg-[#0969da]" : "bg-[#617781]"
+            }`}
+          />
+          <span
+            onClick={() => {
+              setQuery({ owner: "elaine011", repo: "test-issue" });
+              setLabelQuery([]);
+              setSearchQuery(["is:issue is:open"]);
+            }}
+          >
+            Clear current search query, filters, and sorts
+          </span>
+        </a>
+      )}
     </div>
   );
 }

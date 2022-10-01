@@ -13,3 +13,8 @@
 // export const useAppDispatch: () => AppDispatch = useDispatch;
 // // export type RootState = ReturnType<typeof store.getState>;
 // export default store;
+
+import { createStore } from "redux";
+import { combineReducer } from "./reducer";
+
+export const store = createStore(combineReducer);

@@ -1,6 +1,7 @@
 import { createContext, Dispatch, SetStateAction } from "react";
 
 export type Labels = {
+  [x: string]: any;
   color: string;
   default: boolean;
   description: string;
@@ -16,3 +17,5 @@ type ContextState = {
   labels: [Labels[], Dispatch<SetStateAction<Labels[]>>];
 };
 export const SelectContext = createContext({} as ContextState);
+
+export const IssueContext = createContext({});
