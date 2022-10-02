@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import {
   RepoIcon,
@@ -138,13 +139,15 @@ export default function RepoHeader() {
               </RepoProjectLink>
               Code
             </RepoProjectList>
-            <RepoProjectList>
-              <RepoProjectLink>
-                <IssueOpenedIcon size={16} fill="#57606a" />
-              </RepoProjectLink>
-              Issues
-              <IssuesNumber>3</IssuesNumber>
-            </RepoProjectList>
+            <Link to="/">
+              <RepoProjectList>
+                <RepoProjectLink>
+                  <IssueOpenedIcon size={16} fill="#57606a" />
+                </RepoProjectLink>
+                Issues
+                <IssuesNumber>3</IssuesNumber>
+              </RepoProjectList>
+            </Link>
             <RepoProjectList>
               <RepoProjectLink>
                 <GitPullRequestIcon size={16} fill="#57606a" />
