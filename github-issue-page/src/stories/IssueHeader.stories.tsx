@@ -1,12 +1,12 @@
-import LabelHeader from "../Pages/Issues/IssueHeader";
+import IssueHeader from "../Pages/Issues/IssueHeader";
 import { useState } from "react";
 import { IssueContext } from "../utils/SelectContext";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 
 export default {
-  title: "Issue/LabelHeader",
-  component: LabelHeader,
+  title: "Issue/IssueHeader",
+  component: IssueHeader,
   parameters: {
     layout: "fullscreen",
   },
@@ -15,6 +15,7 @@ export default {
       const [issueData, setIssueData] = useState(null);
       const [labelQuery, setLabelQuery] = useState([]);
       const [searchQuery, setSearchQuery] = useState(["is:issue is:open"]);
+      const [inputValue, setInputValue] = useState("");
       const [query, setQuery] = useState({
         owner: "elaine011",
         repo: "test-issue",
@@ -29,6 +30,7 @@ export default {
             issues: [issueData, setIssueData],
             label: [labelQuery, setLabelQuery],
             searchQuery: [searchQuery, setSearchQuery],
+            input: [inputValue, setInputValue],
           }}
         >
           <Provider store={store}>
@@ -49,7 +51,7 @@ const Template = (args) => (
       transform: "translateY(45vh)",
     }}
   >
-    <LabelHeader issuesLength={30} />
+    <IssueHeader issuesLength={30} />
   </div>
 );
 

@@ -1,4 +1,8 @@
+import { useState } from "react";
+import { Provider } from "react-redux";
 import IssueList from "../Pages/Issues/IssueList";
+import { store } from "../redux/store";
+import { IssueContext } from "../utils/SelectContext";
 
 export default {
   title: "Issue/IssueList",
@@ -6,6 +10,36 @@ export default {
   parameters: {
     layout: "fullscreen",
   },
+  decorators: [
+    (Story) => {
+      const [issueData, setIssueData] = useState(null);
+      const [labelQuery, setLabelQuery] = useState([]);
+      const [searchQuery, setSearchQuery] = useState(["is:issue is:open"]);
+      const [inputValue, setInputValue] = useState("");
+      const [query, setQuery] = useState({
+        owner: "elaine011",
+        repo: "test-issue",
+        perPage: 10,
+        page: 1,
+      });
+
+      return (
+        <IssueContext.Provider
+          value={{
+            query: [query, setQuery],
+            issues: [issueData, setIssueData],
+            label: [labelQuery, setLabelQuery],
+            searchQuery: [searchQuery, setSearchQuery],
+            input: [inputValue, setInputValue],
+          }}
+        >
+          <Provider store={store}>
+            <Story />
+          </Provider>
+        </IssueContext.Provider>
+      );
+    },
+  ],
 };
 
 const Template = (args) => (
