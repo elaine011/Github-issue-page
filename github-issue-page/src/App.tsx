@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Login from "./components/LoginHeader";
-import Issues from "./Pages/Issues/Issues";
+import Labels from "./Pages/Labels/Labels";
 
 function App() {
   const [token, setToken] = useState("");
@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <Login setTokenFn={setToken} />
-      {token && <Issues />}
+      {token && <Labels />}
     </>
   );
 }

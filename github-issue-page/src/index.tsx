@@ -1,14 +1,11 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { createStore } from "redux";
 import { createGlobalStyle } from "styled-components";
-import { ApiProvider } from "@reduxjs/toolkit/query/react";
 
 import App from "./App";
 import Issues from "./Pages/Issues/Issues";
 import Labels from "./Pages/Labels/Labels";
-// import { apiSlice } from "./redux/apiSlices";
 import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -25,11 +22,11 @@ root.render(
   <BrowserRouter>
     <GlobalStyle />
     <Routes>
-      <Route path="/" element={<App />}></Route>
-      <Route path="/issues" element={<Labels />}></Route>
-      <Route path="/labels" element={<Issues />}>
-        <Route path="/labels/:id" element={<Issues />}></Route>
-        <Route path="/labels/new" element={<Issues />}></Route>
+      <Route path="/labels" element={<App />}></Route>
+      <Route path="/labels" element={<Labels />}></Route>
+      <Route path="/" element={<Issues />}>
+        <Route path="/issues/:id" element={<Issues />}></Route>
+        <Route path="/issues/new" element={<Issues />}></Route>
       </Route>
     </Routes>
   </BrowserRouter>
