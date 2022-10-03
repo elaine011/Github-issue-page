@@ -69,7 +69,7 @@ export default function ({ issuesLength }) {
             <input
               type="text"
               placeholder="Search all issues"
-              defaultValue={searchQuery.join(" ")}
+              value={searchQuery.join(" ")}
               className="w-full rounded-r-md border border-solid border-secondary-border bg-primary-bg py-5px pl-8 pr-3 text-fg-muted shadow-input-shadow"
               onChange={(e) => {
                 setInputValue(e.target.value.split("is:issue is:open")[1]);
@@ -87,7 +87,7 @@ export default function ({ issuesLength }) {
         query.mentioned ||
         query.state) && (
         <a
-          href="#/"
+          href="/"
           className="mx-auto mb-4 flex w-full max-w-7xl items-center font-semibold text-fg-muted hover:fill-inherit hover:text-[#0969da]"
           onMouseEnter={() => setHoverClearQuery(true)}
           onMouseLeave={() => setHoverClearQuery(false)}
