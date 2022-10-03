@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { SelectContext } from "../../src/utils/SelectContext";
-import LabelList from "../Pages/Issues/LabelList";
+import LabelList from "../Pages/Labels/LabelList";
 
 export default {
   title: "Label/LabelList",

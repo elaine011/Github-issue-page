@@ -4,6 +4,8 @@ import {
   IssueOpenedIcon,
   SkipIcon,
 } from "@primer/octicons-react";
+import { useContext } from "react";
+import { IssueContext } from "../../utils/SelectContext";
 
 export default function IssueList({
   title,
@@ -16,6 +18,9 @@ export default function IssueList({
   state,
   stateReason,
 }) {
+  const [inputValue, setInputValue] = useContext(IssueContext)["input"];
+
+  if (inputValue && !title.toLowerCase().includes(inputValue)) return <></>;
   return (
     <div className="border border-t-0">
       <div className="flex border border-transparent px-[16px] py-[8px] hover:bg-primary-bg">

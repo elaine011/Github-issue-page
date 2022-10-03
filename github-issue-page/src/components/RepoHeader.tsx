@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import {
   RepoIcon,
@@ -117,8 +117,6 @@ const IssuesNumber = styled.span`
 `;
 
 export default function RepoHeader() {
-  const Navigate = useNavigate();
-
   return (
     <>
       <Container>
@@ -141,17 +139,15 @@ export default function RepoHeader() {
               </RepoProjectLink>
               Code
             </RepoProjectList>
-            <RepoProjectList
-              onClick={() => {
-                Navigate("/issues");
-              }}
-            >
-              <RepoProjectLink>
-                <IssueOpenedIcon size={16} fill="#57606a" />
-              </RepoProjectLink>
-              Issues
-              <IssuesNumber>3</IssuesNumber>
-            </RepoProjectList>
+            <Link to="/">
+              <RepoProjectList>
+                <RepoProjectLink>
+                  <IssueOpenedIcon size={16} fill="#57606a" />
+                </RepoProjectLink>
+                Issues
+                <IssuesNumber>3</IssuesNumber>
+              </RepoProjectList>
+            </Link>
             <RepoProjectList>
               <RepoProjectLink>
                 <GitPullRequestIcon size={16} fill="#57606a" />

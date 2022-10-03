@@ -1,37 +1,115 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Provider } from "react-redux";
 
-import IssueHeader from "./IssueHeader";
-import IssuesContent from "./IssuesContent";
+import { IssueContext } from "../../utils/SelectContext";
+import { store } from "../../redux/store";
+import Login from "../../components/LoginHeader";
 import Footer from "../../components/Footer";
-import { SelectContext } from "../../utils/SelectContext";
+import Pagination from "../../components/Pagination";
+import RepoHeader from "../../components/RepoHeader";
+import IssueContent from "./IssueContent";
+import IssueHeader from "./IssueHeader";
 import api from "../../utils/api";
+import IssueList from "./IssueList";
+import NoIssue from "./NoIssue";
 
-export default function Issues() {
-  const [selectedSort, setSelectedSort] = useState<Boolean>(false);
-  const [createLabel, setCreateLabel] = useState<Boolean>(false);
-  const [labels, setLabels] = useState(null);
+export default function Labels() {
+  const [token, setToken] = useState("");
+  const [issueData, setIssueData] = useState(null);
+  const [labelQuery, setLabelQuery] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(["is:issue is:open"]);
+  const [inputValue, setInputValue] = useState("");
+  const [query, setQuery] = useState({
+    owner: "elaine011",
+    repo: "test-issue",
+    perPage: 10,
+    page: 1,
+  });
+
+  const now = new Date().getTime();
 
   useEffect(() => {
     async function getLabels() {
-      const data = await api.getLabels();
-      setLabels(data);
+      const data = await api.getListIssues(query);
+      setIssueData(data);
     }
-    getLabels();
-  }, []);
+    if (query.owner && query.repo) getLabels();
+  }, [query]);
+
+  function handleCreateTime(time) {
+    const createdTime = Date.parse(time);
+    const remainTime = now - createdTime;
+    const convertDay = 24 * 3600 * 1000;
+    const convertHour = 3600 * 1000;
+    const convertMins = 60 * 1000;
+    const days = Math.round(remainTime / convertDay);
+    const hours = Math.round((days % convertDay) / convertHour);
+    const minutes = Math.floor(
+      ((days % convertDay) % convertHour) / convertMins
+    );
+    const seconds = Math.round(
+      (((days % convertDay) % convertHour) % convertMins) / 1000
+    );
+    return seconds > 0
+      ? `${seconds} seconds`
+      : minutes > 0
+      ? `${minutes} minutes`
+      : hours > 0
+      ? `${hours} hours`
+      : days > 0
+      ? `${days} days`
+      : null;
+  }
 
   return (
     <>
-      <SelectContext.Provider
+      <Login setTokenFn={setToken} />
+      <IssueContext.Provider
         value={{
-          sort: [selectedSort, setSelectedSort],
-          create: [createLabel, setCreateLabel],
-          labels: [labels, setLabels],
+          query: [query, setQuery],
+          issues: [issueData, setIssueData],
+          label: [labelQuery, setLabelQuery],
+          searchQuery: [searchQuery, setSearchQuery],
+          input: [inputValue, setInputValue],
         }}
       >
-        <IssueHeader />
-        <IssuesContent />
-      </SelectContext.Provider>
-      <Footer />
+        <Provider store={store}>
+          <RepoHeader />
+          {issueData && (
+            <>
+              <IssueHeader issuesLength={issueData.length} />
+              <IssueContent />
+              {issueData.map((item) => {
+                return (
+                  <div
+                    className=" px-0 sm:px-4 lg:mx-auto lg:max-w-[1280px]"
+                    key={item.id}
+                  >
+                    <IssueList
+                      title={item.title}
+                      labels={item.labels}
+                      issueNumber={item.number}
+                      createdTime={handleCreateTime(item.created_at)}
+                      author={item.user.login}
+                      assignees={item.assignees}
+                      commentNumber={item.comments}
+                      state={item.state}
+                      stateReason={item.state_reason}
+                    />
+                  </div>
+                );
+              })}
+              {issueData.length === 0 && (
+                <div className="px-0 sm:px-4 lg:mx-auto lg:max-w-[1280px]">
+                  <NoIssue />
+                </div>
+              )}
+              <Pagination />
+            </>
+          )}
+          <Footer />
+        </Provider>
+      </IssueContext.Provider>
     </>
   );
 }

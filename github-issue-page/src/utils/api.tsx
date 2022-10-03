@@ -36,9 +36,9 @@ const api = {
       const response = await getOctokit.request(
         "GET /search/issues?q=repo:{owner}/{repo} {query}",
         {
-          owner: data.owner,
-          repo: data.repo,
-          query: data.query,
+          owner: "elaine011",
+          repo: "test-issue",
+          query: data,
         }
       );
       return response.data;
@@ -98,7 +98,6 @@ const api = {
       auth: process.env.REACT_APP_PASSWORD,
       name: data.labelName,
     });
-    console.log(process.env.REACT_APP_PASSWORD);
   },
   async getFilters(filters) {
     const owner = "elaine011";
