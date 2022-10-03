@@ -82,6 +82,20 @@ const Logo = styled(MarkGithubIcon)`
 `;
 
 export default function Footer() {
+  const footerMenu = [
+    "Terms",
+    "Privacy",
+    "Security",
+    "Status",
+    "Docs",
+    "Contact GitHub",
+    "Pricing",
+    "API",
+    "Trining",
+    "Blog",
+    "About",
+  ];
+
   return (
     <Container>
       <FooterContent>
@@ -91,17 +105,9 @@ export default function Footer() {
         </CopyRight>
         <Nav>
           <FooterLists>
-            <FooterList>Terms</FooterList>
-            <FooterList>Privacy</FooterList>
-            <FooterList>Security</FooterList>
-            <FooterList>Status</FooterList>
-            <FooterList>Docs</FooterList>
-            <FooterList>Contact GitHub</FooterList>
-            <FooterList>Pricing</FooterList>
-            <FooterList>API</FooterList>
-            <FooterList>Trining</FooterList>
-            <FooterList>Blog</FooterList>
-            <FooterList>About</FooterList>
+            {footerMenu.map((item) => (
+              <FooterList>{item}</FooterList>
+            ))}
           </FooterLists>
         </Nav>
       </FooterContent>
