@@ -1,4 +1,4 @@
-import { useContext, useRef } from "react";
+import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { XIcon } from "@primer/octicons-react";

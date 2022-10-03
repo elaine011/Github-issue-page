@@ -45,7 +45,7 @@ const Template = (args) => (
     style={{
       position: "relative",
       top: "0",
-      left: "40%",
+      left: "10%",
       right: "0",
       width: "50%",
     }}

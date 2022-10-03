@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 
 import {
   MilestoneIcon,
@@ -30,9 +29,9 @@ export default function ({ issuesLength }) {
             <div>
               <button className="rounded-r-0 flex items-center rounded-l-md border border-solid border-primary-border py-5px px-4 hover:bg-[#f3f4f6]">
                 <TagIcon size={16} className="left-2 top-9px" />
-                <Link className="mx-3px" to="/labels">
+                <a className="mx-3px" href="/labels">
                   Labels
-                </Link>
+                </a>
                 <span className="hidden rounded-[2em] border border-solid border-counter-border bg-neutral-muted px-1.5 text-center	text-xs font-medium leading-18px text-primary-text md:block">
                   {issuesLength}
                 </span>
