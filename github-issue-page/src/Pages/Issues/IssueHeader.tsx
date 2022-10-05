@@ -48,8 +48,12 @@ export default function ({ issuesLength }) {
             </div>
           </div>
           <button className="ml-4 whitespace-nowrap rounded-md border border-solid border-secondary-border bg-btn-primary-bg py-5px px-4 font-medium text-white hover:bg-[#2c974b]">
-            <span className="hidden md:block">New issue</span>
-            <span className="md:hidden">New</span>
+            <a href="/newissue" className="hidden md:block">
+              New issue
+            </a>
+            <a href="/newissue" className="md:hidden">
+              New
+            </a>
           </button>
         </div>
         <div className="my-6 flex w-full md:order-first md:mt-0 md:w-auto md:grow">

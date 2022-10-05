@@ -6,7 +6,7 @@ import { actionType } from "../../redux/reducer";
 import api from "../../utils/api";
 import { IssueContext, Labels } from "../../utils/SelectContext";
 
-export default function LabelsMenu({ isDisplayLabels }) {
+export default function LabelsMenu({ isDisplayLabels, isDisplayFullScreen }) {
   const dispatch = useDispatch();
   const [labelslist, setLabelslist] = useState<Labels[]>();
   const [query, setQuery] = useContext(IssueContext)["query"];
@@ -28,9 +28,19 @@ export default function LabelsMenu({ isDisplayLabels }) {
       <div
         className={`${
           isDisplayLabels ? "block " : "hidden"
-        } fixed top-0 left-0 right-0 bottom-0 z-[100] flex flex-col p-4 sm:absolute sm:top-auto sm:right-auto sm:left-auto sm:bottom-auto sm:z-[1] sm:p-0 lg:right-0`}
+        } fixed top-0 left-0 right-0 bottom-0 z-[100] flex flex-col p-4 ${
+          isDisplayFullScreen
+            ? "md:absolute md:top-auto md:right-auto md:left-auto md:bottom-auto md:z-[1] md:p-0"
+            : "sm:absolute sm:top-auto sm:right-auto sm:left-auto sm:bottom-auto sm:z-[1] sm:p-0"
+        } lg:right-0`}
       >
-        <div className="mt-0 h-4/5 rounded-xl border border-solid border-[rgba(0,0,0,0)] bg-white before:absolute before:top-0 before:right-0 before:bottom-0 before:left-0 before:z-[-5] before:bg-[#1B1F2480] before:content-str sm:mt-2 sm:h-auto sm:max-h-[480px] sm:w-[300px] sm:border-[hsla(210,18%,87%,1)] sm:before:content-none">
+        <div
+          className={`mt-0 h-4/5 rounded-xl border border-solid border-[rgba(0,0,0,0)] bg-white before:absolute before:top-0 before:right-0 before:bottom-0 before:left-0 before:z-[-5] before:bg-[#1B1F2480] before:content-str ${
+            isDisplayFullScreen
+              ? "md:mt-2 md:h-auto md:max-h-[480px] md:w-[300px] md:border-[hsla(210,18%,87%,1)] md:before:content-none"
+              : "sm:mt-2 sm:h-auto sm:max-h-[480px] sm:w-[300px] sm:border-[hsla(210,18%,87%,1)] sm:before:content-none"
+          }`}
+        >
           <header className="flex items-center border-b border-solid border-b-[hsla(210,18%,87%,1)] p-4 sm:pt-[7px] sm:pr-[7px] sm:pb-[7px]">
             <span className="flex-1 font-semibold">Filter by Label</span>
             <button className="m-[-16px] cursor-pointer rounded-none p-4 leading-none">
@@ -65,7 +75,13 @@ export default function LabelsMenu({ isDisplayLabels }) {
               </svg>
             </div>
           )}
-          <div className="max-h-[calc(100%-126px)] overflow-y-auto sm:max-h-[calc(485px-82px)]">
+          <div
+            className={`max-h-[calc(100%-126px)] overflow-y-auto ${
+              isDisplayFullScreen
+                ? "md:max-h-[calc(485px-82px)]"
+                : "sm:max-h-[calc(485px-82px)]"
+            } `}
+          >
             <a className="flex w-full cursor-pointer items-start overflow-hidden border-b border-solid border-b-[hsla(210,18%,87%,1)] p-4 text-left text-[#24292f] sm:pt-[7px] sm:pb-[7px]">
               <div className="mr-2 flex items-start">
                 <CheckIcon fill={"#ffffff"} />

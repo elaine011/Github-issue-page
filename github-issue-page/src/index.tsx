@@ -7,6 +7,7 @@ import App from "./App";
 import Issues from "./Pages/Issues/Issues";
 import Labels from "./Pages/Labels/Labels";
 import "./index.css";
+import NewIssue from "./Pages/NewIssue/NewIssue";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -28,6 +29,7 @@ root.render(
         <Route path="/issues/:id" element={<Issues />}></Route>
         <Route path="/issues/new" element={<Issues />}></Route>
       </Route>
+      <Route path="/newissue" element={<NewIssue />}></Route>
     </Routes>
   </BrowserRouter>
 );

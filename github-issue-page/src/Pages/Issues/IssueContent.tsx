@@ -51,7 +51,10 @@ export default function LabelContent() {
           >
             Label
             <span className="ml-1 hidden border-x-4 border-t-4 border-solid border-fg-muted border-x-transparent border-b-transparent align-middle sm:inline-block"></span>
-            <LabelsMenu isDisplayLabels={isDisplayLabels} />
+            <LabelsMenu
+              isDisplayLabels={isDisplayLabels}
+              isDisplayFullScreen={false}
+            />
           </div>
           <div className="hidden cursor-pointer px-4 hover:text-primary-text md:block">
             Projects
@@ -67,7 +70,10 @@ export default function LabelContent() {
           >
             Assignee
             <span className="ml-1 hidden border-x-4 border-t-4 border-solid border-fg-muted border-x-transparent border-b-transparent align-middle sm:inline-block"></span>
-            <AssigneeMenu isDisplayAssignee={isDisplayAssignee} />
+            <AssigneeMenu
+              isDisplayAssignee={isDisplayAssignee}
+              isDisplayFullScreen={false}
+            />
           </div>
           <div
             className="relative cursor-pointer px-4 hover:text-primary-text"
