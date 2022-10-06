@@ -28,12 +28,12 @@ export default function FiltersMenu() {
         <div className="mt-0 h-4/5 rounded-xl border border-solid border-[rgba(0,0,0,0)] bg-white shadow-[0_8px_24px_rgba(140,149,159,0.2)] before:absolute before:top-0 before:right-0 before:bottom-0 before:left-0 before:z-[-5] before:bg-[#1B1F2480] before:content-str sm:mt-2 sm:h-auto sm:max-h-[480px] sm:w-[300px] sm:border-[hsla(210,18%,87%,1)] sm:before:content-none">
           <header className="flex items-center border-b border-solid border-b-[hsla(210,18%,87%,1)] p-4 sm:pt-[7px] sm:pr-[7px] sm:pb-[7px]">
             <span className="flex font-semibold">Filter Issues</span>
-            <button
+            <div
               className="m-[-16px] ml-auto cursor-pointer rounded-none p-4 leading-none"
               onClick={() => dispatch({ type: actionType.filtersType })}
             >
               <XIcon className="fill-fg-muted" />
-            </button>
+            </div>
           </header>
 
           <div className="max-h-[calc(100%-126px)] overflow-y-auto sm:max-h-[calc(485px-82px)]">

@@ -10,6 +10,7 @@ export default function DropdownList({
   isAssigned,
 }) {
   const [filter, setFilter] = useState("");
+  const [isSelected, setIsSelected] = useState();
 
   return (
     <div
@@ -112,7 +113,11 @@ export default function DropdownList({
               else
                 return (
                   <a
-                    className={`border-solidborder-b-[hsla(210,18%,87%,1)] flex w-full cursor-pointer items-center overflow-hidden border-b p-4 text-left  text-[#24292f] last-of-type:border-none hover:bg-[rgba(234,238,242,0.5)] ${
+                    className={`group flex w-full cursor-pointer items-center overflow-hidden border-b border-solid border-b-[hsla(210,18%,87%,1)] p-4 text-left text-[#24292f] last-of-type:border-none ${
+                      isAssigned && item?.login
+                        ? "hover:bg-[#0969da] hover:text-[#fff]"
+                        : "hover:bg-[rgba(234,238,242,0.5)]"
+                    } ${
                       isDisplayFullScreen
                         ? "md:pt-[7px] md:pb-[7px]"
                         : "sm:pt-[7px] sm:pb-[7px]"
@@ -137,7 +142,13 @@ export default function DropdownList({
                     {item?.login && (
                       <div className="min-w-0 leading-tight">
                         <div className="flex items-center">
-                          <div className="truncate font-semibold text-[#24292f] sm:pt-[2px]">
+                          <div
+                            className={`truncate font-semibold text-[#24292f] sm:pt-[2px] ${
+                              isAssigned && item?.login
+                                ? "group-hover:text-white"
+                                : ""
+                            }`}
+                          >
                             {item.login}
                           </div>
                         </div>
