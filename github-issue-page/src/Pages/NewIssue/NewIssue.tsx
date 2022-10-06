@@ -36,8 +36,8 @@ export default function NewIssue() {
 
   const handleSubmitBtn = () => {
     if (inputValue["title"] && inputValue["title"].length > 0) {
-      return "bg-[#2da44e] text-[#fff]";
-    } else return "bg-[#94d3a2] text-[rgba(255,255,255,0.8)]";
+      return true;
+    } else return false;
   };
 
   return (
