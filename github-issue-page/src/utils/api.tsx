@@ -1,7 +1,8 @@
 import { Octokit } from "octokit";
+const auth = localStorage.getItem("loginToken");
 
 const octokit = new Octokit({
-  auth: process.env.REACT_APP_PASSWORD,
+  auth: auth.slice(1, -1),
 });
 const getOctokit = new Octokit();
 
@@ -146,21 +147,14 @@ const api = {
     return await response.json();
   },
   async createIssue(data) {
-    const owner = "elaine011";
-    const repo = "test-issue";
-    const githubToken = "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";
-    const response = await fetch(
-      `${this.githubHostname}/repos/${owner}/${repo}/issues/`,
-      {
-        body: JSON.stringify(data),
-        headers: new Headers({
-          Accept: "application/vnd.github+json",
-          Authorization: `Bearer ${githubToken}`,
-        }),
-        method: "POST",
-      }
-    );
-    return await response.json();
+    await octokit.request("POST /repos/{owner}/{repo}/issues", {
+      owner: data.owner,
+      repo: data.repo,
+      title: data.title,
+      body: data.body,
+      assignees: data?.assignee,
+      labels: data?.labels,
+    });
   },
   async createComment(data, issue_number) {
     const owner = "elaine011";
