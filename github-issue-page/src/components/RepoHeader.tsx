@@ -84,7 +84,7 @@ const RepoProjectNav = styled.nav`
   width: 100%;
   box-shadow: inset 0 -1px 0 hsla(210, 18%, 87%, 1);
 `;
-const RepoProjectLink = styled.a`
+const RepoProjectLink = styled.div`
   padding: 0 8px;
 `;
 const RepoProjectList = styled.li`

@@ -105,8 +105,8 @@ export default function Footer() {
         </CopyRight>
         <Nav>
           <FooterLists>
-            {footerMenu.map((item) => (
-              <FooterList>{item}</FooterList>
+            {footerMenu.map((item, index) => (
+              <FooterList key={index}>{item}</FooterList>
             ))}
           </FooterLists>
         </Nav>

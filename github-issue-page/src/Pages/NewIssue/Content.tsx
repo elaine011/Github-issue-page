@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   ChevronUpIcon,
   TypographyIcon,
@@ -20,12 +20,15 @@ import {
   MarkdownIcon,
 } from "@primer/octicons-react";
 import SubmitBtn from "./SubmitBtn";
+import { IssueContext } from "../../utils/SelectContext";
 
 export default function Content() {
   const [isDisplayWrite, setIsDisplayWrite] = useState(false);
   const [isDisplayMarkdown, setIsDisplayMarkdown] = useState(false);
   const [isFocusTextArea, setIsFocusTextArea] = useState(false);
-  const [inputValue, setInputValue] = useState({});
+  const [inputValue, setInputValue] = useContext(IssueContext)["inputValue"];
+  const createIssue = useContext(IssueContext)["createIssue"];
+
   const markdownIcon = [
     [<QuoteIcon size={16} />, <CodeIcon size={16} />, <LinkIcon size={16} />],
     [
@@ -106,28 +109,38 @@ export default function Content() {
                 )}
               </div>
               <div className="flex">
-                {markdownIcon[2].map((item) => (
-                  <div className="ml-[5px] hidden cursor-pointer p-2 first-of-type:pl-1 hover:text-[#0969da] md:block md:p-1">
+                {markdownIcon[2].map((item, index) => (
+                  <div
+                    className="ml-[5px] hidden cursor-pointer p-2 first-of-type:pl-1 hover:text-[#0969da] md:block md:p-1"
+                    key={index}
+                  >
                     {item}
                   </div>
                 ))}
-                {markdownIcon[0].map((item) => (
-                  <div className="ml-[5px] cursor-pointer p-2 first-of-type:pl-[5px] hover:text-[#0969da] md:p-1">
+                {markdownIcon[0].map((item, index) => (
+                  <div
+                    className="ml-[5px] cursor-pointer p-2 first-of-type:pl-[5px] hover:text-[#0969da] md:p-1"
+                    key={index}
+                  >
                     {item}
                   </div>
                 ))}
-                {markdownIcon[3].map((item) => (
-                  <div className="ml-[5px] hidden cursor-pointer p-2 hover:text-[#0969da] md:block md:p-1">
+                {markdownIcon[3].map((item, index) => (
+                  <div
+                    className="ml-[5px] hidden cursor-pointer p-2 hover:text-[#0969da] md:block md:p-1"
+                    key={index}
+                  >
                     {item}
                   </div>
                 ))}
-                {markdownIcon[1].map((item) => (
+                {markdownIcon[1].map((item, index) => (
                   <div
                     className={`mx-1 cursor-pointer p-2 hover:text-[#0969da] md:p-1 ${
                       item.props.className === "octicon octicon-image"
                         ? "md:hidden"
                         : ""
                     }`}
+                    key={index}
                   >
                     {item}
                   </div>
@@ -135,13 +148,19 @@ export default function Content() {
               </div>
               {isDisplayMarkdown && (
                 <div className="flex w-full md:hidden">
-                  {markdownIcon[2].map((item) => (
-                    <div className="ml-[5px] cursor-pointer p-2 first-of-type:pl-1 hover:text-[#0969da]">
+                  {markdownIcon[2].map((item, index) => (
+                    <div
+                      className="ml-[5px] cursor-pointer p-2 first-of-type:pl-1 hover:text-[#0969da]"
+                      key={index}
+                    >
                       {item}
                     </div>
                   ))}
-                  {markdownIcon[3].map((item) => (
-                    <div className="ml-[5px] cursor-pointer p-2 hover:text-[#0969da]">
+                  {markdownIcon[3].map((item, index) => (
+                    <div
+                      className="ml-[5px] cursor-pointer p-2 hover:text-[#0969da]"
+                      key={index}
+                    >
                       {item}
                     </div>
                   ))}
@@ -168,7 +187,7 @@ export default function Content() {
                   className="min-h-[200px] w-full rounded-md border border-solid border-[#d0d7de] bg-[#f6f8fa] p-2 text-[14px] focus:border-solid focus:border-[#0969da] focus:bg-white focus:shadow-innerblue focus:outline-none md:flex md:rounded-b-none md:border-0 md:bg-[#f6f8fa] md:focus:border-0 md:focus:shadow-none"
                   placeholder="Leave a comment"
                   onChange={(e) =>
-                    setInputValue({ ...inputValue, comment: e.target.value })
+                    setInputValue({ ...inputValue, body: e.target.value })
                   }
                 />
                 <label
@@ -204,7 +223,7 @@ export default function Content() {
                 Styling with Markdown is supported
               </span>
             </a>
-            <div>
+            <div onClick={() => createIssue()}>
               <SubmitBtn />
             </div>
           </div>
