@@ -1,5 +1,6 @@
 import { CheckIcon, PencilIcon, XIcon } from "@primer/octicons-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { IssueContext } from "../../utils/SelectContext";
 
 export default function DropdownList({
   isDisplayFullScreen,
@@ -10,7 +11,7 @@ export default function DropdownList({
   isAssigned,
 }) {
   const [filter, setFilter] = useState("");
-  const [isSelected, setIsSelected] = useState();
+  const [inputValue, setInputValue] = useContext(IssueContext)["inputValue"];
 
   return (
     <div
@@ -75,7 +76,7 @@ export default function DropdownList({
             {!isAssigned && (
               <a className="flex w-full cursor-pointer items-center overflow-hidden border-b border-solid border-b-[hsla(210,18%,87%,1)] p-4 text-left text-[#24292f] sm:pt-[7px] sm:pb-[7px] ">
                 <div className="mr-2 flex items-center">
-                  <CheckIcon fill={"#ffffff"} />
+                  <CheckIcon fill={"transparent"} />
                 </div>
                 <span className="font-semibold">Assigned to nobody</span>
               </a>
@@ -115,7 +116,7 @@ export default function DropdownList({
                   <a
                     className={`group flex w-full cursor-pointer items-center overflow-hidden border-b border-solid border-b-[hsla(210,18%,87%,1)] p-4 text-left text-[#24292f] last-of-type:border-none ${
                       isAssigned && item?.login
-                        ? "hover:bg-[#0969da] hover:text-[#fff]"
+                        ? "hover:bg-[#0969da] hover:text-[#fff] hover:last-of-type:rounded-b-md"
                         : "hover:bg-[rgba(234,238,242,0.5)]"
                     } ${
                       isDisplayFullScreen
@@ -123,9 +124,77 @@ export default function DropdownList({
                         : "sm:pt-[7px] sm:pb-[7px]"
                     }`}
                     key={index}
+                    onClick={() => {
+                      let assigneesArr = [...(inputValue?.assignees ?? [])];
+                      if (assigneesArr.includes(item?.login)) {
+                        assigneesArr = assigneesArr.filter(
+                          (element) => element != item?.login
+                        );
+                      } else {
+                        assigneesArr = [...assigneesArr, item?.login];
+                      }
+
+                      let assigneesImgArr = [
+                        ...(inputValue?.assigneesImg ?? []),
+                      ];
+                      if (assigneesImgArr.includes(item?.avatar_url)) {
+                        assigneesImgArr = assigneesImgArr.filter(
+                          (element) => element !== item?.avatar_url
+                        );
+                      } else {
+                        assigneesImgArr = [
+                          ...assigneesImgArr,
+                          item?.avatar_url,
+                        ];
+                      }
+
+                      let labelsArr = [...(inputValue?.labels ?? [])];
+                      if (labelsArr.includes(item?.name)) {
+                        labelsArr = labelsArr.filter(
+                          (element) => element !== item?.name
+                        );
+                      } else {
+                        labelsArr = [...labelsArr, item?.name];
+                      }
+
+                      let labelsColorArr = [...(inputValue?.labelsColor ?? [])];
+                      if (labelsColorArr.includes(item?.color)) {
+                        labelsColorArr = labelsColorArr.filter(
+                          (element) => element !== item?.color
+                        );
+                      } else {
+                        labelsColorArr = [...labelsColorArr, item?.color];
+                      }
+
+                      item?.login &&
+                        setInputValue({
+                          ...inputValue,
+                          assignees: assigneesArr,
+                          assigneesImg: assigneesImgArr,
+                        });
+                      item?.name &&
+                        setInputValue({
+                          ...inputValue,
+                          labels: labelsArr,
+                          labelsColor: labelsColorArr,
+                        });
+                    }}
                   >
                     <div className="mr-2 flex items-center">
-                      <CheckIcon fill={"#fff"} />
+                      {item?.login &&
+                        inputValue?.assignees &&
+                        (inputValue?.assignees.includes(item?.login) ? (
+                          <CheckIcon fill={"#000"} />
+                        ) : (
+                          <CheckIcon fill={"transparent"} />
+                        ))}
+                      {item?.name &&
+                        inputValue?.labels &&
+                        (inputValue?.labels.includes(item?.name) ? (
+                          <CheckIcon fill={"#000"} />
+                        ) : (
+                          <CheckIcon fill={"transparent"} />
+                        ))}
                     </div>
                     {item?.color && (
                       <span

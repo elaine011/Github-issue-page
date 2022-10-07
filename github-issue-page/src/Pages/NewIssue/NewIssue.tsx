@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Provider } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import LoginHeader from "../../components/LoginHeader";
 import RepoHeader from "../../components/RepoHeader";
@@ -20,6 +21,7 @@ export default function NewIssue() {
     perPage: 10,
     page: 1,
   });
+  const Navigate = useNavigate();
 
   const userInfo = {
     owner: "elaine011",
@@ -31,7 +33,8 @@ export default function NewIssue() {
   };
 
   async function createIssue() {
-    await api.createIssue(userInfo);
+    const res = await api.createIssue(userInfo);
+    if (res) Navigate("/");
   }
 
   const handleSubmitBtn = () => {

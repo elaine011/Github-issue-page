@@ -21,14 +21,14 @@ import {
 } from "@primer/octicons-react";
 import SubmitBtn from "./SubmitBtn";
 import { IssueContext } from "../../utils/SelectContext";
+import { marked } from "marked";
+import "../../utils/prose.css";
 
 export default function Content() {
   const [isDisplayWrite, setIsDisplayWrite] = useState(false);
   const [isDisplayMarkdown, setIsDisplayMarkdown] = useState(false);
   const [isFocusTextArea, setIsFocusTextArea] = useState(false);
   const [inputValue, setInputValue] = useContext(IssueContext)["inputValue"];
-  const createIssue = useContext(IssueContext)["createIssue"];
-
   const markdownIcon = [
     [<QuoteIcon size={16} />, <CodeIcon size={16} />, <LinkIcon size={16} />],
     [
@@ -48,6 +48,7 @@ export default function Content() {
       <TasklistIcon size={16} />,
     ],
   ];
+  console.log(inputValue);
 
   return (
     <div className="md:flex-auto">
@@ -170,8 +171,11 @@ export default function Content() {
           </div>
           <div className="py-2 md:mx-2">
             {isDisplayWrite ? (
-              <div className="min-h-[200px] border-b border-solid border-[#d0d7de] p-2 pt-0 text-[14px] text-[#24292f]">
-                <p>Noting to preview</p>
+              <div
+                className="prose min-h-[200px] border-b border-solid border-[#d0d7de] p-2 pt-0 text-[14px] text-[#24292f]"
+                dangerouslySetInnerHTML={{ __html: marked(inputValue.body) }}
+              >
+                {/* <p>Noting to preview</p> */}
               </div>
             ) : (
               <div
@@ -186,6 +190,7 @@ export default function Content() {
                 <textarea
                   className="min-h-[200px] w-full rounded-md border border-solid border-[#d0d7de] bg-[#f6f8fa] p-2 text-[14px] focus:border-solid focus:border-[#0969da] focus:bg-white focus:shadow-innerblue focus:outline-none md:flex md:rounded-b-none md:border-0 md:bg-[#f6f8fa] md:focus:border-0 md:focus:shadow-none"
                   placeholder="Leave a comment"
+                  value={inputValue?.body}
                   onChange={(e) =>
                     setInputValue({ ...inputValue, body: e.target.value })
                   }
@@ -223,7 +228,7 @@ export default function Content() {
                 Styling with Markdown is supported
               </span>
             </a>
-            <div onClick={() => createIssue()}>
+            <div>
               <SubmitBtn />
             </div>
           </div>

@@ -3,6 +3,7 @@ import { IssueContext } from "../../utils/SelectContext";
 
 export default function SubmitBtn() {
   const handleSubmitBtn = useContext(IssueContext)["handleSubmitBtn"];
+  const createIssue = useContext(IssueContext)["createIssue"];
 
   return (
     <button
@@ -12,6 +13,7 @@ export default function SubmitBtn() {
           : "bg-[#94d3a2] text-[rgba(255,255,255,0.8)]"
       }`}
       disabled={!handleSubmitBtn()}
+      onClick={() => createIssue()}
     >
       Submit new issue
     </button>

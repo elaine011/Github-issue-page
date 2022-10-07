@@ -1,0 +1,32 @@
+.prose {
+  max-width: 100%;
+  color: #24292f;
+}
+.prose h1 {
+  width: 100%;
+  font-size: 28px;
+  margin: 24px 0px 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgb(208, 215, 222);
+}
+.prose h2 {
+  font-size: 21px;
+  margin: 24px 0px 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgb(208, 215, 222);
+}
+.prose em {
+  font-style: italic;
+}
+.prose table {
+  width: unset;
+  border: 1px solid rgb(208, 215, 222);
+}
+.prose table tr {
+  border-bottom: 1px solid rgb(208, 215, 222);
+}
+.prose table td,
+.prose table th {
+  padding: 6px 13px;
+  border-right: 1px solid rgb(208, 215, 222);
+} /*# sourceMappingURL=markdownStyle.css.map */

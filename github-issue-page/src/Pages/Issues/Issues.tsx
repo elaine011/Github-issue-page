@@ -43,13 +43,14 @@ export default function Labels() {
     const convertHour = 3600 * 1000;
     const convertMins = 60 * 1000;
     const days = Math.round(remainTime / convertDay);
-    const hours = Math.round((days % convertDay) / convertHour);
-    const minutes = Math.floor(
-      ((days % convertDay) % convertHour) / convertMins
+    const hours = Math.round((remainTime % convertDay) / convertHour);
+    const minutes = Math.round(
+      ((remainTime % convertDay) % convertHour) / convertMins
     );
     const seconds = Math.round(
-      (((days % convertDay) % convertHour) % convertMins) / 1000
+      (((remainTime % convertDay) % convertHour) % convertMins) / 1000
     );
+
     return seconds > 0
       ? `${seconds} seconds`
       : minutes > 0

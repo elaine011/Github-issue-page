@@ -147,14 +147,15 @@ const api = {
     return await response.json();
   },
   async createIssue(data) {
-    await octokit.request("POST /repos/{owner}/{repo}/issues", {
+    const res = await octokit.request("POST /repos/{owner}/{repo}/issues", {
       owner: data.owner,
       repo: data.repo,
       title: data.title,
       body: data.body,
-      assignees: data?.assignee,
+      assignees: data?.assignees,
       labels: data?.labels,
     });
+    return res;
   },
   async createComment(data, issue_number) {
     const owner = "elaine011";
