@@ -48,7 +48,24 @@ export default function Content() {
       <TasklistIcon size={16} />,
     ],
   ];
-  console.log(inputValue);
+
+  const renderer = {
+    listitem(text: string, booleantask: boolean, checked: boolean) {
+      if (checked !== undefined) {
+        return `<li class='check'>${text}/n</li>`;
+      }
+      return `<li>${text}</li>`;
+    },
+    paragraph(text: string) {
+      const mentionText = text.match(/^\@/g);
+      const hashText = text.match(/^\#/g);
+      if (hashText) {
+        return `<button class="hash">${text}</button>`;
+      }
+      return `<button ${mentionText ? "class=mention" : null}>${text}</button>`;
+    },
+  };
+  marked.use({ renderer });
 
   return (
     <div className="md:flex-auto">
@@ -68,6 +85,7 @@ export default function Content() {
               onChange={(e) =>
                 setInputValue({ ...inputValue, title: e.target.value })
               }
+              value={inputValue?.title}
             />
           </div>
           <div className="lg:flex lg:justify-between lg:border-b lg:border-solid lg:border-b-[#d0d7de]">
