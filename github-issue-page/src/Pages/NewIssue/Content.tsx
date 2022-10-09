@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import {
   ChevronUpIcon,
   TypographyIcon,
@@ -23,14 +23,21 @@ import SubmitBtn from "./SubmitBtn";
 import { IssueContext } from "../../utils/SelectContext";
 import { marked } from "marked";
 import "../../utils/prose.css";
-
+import TextareaMarkdown, {
+  TextareaMarkdownRef,
+} from "textarea-markdown-editor";
 export default function Content() {
   const [isDisplayWrite, setIsDisplayWrite] = useState(false);
   const [isDisplayMarkdown, setIsDisplayMarkdown] = useState(false);
   const [isFocusTextArea, setIsFocusTextArea] = useState(false);
+  const ref = useRef<TextareaMarkdownRef>(null);
   const [inputValue, setInputValue] = useContext(IssueContext)["inputValue"];
   const markdownIcon = [
-    [<QuoteIcon size={16} />, <CodeIcon size={16} />, <LinkIcon size={16} />],
+    [
+      <QuoteIcon size={16} className="octicon octicon-block-quotes" />,
+      <CodeIcon size={16} />,
+      <LinkIcon size={16} />,
+    ],
     [
       <MentionIcon size={16} />,
       <ImageIcon size={16} />,
@@ -38,13 +45,16 @@ export default function Content() {
       <ReplyIcon size={16} />,
     ],
     [
-      <HeadingIcon size={16} />,
+      <HeadingIcon size={16} className="octicon octicon-h3" />,
       <BoldIcon size={16} />,
       <ItalicIcon size={16} />,
     ],
     [
-      <ListUnorderedIcon size={16} />,
-      <ListOrderedIcon size={16} />,
+      <ListUnorderedIcon
+        size={16}
+        className="octicon octicon-unordered-list"
+      />,
+      <ListOrderedIcon size={16} className="octicon octicon-ordered-list" />,
       <TasklistIcon size={16} />,
     ],
   ];
@@ -52,7 +62,7 @@ export default function Content() {
   const renderer = {
     listitem(text: string, booleantask: boolean, checked: boolean) {
       if (checked !== undefined) {
-        return `<li class='check'>${text}/n</li>`;
+        return `<li class='check'>${text}</li>`;
       }
       return `<li>${text}</li>`;
     },
@@ -132,6 +142,11 @@ export default function Content() {
                   <div
                     className="ml-[5px] hidden cursor-pointer p-2 first-of-type:pl-1 hover:text-[#0969da] md:block md:p-1"
                     key={index}
+                    onClick={() =>
+                      ref.current?.trigger(
+                        `${item.props.className.split("octicon octicon-")[1]}`
+                      )
+                    }
                   >
                     {item}
                   </div>
@@ -140,6 +155,11 @@ export default function Content() {
                   <div
                     className="ml-[5px] cursor-pointer p-2 first-of-type:pl-[5px] hover:text-[#0969da] md:p-1"
                     key={index}
+                    onClick={() =>
+                      ref.current?.trigger(
+                        `${item.props.className.split("octicon octicon-")[1]}`
+                      )
+                    }
                   >
                     {item}
                   </div>
@@ -148,6 +168,11 @@ export default function Content() {
                   <div
                     className="ml-[5px] hidden cursor-pointer p-2 hover:text-[#0969da] md:block md:p-1"
                     key={index}
+                    onClick={() =>
+                      ref.current?.trigger(
+                        `${item.props.className.split("octicon octicon-")[1]}`
+                      )
+                    }
                   >
                     {item}
                   </div>
@@ -160,6 +185,11 @@ export default function Content() {
                         : ""
                     }`}
                     key={index}
+                    onClick={() =>
+                      ref.current?.trigger(
+                        `${item.props.className.split("octicon octicon-")[1]}`
+                      )
+                    }
                   >
                     {item}
                   </div>
@@ -171,6 +201,11 @@ export default function Content() {
                     <div
                       className="ml-[5px] cursor-pointer p-2 first-of-type:pl-1 hover:text-[#0969da]"
                       key={index}
+                      onClick={() =>
+                        ref.current?.trigger(
+                          `${item.props.className.split("octicon octicon-")[1]}`
+                        )
+                      }
                     >
                       {item}
                     </div>
@@ -179,6 +214,11 @@ export default function Content() {
                     <div
                       className="ml-[5px] cursor-pointer p-2 hover:text-[#0969da]"
                       key={index}
+                      onClick={() =>
+                        ref.current?.trigger(
+                          `${item.props.className.split("octicon octicon-")[1]}`
+                        )
+                      }
                     >
                       {item}
                     </div>
@@ -205,9 +245,10 @@ export default function Content() {
                 onFocus={() => setIsFocusTextArea(true)}
                 onBlur={() => setIsFocusTextArea(false)}
               >
-                <textarea
+                <TextareaMarkdown
                   className="min-h-[200px] w-full rounded-md border border-solid border-[#d0d7de] bg-[#f6f8fa] p-2 text-[14px] focus:border-solid focus:border-[#0969da] focus:bg-white focus:shadow-innerblue focus:outline-none md:flex md:rounded-b-none md:border-0 md:bg-[#f6f8fa] md:focus:border-0 md:focus:shadow-none"
                   placeholder="Leave a comment"
+                  ref={ref}
                   value={inputValue?.body}
                   onChange={(e) =>
                     setInputValue({ ...inputValue, body: e.target.value })
