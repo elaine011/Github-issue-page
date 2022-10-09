@@ -81,6 +81,31 @@ export default function DropdownList({
                 <span className="font-semibold">Assigned to nobody</span>
               </a>
             )}
+            {isAssigned &&
+              isSuggested &&
+              inputValue?.assignees &&
+              inputValue?.assignees.length > 0 && (
+                <div
+                  className={`group flex w-full cursor-pointer items-center border-b border-solid border-b-[hsla(210,18%,87%,1)] p-4 text-left text-[12px] text-[#24292f] last-of-type:border-none hover:bg-[#0969da] hover:text-[#fff] hover:last-of-type:rounded-b-md
+                 ${
+                   isDisplayFullScreen
+                     ? "md:pt-[7px] md:pb-[7px]"
+                     : "sm:pt-[7px] sm:pb-[7px]"
+                 }`}
+                  onClick={() =>
+                    setInputValue({
+                      ...inputValue,
+                      assignees: [],
+                      assigneesImg: [],
+                    })
+                  }
+                >
+                  <div className="mr-2">
+                    <XIcon size={16} />
+                  </div>
+                  Clear assignees
+                </div>
+              )}
             {isAssigned && isSuggested && (
               <div className="boder-solid mt-[-1px] border-y border-b-[hsla(210,18%,87%,1)] bg-[#f6f8fa] px-[10px] py-2 font-semibold">
                 Suggestions

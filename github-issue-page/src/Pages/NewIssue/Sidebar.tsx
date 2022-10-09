@@ -85,7 +85,8 @@ export default function Sidebar() {
                 </div>
               </details>
 
-              {!inputValue?.assignees ? (
+              {!inputValue?.assignees ||
+              (inputValue?.assignees && inputValue?.assignees.length === 0) ? (
                 <>
                   <span> No one—</span>
                   <a
