@@ -8,12 +8,14 @@
   margin: 24px 0px 16px;
   padding-bottom: 8px;
   border-bottom: 1px solid rgb(208, 215, 222);
+  font-weight: 600;
 }
 .prose h2 {
   font-size: 21px;
   margin: 24px 0px 16px;
   padding-bottom: 8px;
   border-bottom: 1px solid rgb(208, 215, 222);
+  font-weight: 600;
 }
 .prose em {
   font-style: italic;
