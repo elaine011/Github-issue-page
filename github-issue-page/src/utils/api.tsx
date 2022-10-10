@@ -1,8 +1,8 @@
 import { Octokit } from "octokit";
-const auth = localStorage.getItem("loginToken");
+const auth = JSON.parse(localStorage.getItem("loginToken")) ?? "";
 
 const octokit = new Octokit({
-  auth: auth.slice(1, -1),
+  auth: auth,
 });
 const getOctokit = new Octokit();
 
