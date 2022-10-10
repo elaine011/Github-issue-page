@@ -18,32 +18,26 @@ export default function Sidebar() {
   };
   const sideBarTitle = [
     {
-      id: 0,
       title: "Assignees",
       description: "assign yourself",
     },
     {
-      id: 1,
       title: "Labels",
       description: "None yet",
     },
     {
-      id: 2,
       title: "Projects",
       description: "None yet",
     },
     {
-      id: 3,
       title: "Milestone",
       description: "No milestone",
     },
     {
-      id: 4,
       title: "Development",
       description: "Shows branches and pull requests linked to this issue.",
     },
     {
-      id: 5,
       title: "Helpful resources",
       description: "GitHub Community Guidelines",
     },

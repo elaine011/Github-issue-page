@@ -58,7 +58,6 @@ export default function Content() {
       <TasklistIcon size={16} />,
     ],
   ];
-
   const renderer = {
     listitem(text: string, booleantask: boolean, checked: boolean) {
       if (checked !== undefined) {
@@ -231,7 +230,9 @@ export default function Content() {
             {isDisplayWrite ? (
               <div
                 className="prose min-h-[200px] border-b border-solid border-[#d0d7de] p-2 pt-0 text-[14px] text-[#24292f]"
-                dangerouslySetInnerHTML={{ __html: marked(inputValue.body) }}
+                dangerouslySetInnerHTML={{
+                  __html: marked(inputValue?.body ?? ""),
+                }}
               >
                 {/* <p>Noting to preview</p> */}
               </div>

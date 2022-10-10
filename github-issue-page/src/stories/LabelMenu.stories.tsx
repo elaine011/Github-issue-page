@@ -15,6 +15,7 @@ export default {
       const [issueData, setIssueData] = useState(null);
       const [labelQuery, setLabelQuery] = useState([]);
       const [searchQuery, setSearchQuery] = useState(["is:issue is:open"]);
+      const [inputValue, setInputValue] = useState("");
       const [query, setQuery] = useState({
         owner: "elaine011",
         repo: "test-issue",
@@ -29,6 +30,7 @@ export default {
             issues: [issueData, setIssueData],
             label: [labelQuery, setLabelQuery],
             searchQuery: [searchQuery, setSearchQuery],
+            input: [inputValue, setInputValue],
           }}
         >
           <Provider store={store}>
