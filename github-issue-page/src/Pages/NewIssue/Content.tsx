@@ -23,6 +23,8 @@ import SubmitBtn from "./SubmitBtn";
 import { IssueContext } from "../../utils/SelectContext";
 import { marked } from "marked";
 import "../../utils/prose.css";
+import storage from "../../utils/firebase";
+import { ref, uploadBytes } from "firebase/storage";
 import TextareaMarkdown, {
   TextareaMarkdownRef,
 } from "textarea-markdown-editor";
@@ -30,7 +32,7 @@ export default function Content() {
   const [isDisplayWrite, setIsDisplayWrite] = useState(false);
   const [isDisplayMarkdown, setIsDisplayMarkdown] = useState(false);
   const [isFocusTextArea, setIsFocusTextArea] = useState(false);
-  const ref = useRef<TextareaMarkdownRef>(null);
+  const textAreaRef = useRef<TextareaMarkdownRef>(null);
   const [inputValue, setInputValue] = useContext(IssueContext)["inputValue"];
   const markdownIcon = [
     [
@@ -75,6 +77,19 @@ export default function Content() {
     },
   };
   marked.use({ renderer });
+  const handleUpload = async (e) => {
+    if (e.target.files[0] == null) return;
+
+    // Sending File to Firebase Storage
+    const storageRef = ref(storage, `images/${e.target.files[0].name}`);
+
+    try {
+      await uploadBytes(storageRef, e.target.files[0]);
+      alert("Successfully uploaded picture!");
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <div className="md:flex-auto">
@@ -95,6 +110,7 @@ export default function Content() {
                 setInputValue({ ...inputValue, title: e.target.value })
               }
               value={inputValue?.title}
+              required
             />
           </div>
           <div className="lg:flex lg:justify-between lg:border-b lg:border-solid lg:border-b-[#d0d7de]">
@@ -142,7 +158,7 @@ export default function Content() {
                     className="ml-[5px] hidden cursor-pointer p-2 first-of-type:pl-1 hover:text-[#0969da] md:block md:p-1"
                     key={index}
                     onClick={() =>
-                      ref.current?.trigger(
+                      textAreaRef.current?.trigger(
                         `${item.props.className.split("octicon octicon-")[1]}`
                       )
                     }
@@ -155,7 +171,7 @@ export default function Content() {
                     className="ml-[5px] cursor-pointer p-2 first-of-type:pl-[5px] hover:text-[#0969da] md:p-1"
                     key={index}
                     onClick={() =>
-                      ref.current?.trigger(
+                      textAreaRef.current?.trigger(
                         `${item.props.className.split("octicon octicon-")[1]}`
                       )
                     }
@@ -168,7 +184,7 @@ export default function Content() {
                     className="ml-[5px] hidden cursor-pointer p-2 hover:text-[#0969da] md:block md:p-1"
                     key={index}
                     onClick={() =>
-                      ref.current?.trigger(
+                      textAreaRef.current?.trigger(
                         `${item.props.className.split("octicon octicon-")[1]}`
                       )
                     }
@@ -185,7 +201,7 @@ export default function Content() {
                     }`}
                     key={index}
                     onClick={() =>
-                      ref.current?.trigger(
+                      textAreaRef.current?.trigger(
                         `${item.props.className.split("octicon octicon-")[1]}`
                       )
                     }
@@ -201,7 +217,7 @@ export default function Content() {
                       className="ml-[5px] cursor-pointer p-2 first-of-type:pl-1 hover:text-[#0969da]"
                       key={index}
                       onClick={() =>
-                        ref.current?.trigger(
+                        textAreaRef.current?.trigger(
                           `${item.props.className.split("octicon octicon-")[1]}`
                         )
                       }
@@ -214,7 +230,7 @@ export default function Content() {
                       className="ml-[5px] cursor-pointer p-2 hover:text-[#0969da]"
                       key={index}
                       onClick={() =>
-                        ref.current?.trigger(
+                        textAreaRef.current?.trigger(
                           `${item.props.className.split("octicon octicon-")[1]}`
                         )
                       }
@@ -249,7 +265,7 @@ export default function Content() {
                 <TextareaMarkdown
                   className="min-h-[200px] w-full rounded-md border border-solid border-[#d0d7de] bg-[#f6f8fa] p-2 text-[14px] focus:border-solid focus:border-[#0969da] focus:bg-white focus:shadow-innerblue focus:outline-none md:flex md:rounded-b-none md:border-0 md:bg-[#f6f8fa] md:focus:border-0 md:focus:shadow-none"
                   placeholder="Leave a comment"
-                  ref={ref}
+                  ref={textAreaRef}
                   value={inputValue?.body}
                   onChange={(e) =>
                     setInputValue({ ...inputValue, body: e.target.value })
@@ -266,6 +282,7 @@ export default function Content() {
                     className="border-b-[#d0d7de] md:block md:w-full md:border md:border-solid md:opacity-[0.01]"
                     type="file"
                     accept=".gif,.jpeg,.jpg,.mov,.mp4,.png,.svg,.webm,.csv,.docx,.fodg,.fodp,.fods,.fodt,.gz,.log,.md,.odf,.odg,.odp,.ods,.odt,.pdf,.pptx,.tgz,.txt,.xls,.xlsx,.zip"
+                    onChange={handleUpload}
                   />
                   <span className="md:absolute md:bottom-0 md:px-[10px] md:py-[7px] md:text-[13px]">
                     Attach files by dragging & dropping, selecting or pasting
