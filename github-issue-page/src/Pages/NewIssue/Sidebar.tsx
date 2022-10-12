@@ -5,7 +5,7 @@ import { IssueContext } from "../../utils/SelectContext";
 import DropdownList from "./DropdownList";
 import SubmitBtn from "./SubmitBtn";
 
-export default function Sidebar() {
+export default function Sidebar({ newComment }) {
   const [isOpen, setIsOpen] = useState(false);
   const [listContent, setListContent] = useState({
     assignees: [],
@@ -229,8 +229,8 @@ export default function Sidebar() {
           )
         )}
         <div className="mt-4 border-t border-t-[hsla(210,18%,87%,1)] pt-4"></div>
-        <div className="mt-6 w-full md:hidden">
-          <SubmitBtn />
+        <div className={`mt-6 w-full md:hidden ${newComment ? "hidden" : ""}`}>
+          <SubmitBtn btnText={"Submit new issue"} isCloseIssue={false} />
         </div>
       </>
     </div>

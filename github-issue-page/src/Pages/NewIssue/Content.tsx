@@ -28,7 +28,7 @@ import { ref, uploadBytes } from "firebase/storage";
 import TextareaMarkdown, {
   TextareaMarkdownRef,
 } from "textarea-markdown-editor";
-export default function Content() {
+export default function Content({ newComment }) {
   const [isDisplayWrite, setIsDisplayWrite] = useState(false);
   const [isDisplayMarkdown, setIsDisplayMarkdown] = useState(false);
   const [isFocusTextArea, setIsFocusTextArea] = useState(false);
@@ -93,26 +93,32 @@ export default function Content() {
 
   return (
     <div className="md:flex-auto">
+      {newComment && (
+        <div className="mb-4 border-t-2 border-solid border-[#d0d7de] md:ml-[56px]"></div>
+      )}
       <div className="hidden md:float-left md:block">
         <img
           src="https://avatars.githubusercontent.com/u/70333832?s=80&v=4"
           className="w-10 rounded-[50%] shadow-[0_0_0_1px_rgba(27,31,36,0.15)]"
         />
       </div>
-      <div className="md:relative md:ml-[56px]">
-        <div className="md:rounded-md md:border md:border-[#d0d7de] md:bg-[#fff] md:before:absolute md:before:top-[11px] md:before:right-[100%] md:before:border-[7px] md:before:border-solid md:before:border-transparent md:before:border-r-[#d0d7de] md:after:absolute md:after:top-[11px] md:after:right-[100%] md:after:left-[-13px] md:after:border-[7px] md:after:border-solid md:after:border-transparent md:after:border-r-white">
-          <div className="mb-4 mt-6 md:mt-0 md:mb-0 md:p-2">
-            <input
-              className="w-full rounded-md border border-solid border-[#d0d7de] bg-[#f6f8fa] px-3 py-[5px] text-base leading-5 text-[#24292f] shadow-[inset_0_1px_0_rgba(208,215,222,0.2)] focus:border focus:border-solid focus:border-[#0969da] focus:bg-white focus:shadow-innerblue focus:outline-none"
-              type="text"
-              placeholder="Title"
-              onChange={(e) =>
-                setInputValue({ ...inputValue, title: e.target.value })
-              }
-              value={inputValue?.title}
-              required
-            />
-          </div>
+      <div className="md:ml-[56px]">
+        <div className="md:relative md:rounded-md md:border md:border-[#d0d7de] md:bg-[#fff] md:before:absolute md:before:top-[11px] md:before:right-[100%] md:before:border-[7px] md:before:border-solid md:before:border-transparent md:before:border-r-[#d0d7de] md:after:absolute md:after:top-[11px] md:after:right-[100%] md:after:left-[-13px] md:after:border-[7px] md:after:border-solid md:after:border-transparent md:after:border-r-white">
+          {!newComment && (
+            <div className="mb-4 mt-6 md:mt-0 md:mb-0 md:p-2">
+              <input
+                className="w-full rounded-md border border-solid border-[#d0d7de] bg-[#f6f8fa] px-3 py-[5px] text-base leading-5 text-[#24292f] shadow-[inset_0_1px_0_rgba(208,215,222,0.2)] focus:border focus:border-solid focus:border-[#0969da] focus:bg-white focus:shadow-innerblue focus:outline-none"
+                type="text"
+                placeholder="Title"
+                onChange={(e) =>
+                  setInputValue({ ...inputValue, title: e.target.value })
+                }
+                value={inputValue?.title}
+                required
+              />
+            </div>
+          )}
+
           <div className="lg:flex lg:justify-between lg:border-b lg:border-solid lg:border-b-[#d0d7de]">
             <div className="mb-2 w-full text-[14px] md:m-2 md:mb-[-1px] md:w-auto">
               <button
@@ -245,7 +251,9 @@ export default function Content() {
           <div className="py-2 md:mx-2">
             {isDisplayWrite ? (
               <div
-                className="prose min-h-[200px] border-b border-solid border-[#d0d7de] p-2 pt-0 text-[14px] text-[#24292f]"
+                className={`prose border-b border-solid border-[#d0d7de] p-2 pt-0 text-[14px] text-[#24292f]  ${
+                  newComment ? "min-h-[100px]" : "min-h-[200px]"
+                }`}
                 dangerouslySetInnerHTML={{
                   __html: marked(inputValue?.body ?? ""),
                 }}
@@ -263,7 +271,9 @@ export default function Content() {
                 onBlur={() => setIsFocusTextArea(false)}
               >
                 <TextareaMarkdown
-                  className="min-h-[200px] w-full rounded-md border border-solid border-[#d0d7de] bg-[#f6f8fa] p-2 text-[14px] focus:border-solid focus:border-[#0969da] focus:bg-white focus:shadow-innerblue focus:outline-none md:flex md:rounded-b-none md:border-0 md:bg-[#f6f8fa] md:focus:border-0 md:focus:shadow-none"
+                  className={`w-full rounded-md border border-solid border-[#d0d7de] bg-[#f6f8fa] p-2 text-[14px] focus:border-solid focus:border-[#0969da] focus:bg-white focus:shadow-innerblue focus:outline-none md:flex md:rounded-b-none md:border-0 md:bg-[#f6f8fa] md:focus:border-0 md:focus:shadow-none ${
+                    newComment ? "min-h-[100px]" : "min-h-[200px]"
+                  }`}
                   placeholder="Leave a comment"
                   ref={textAreaRef}
                   value={inputValue?.body}
@@ -295,22 +305,37 @@ export default function Content() {
               </div>
             )}
           </div>
-          <div className="hidden md:m-2 md:mt-0 md:flex md:items-center md:justify-between">
-            <a
-              href="https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax"
-              className="flex flex-auto text-[12px] text-[#57606a] hover:text-[#0969da] md:items-center"
-            >
-              <MarkdownIcon size={16} />
-              <span className="md:ml-1 md:text-center">
-                Styling with Markdown is supported
-              </span>
-            </a>
-            <div>
-              <SubmitBtn />
+          {newComment ? (
+            <div className="flex flex-auto justify-end md:p-2">
+              <div className="flex">
+                <SubmitBtn btnText={"Close issue"} isCloseIssue={true} />
+              </div>
+              <div className="ml-1">
+                <SubmitBtn btnText={"Comment"} isCloseIssue={false} />
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="hidden md:m-2 md:mt-0 md:flex md:items-center md:justify-between">
+              <a
+                href="https://docs.github.com/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax"
+                className="flex flex-auto text-[12px] text-[#57606a] hover:text-[#0969da] md:items-center"
+              >
+                <MarkdownIcon size={16} />
+                <span className="md:ml-1 md:text-center">
+                  Styling with Markdown is supported
+                </span>
+              </a>
+              <div>
+                <SubmitBtn btnText={"Submit new issue"} isCloseIssue={false} />
+              </div>
+            </div>
+          )}
         </div>
-        <div className="my-2 text-[12px] text-[#57606a]">
+        <div
+          className={`my-2 text-[12px] text-[#57606a] ${
+            newComment ? "mt-4" : ""
+          }`}
+        >
           <InfoIcon size={16} className="mr-1" />
           <span>
             Remember, contributions to this repository should follow our &nbsp;

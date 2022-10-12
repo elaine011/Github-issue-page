@@ -6,6 +6,7 @@ import {
 } from "@primer/octicons-react";
 import { useContext } from "react";
 import { IssueContext } from "../../utils/SelectContext";
+import { useNavigate } from "react-router-dom";
 
 export default function IssueList({
   title,
@@ -19,10 +20,17 @@ export default function IssueList({
   stateReason,
 }) {
   const [inputValue, setInputValue] = useContext(IssueContext)["input"];
+  const Navigate = useNavigate();
 
   if (inputValue && !title.toLowerCase().includes(inputValue)) return <></>;
   return (
-    <div className="border border-t-0">
+    <div
+      className="border border-t-0"
+      onClick={(e) => {
+        console.log(issueNumber);
+        Navigate(`/issuePage/${issueNumber}`);
+      }}
+    >
       <div className="flex border border-transparent px-[16px] py-[8px] hover:bg-primary-bg">
         {state === "open" ? (
           <IssueOpenedIcon className="fill-primary" fill="#127f37" />

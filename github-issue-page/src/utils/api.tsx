@@ -131,20 +131,16 @@ const api = {
     );
     return await response.json();
   },
-  async getListComments() {
-    const owner = "elaine011";
-    const repo = "test-issue";
-    const githubToken = "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";
-    const response = await fetch(
-      `${this.githubHostname}/repos/${owner}/${repo}/issues/comments`,
+  async getListComments(data) {
+    const res = await octokit.request(
+      "GET /repos/{owner}/{repo}/issues/{issue_number}",
       {
-        headers: new Headers({
-          Accept: "application/vnd.github+json",
-          Authorization: `Bearer ${githubToken}`,
-        }),
+        owner: data.owner,
+        repo: data.repo,
+        issue_number: data.issue_number,
       }
     );
-    return await response.json();
+    return res.data;
   },
   async createIssue(data) {
     const res = await octokit.request("POST /repos/{owner}/{repo}/issues", {
@@ -190,6 +186,17 @@ const api = {
       }
     );
     return await response.json();
+  },
+  async getTimeline(data) {
+    const res = await octokit.request(
+      "GET /repos/{owner}/{repo}/issues/{issue_number}/timeline",
+      {
+        owner: data.owner,
+        repo: data.repo,
+        issue_number: data.issue_number,
+      }
+    );
+    return res.data;
   },
 };
 export default api;

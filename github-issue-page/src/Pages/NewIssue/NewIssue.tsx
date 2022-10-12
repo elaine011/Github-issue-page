@@ -59,8 +59,8 @@ export default function NewIssue() {
       >
         <Provider store={store}>
           <div className="max-w-[1280px] px-4 md:mt-6 md:flex md:w-full md:px-6 xl:mx-auto">
-            <Content />
-            <Sidebar />
+            <Content newComment={false} />
+            <Sidebar newComment={false} />
           </div>
         </Provider>
       </IssueContext.Provider>

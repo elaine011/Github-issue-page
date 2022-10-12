@@ -8,6 +8,7 @@ import Issues from "./Pages/Issues/Issues";
 import Labels from "./Pages/Labels/Labels";
 import "./index.css";
 import NewIssue from "./Pages/NewIssue/NewIssue";
+import IssuePage from "./Pages/IssuePage/IssuePage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -30,6 +31,7 @@ root.render(
         <Route path="/issues/new" element={<Issues />}></Route>
       </Route>
       <Route path="/newissue" element={<NewIssue />}></Route>
+      <Route path="/issuePage/:issueId" element={<IssuePage />}></Route>
     </Routes>
   </BrowserRouter>
 );
