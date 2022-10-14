@@ -100,37 +100,6 @@ const api = {
       name: data.labelName,
     });
   },
-  async getFilters(filters) {
-    const owner = "elaine011";
-    const repo = "test-issue";
-    const githubToken = "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";
-    const response = await fetch(
-      `${this.githubHostname}/repos/${owner}/${repo}/issues?${filters}=${owner}`,
-      {
-        headers: new Headers({
-          Accept: "application/vnd.github+json",
-          Authorization: `Bearer ${githubToken}`,
-        }),
-        method: "GET",
-      }
-    );
-    return await response.json();
-  },
-  async getAnIssues(issue_number) {
-    const owner = "elaine011";
-    const repo = "test-issue";
-    const githubToken = "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";
-    const response = await fetch(
-      `${this.githubHostname}/repos/${owner}/${repo}/issues/${issue_number}`,
-      {
-        headers: new Headers({
-          Accept: "application/vnd.github+json",
-          Authorization: `Bearer ${githubToken}`,
-        }),
-      }
-    );
-    return await response.json();
-  },
   async getListComments(data) {
     const res = await octokit.request(
       "GET /repos/{owner}/{repo}/issues/{issue_number}",
@@ -153,47 +122,73 @@ const api = {
     });
     return res;
   },
-  async createComment(data, issue_number) {
-    const owner = "elaine011";
-    const repo = "test-issue";
-    const githubToken = "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";
-    const response = await fetch(
-      `${this.githubHostname}/repos/${owner}/${repo}/issues/${issue_number}/comments`,
-      {
-        body: JSON.stringify(data),
-        headers: new Headers({
-          Accept: "application/vnd.github+json",
-          Authorization: `Bearer ${githubToken}`,
-        }),
-        method: "POST",
-      }
-    );
-    return await response.json();
+  async updateIssue(data) {
+    await octokit.request("PATCH /repos/{owner}/{repo}/issues/{issue_number}", {
+      headers: {
+        "if-none-match": "",
+      },
+      owner: data.owner,
+      repo: data.repo,
+      issue_number: data.issue_number,
+      title: data?.title,
+      body: data?.body,
+      assignees: data?.assignees,
+      state: data?.state,
+      labels: data?.labels,
+    });
   },
-  async updateComment(data, comment_id) {
-    const owner = "elaine011";
-    const repo = "test-issue";
-    const githubToken = "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";
-    const response = await fetch(
-      `${this.githubHostname}/repos/${owner}/${repo}/issues/comments/${comment_id}`,
+  async createComment(data) {
+    await octokit.request(
+      "POST /repos/{owner}/{repo}/issues/{issue_number}/comments",
       {
-        body: JSON.stringify(data),
-        headers: new Headers({
-          Accept: "application/vnd.github+json",
-          Authorization: `Bearer ${githubToken}`,
-        }),
-        method: "PATCH",
+        headers: {
+          "if-none-match": "",
+        },
+        owner: data.owner,
+        repo: data.repo,
+        issue_number: data.issue_number,
+        body: data.body,
       }
     );
-    return await response.json();
+  },
+  async updateComment(data) {
+    const res = await octokit.request(
+      "PATCH /repos/{owner}/{repo}/issues/comments/{comment_id}",
+      {
+        headers: {
+          "if-none-match": "",
+        },
+        owner: data.owner,
+        repo: data.repo,
+        comment_id: data.commentId,
+        body: data.body,
+      }
+    );
+    return res.data;
+  },
+  async deleteComment(data) {
+    const res = await octokit.request(
+      "DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}",
+      {
+        headers: {
+          "if-none-match": "",
+        },
+        owner: data.owner,
+        repo: data.repo,
+        comment_id: data.commentId,
+        body: data.body,
+      }
+    );
+    return res.data;
   },
   async getTimeline(data) {
     const res = await octokit.request(
-      "GET /repos/{owner}/{repo}/issues/{issue_number}/timeline",
+      "GET /repos/{owner}/{repo}/issues/{issue_number}/timeline?per_page={per_page}",
       {
         owner: data.owner,
         repo: data.repo,
         issue_number: data.issue_number,
+        per_page: 100,
       }
     );
     return res.data;

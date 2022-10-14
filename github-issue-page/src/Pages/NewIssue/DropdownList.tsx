@@ -12,6 +12,7 @@ export default function DropdownList({
 }) {
   const [filter, setFilter] = useState("");
   const [inputValue, setInputValue] = useContext(IssueContext)["inputValue"];
+  const [editData, setEditData] = useContext(IssueContext)["editData"];
 
   return (
     <div
@@ -92,13 +93,18 @@ export default function DropdownList({
                      ? "md:pt-[7px] md:pb-[7px]"
                      : "sm:pt-[7px] sm:pb-[7px]"
                  }`}
-                  onClick={() =>
+                  onClick={() => {
                     setInputValue({
                       ...inputValue,
                       assignees: [],
                       assigneesImg: [],
-                    })
-                  }
+                    });
+                    setEditData({
+                      ...editData,
+                      assignees: [],
+                      assigneesImg: [],
+                    });
+                  }}
                 >
                   <div className="mr-2">
                     <XIcon size={16} />
@@ -203,6 +209,17 @@ export default function DropdownList({
                           labels: labelsArr,
                           labelsColor: labelsColorArr,
                         });
+                      item?.login &&
+                        setEditData({
+                          ...editData,
+                          assignees: assigneesArr,
+                        });
+                      item?.name &&
+                        setEditData({
+                          ...editData,
+                          labels: labelsArr,
+                        });
+                      console.log(editData);
                     }}
                   >
                     <div className="mr-2 flex items-center">

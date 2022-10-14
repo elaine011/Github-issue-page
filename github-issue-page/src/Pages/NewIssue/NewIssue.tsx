@@ -14,15 +14,19 @@ export default function NewIssue() {
   const [token, setToken] = useState("");
   const [labelQuery, setLabelQuery] = useState([]);
   const [searchQuery, setSearchQuery] = useState(["is:issue is:open"]);
-  const [inputValue, setInputValue] = useState({});
+  const [inputValue, setInputValue] = useState({ title: "" });
+  const [editData, setEditData] = useState();
   const [query, setQuery] = useState({
     owner: "elaine011",
     repo: "test-issue",
     perPage: 10,
     page: 1,
   });
+  const [listContent, setListContent] = useState({
+    assignees: [],
+    labels: [],
+  });
   const Navigate = useNavigate();
-
   const userInfo = {
     owner: "elaine011",
     repo: "test-issue",
@@ -43,6 +47,16 @@ export default function NewIssue() {
     } else return false;
   };
 
+  async function getSideBarApi() {
+    const assigneesData = await api.getAssignees(userInfo);
+    const labelsData = await api.getLabels();
+    setListContent({
+      ...listContent,
+      assignees: assigneesData,
+      labels: labelsData,
+    });
+  }
+
   return (
     <>
       <LoginHeader setTokenFn={setToken} />
@@ -55,12 +69,17 @@ export default function NewIssue() {
           inputValue: [inputValue, setInputValue],
           createIssue,
           handleSubmitBtn,
+          editData: [editData, setEditData],
         }}
       >
         <Provider store={store}>
           <div className="max-w-[1280px] px-4 md:mt-6 md:flex md:w-full md:px-6 xl:mx-auto">
             <Content newComment={false} />
-            <Sidebar newComment={false} />
+            <Sidebar
+              newComment={false}
+              getSideBarApi={getSideBarApi}
+              listContent={listContent}
+            />
           </div>
         </Provider>
       </IssueContext.Provider>

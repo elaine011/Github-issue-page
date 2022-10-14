@@ -27,7 +27,6 @@ export default function IssueList({
     <div
       className="border border-t-0"
       onClick={(e) => {
-        console.log(issueNumber);
         Navigate(`/issuePage/${issueNumber}`);
       }}
     >

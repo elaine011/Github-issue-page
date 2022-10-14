@@ -1,21 +1,16 @@
 import { GearIcon } from "@primer/octicons-react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import api from "../../utils/api";
 import { IssueContext } from "../../utils/SelectContext";
 import DropdownList from "./DropdownList";
 import SubmitBtn from "./SubmitBtn";
 
-export default function Sidebar({ newComment }) {
+export default function Sidebar({ newComment, getSideBarApi, listContent }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [listContent, setListContent] = useState({
-    assignees: [],
-    labels: [],
-  });
   const [inputValue, setInputValue] = useContext(IssueContext)["inputValue"];
-  const userInfo = {
-    owner: "elaine011",
-    repo: "test-issue",
-  };
+  const updateIssue = useContext(IssueContext)["updateIssue"];
+  const assigneesDropDownRef = useRef<HTMLDetailsElement>();
+  const labelsDropDownRef = useRef<HTMLDetailsElement>();
   const sideBarTitle = [
     {
       title: "Assignees",
@@ -44,16 +39,7 @@ export default function Sidebar({ newComment }) {
   ];
 
   useEffect(() => {
-    async function getDropdownData() {
-      const assigneesData = await api.getAssignees(userInfo);
-      const labelsData = await api.getLabels();
-      setListContent({
-        ...listContent,
-        assignees: assigneesData,
-        labels: labelsData,
-      });
-    }
-    getDropdownData();
+    getSideBarApi();
   }, []);
 
   return (
@@ -62,8 +48,16 @@ export default function Sidebar({ newComment }) {
         {sideBarTitle.map((item, index) =>
           index === 0 ? (
             <div className="pt-4" key={index}>
-              <details className="h-[30px] md:relative">
-                <summary className="cursor-pointer list-none text-[#57606a] hover:text-[#0969da]">
+              <details
+                className="h-[30px] md:relative"
+                ref={assigneesDropDownRef}
+              >
+                <summary
+                  className="cursor-pointer list-none text-[#57606a] hover:text-[#0969da]"
+                  onClick={() =>
+                    assigneesDropDownRef.current.open === true && updateIssue()
+                  }
+                >
                   <span className="font-semibold">{item.title}</span>
                   <GearIcon size={16} className="float-right" />
                 </summary>
@@ -149,6 +143,59 @@ export default function Sidebar({ newComment }) {
                 </span>
               )}
             </div>
+          ) : index === 1 ? (
+            <div
+              className="mt-4 border-t border-t-[hsla(210,18%,87%,1)] pt-4"
+              key={index}
+            >
+              <details className="h-[30px] md:relative" ref={labelsDropDownRef}>
+                <summary
+                  className="cursor-pointer list-none text-[#57606a] hover:text-[#0969da]"
+                  onClick={() => {
+                    labelsDropDownRef.current.open === true && updateIssue();
+                  }}
+                >
+                  <span className="font-semibold">{item.title}</span>
+                  <GearIcon size={16} className="float-right" />
+                </summary>
+                <div className={`md:absolute md:right-[86px]`}>
+                  {item.title === "Labels" && (
+                    <DropdownList
+                      isDisplayFullScreen={true}
+                      isOpen={isOpen}
+                      isAssigned={true}
+                      isSuggested={false}
+                      isEdited={true}
+                      listContent={listContent.labels}
+                    />
+                  )}
+                </div>
+              </details>
+              {!inputValue?.labels ? (
+                <span>
+                  <a>{item.description}</a>
+                </span>
+              ) : (
+                <span className="flex">
+                  {item.title === "Labels" && (
+                    <div className="flex flex-wrap">
+                      {inputValue?.labels.map((item, index) => (
+                        <a className="mr-1 mb-[10px] h-[20px] cursor-pointer font-semibold text-[#24292f]">
+                          <span
+                            className="rounded-full px-[7px] py-[2px]"
+                            style={{
+                              backgroundColor: `#${inputValue?.labelsColor[index]}`,
+                            }}
+                          >
+                            {item}
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </span>
+              )}
+            </div>
           ) : index < 4 ? (
             <div
               className="mt-4 border-t border-t-[hsla(210,18%,87%,1)] pt-4"
@@ -202,7 +249,7 @@ export default function Sidebar({ newComment }) {
               className="mt-4 border-t border-t-[hsla(210,18%,87%,1)] pt-4"
               key={index}
             >
-              <details className="h-[30px] md:relative">
+              <details className="h-[30px] md:relative" ref={labelsDropDownRef}>
                 <summary className="list-none text-[#57606a]">
                   {item.title === "Helpful resources" ? (
                     <span className="font-semibold text-[#24292f]">

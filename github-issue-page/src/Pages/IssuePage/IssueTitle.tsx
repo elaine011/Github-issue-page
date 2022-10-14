@@ -1,5 +1,6 @@
 import { IssueOpenedIcon } from "@primer/octicons-react";
-import { useState } from "react";
+import { useCallback, useContext, useRef, useState } from "react";
+import { IssueContext } from "../../utils/SelectContext";
 
 export default function IssueTitle({
   title,
@@ -11,7 +12,28 @@ export default function IssueTitle({
 }) {
   const [isEditTitle, setIsEditTitle] = useState(false);
   const [inputValue, setInputValue] = useState({ title: title });
-
+  const [displayStickHeader, setDisplayStickyHeader] =
+    useContext(IssueContext)["displayStickHeader"];
+  const [editData, setEditData] = useContext(IssueContext)["editData"];
+  const updateIssue = useContext(IssueContext)["updateIssue"];
+  const observer = useRef<IntersectionObserver | null>(null);
+  const headerBottom = useCallback((node: HTMLDivElement) => {
+    if (node) {
+      const options = {
+        rootMargin: "0px",
+        threshold: 0,
+      };
+      const callback = (entries: IntersectionObserverEntry[]) => {
+        if (entries[0].isIntersecting) {
+          setDisplayStickyHeader(false);
+        } else {
+          setDisplayStickyHeader(true);
+        }
+      };
+      observer.current = new IntersectionObserver(callback, options);
+      observer.current.observe(node);
+    }
+  }, []);
   return (
     <div>
       <div className={isEditTitle ? "hidden" : "block"}>
@@ -48,12 +70,19 @@ export default function IssueTitle({
           type="text"
           value={inputValue?.title}
           className="w-full rounded-md border border-solid border-[#d0d7de] bg-[#f6f8fa] py-[5px] px-3 leading-5 text-[#24292f] shadow-[inset_0_1px_0_rgba(208,215,222,0.2)] md:mr-4"
-          onChange={(e) =>
-            setInputValue({ ...inputValue, title: e.target.value })
-          }
+          onChange={(e) => {
+            setInputValue({ ...inputValue, title: e.target.value });
+            setEditData({ ...editData, title: e.target.value });
+          }}
         />
         <div className="mt-2 flex md:mt-0">
-          <button className="mr-2 rounded-md border border-solid border-[rgba(27,31,36,0.15)] bg-[#f6f8fa] py-[5px] px-4 text-[14px] font-medium leading-5 text-[#24292f] shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]">
+          <button
+            className="mr-2 rounded-md border border-solid border-[rgba(27,31,36,0.15)] bg-[#f6f8fa] py-[5px] px-4 text-[14px] font-medium leading-5 text-[#24292f] shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]"
+            onClick={() => {
+              updateIssue();
+              setIsEditTitle(false);
+            }}
+          >
             Save
           </button>
           <button
@@ -65,7 +94,10 @@ export default function IssueTitle({
         </div>
       </div>
       <div className="inline-block w-full">
-        <div className="mb-4 flex items-center border-b border-solid border-[#d0d7de] pb-2">
+        <div
+          className="mb-4 flex items-center border-b border-solid border-[#d0d7de] pb-2"
+          ref={headerBottom}
+        >
           <div className="mr-2 mb-2 self-start rounded-[2em] bg-[#2da44e] px-3 py-[5px] text-center text-[14px] font-medium leading-5 text-[#fff]">
             <IssueOpenedIcon size={16} />
             <span className="ml-1">{state}</span>

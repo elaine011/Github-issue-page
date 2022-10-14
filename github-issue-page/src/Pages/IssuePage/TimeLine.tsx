@@ -8,7 +8,6 @@ export default function TimeLine() {
     useContext(IssueContext)["timelineData"];
   const [issueCommentsData, setIssueCommentsData] =
     useContext(IssueContext)["issueCommentsData"];
-
   return (
     <>
       {issueCommentsData && (
@@ -22,6 +21,7 @@ export default function TimeLine() {
             owner={issueCommentsData.author_association}
             actorImg={issueCommentsData.user.avatar_url}
             reactions={issueCommentsData.reactions}
+            commentId={issueCommentsData.id}
           />
 
           {timelineData &&
@@ -36,6 +36,8 @@ export default function TimeLine() {
                   owner={item.author_association}
                   actorImg={item.actor.avatar_url}
                   reactions={item.reactions}
+                  commentId={item.id}
+                  key={item.id}
                 />
               ) : (
                 <></>
