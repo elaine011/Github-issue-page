@@ -1,4 +1,8 @@
-import { IssueOpenedIcon } from "@primer/octicons-react";
+import {
+  IssueClosedIcon,
+  IssueOpenedIcon,
+  SkipIcon,
+} from "@primer/octicons-react";
 import { useCallback, useContext, useRef, useState } from "react";
 import { IssueContext } from "../../utils/SelectContext";
 
@@ -6,6 +10,7 @@ export default function IssueTitle({
   title,
   issueNumber,
   state,
+  stateReason,
   author,
   totalComments,
   createdTime,
@@ -34,6 +39,8 @@ export default function IssueTitle({
       observer.current.observe(node);
     }
   }, []);
+  console.log(stateReason);
+
   return (
     <div>
       <div className={isEditTitle ? "hidden" : "block"}>
@@ -58,7 +65,7 @@ export default function IssueTitle({
             </a>
           </div>
           <div className="mb-2 flex text-[26px] font-normal md:text-[32px]">
-            <h1 className="text-[#24292f]">{title}</h1>
+            <h1 className="whitespace-nowrap text-[#24292f]">{title}</h1>
             <span className="ml-2 font-light text-[#57606a]">
               #{issueNumber}
             </span>
@@ -98,10 +105,22 @@ export default function IssueTitle({
           className="mb-4 flex items-center border-b border-solid border-[#d0d7de] pb-2"
           ref={headerBottom}
         >
-          <div className="mr-2 mb-2 self-start rounded-[2em] bg-[#2da44e] px-3 py-[5px] text-center text-[14px] font-medium leading-5 text-[#fff]">
-            <IssueOpenedIcon size={16} />
-            <span className="ml-1">{state}</span>
-          </div>
+          {state === "open" ? (
+            <div className="mr-2 mb-2 self-start rounded-[2em] bg-[#2da44e] px-3 py-[5px] text-center text-[14px] font-medium leading-5 text-[#fff]">
+              <IssueOpenedIcon size={16} />
+              <span className="ml-1">{state}</span>
+            </div>
+          ) : stateReason === "completed" ? (
+            <div className="mr-2 mb-2 self-start rounded-[2em] bg-[#8250df] px-3 py-[5px] text-center text-[14px] font-medium leading-5 text-[#fff]">
+              <IssueClosedIcon size={16} />
+              <span className="ml-1">{state}</span>
+            </div>
+          ) : (
+            <div className="mr-2 mb-2 self-start rounded-[2em] bg-[#6e7781] px-3 py-[5px] text-center text-[14px] font-medium leading-5 text-[#fff]">
+              <SkipIcon size={16} />
+              <span className="ml-1">{state}</span>
+            </div>
+          )}
           <span className="mb-2 flex-auto text-[14px] text-[#57606a]">
             <span className="font-semibold">{author}&nbsp;</span>
             <span>

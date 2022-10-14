@@ -180,7 +180,10 @@ export default function Sidebar({ newComment, getSideBarApi, listContent }) {
                   {item.title === "Labels" && (
                     <div className="flex flex-wrap">
                       {inputValue?.labels.map((item, index) => (
-                        <a className="mr-1 mb-[10px] h-[20px] cursor-pointer font-semibold text-[#24292f]">
+                        <a
+                          className="mr-1 mb-[10px] h-[20px] cursor-pointer font-semibold text-[#24292f]"
+                          key={index}
+                        >
                           <span
                             className="rounded-full px-[7px] py-[2px]"
                             style={{
@@ -228,7 +231,10 @@ export default function Sidebar({ newComment, getSideBarApi, listContent }) {
                   {item.title === "Labels" && (
                     <div className="flex">
                       {inputValue?.labels.map((item, index) => (
-                        <a className="mr-1 mb-[10px] h-[20px] cursor-pointer font-semibold text-[#24292f]">
+                        <a
+                          className="mr-1 mb-[10px] h-[20px] cursor-pointer font-semibold text-[#24292f]"
+                          key={index}
+                        >
                           <span
                             className="rounded-full px-[7px] py-[2px]"
                             style={{

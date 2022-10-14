@@ -141,6 +141,7 @@ export default function IssuePage() {
               <StickyHeader
                 title={issueCommentsData?.title}
                 state={issueCommentsData?.state}
+                stateReason={issueCommentsData?.state_reason}
                 issueNumber={issueCommentsData?.number}
                 author={issueCommentsData?.user.login}
                 totalComments={issueCommentsData?.comments}
@@ -150,6 +151,7 @@ export default function IssuePage() {
                 title={issueCommentsData?.title}
                 issueNumber={issueCommentsData?.number}
                 state={issueCommentsData?.state}
+                stateReason={issueCommentsData?.state_reason}
                 author={issueCommentsData?.user.login}
                 totalComments={issueCommentsData?.comments}
                 createdTime={handleCreateTime(issueCommentsData?.created_at)}
