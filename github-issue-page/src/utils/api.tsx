@@ -111,6 +111,40 @@ const api = {
     );
     return res.data;
   },
+  async getListCommentsReactions(data) {
+    const res = await octokit.request(
+      "GET /repos/{owner}/{repo}/issues/{issue_number}/reactions",
+      {
+        owner: data.owner,
+        repo: data.repo,
+        issue_number: data.issue_number,
+      }
+    );
+    return res.data;
+  },
+  async createissueCommentReactions(data) {
+    const res = await octokit.request(
+      "POST /repos/{owner}/{repo}/issues/{issue_number}/reactions",
+      {
+        owner: data.owner,
+        repo: data.repo,
+        issue_number: data.issue_number,
+        content: data.reaction,
+      }
+    );
+    return res.data;
+  },
+  async createListCommentsReactions(data) {
+    await octokit.request(
+      "POST /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions",
+      {
+        owner: data.owner,
+        repo: data.repo,
+        comment_id: data.commentId,
+        content: data.reaction,
+      }
+    );
+  },
   async createIssue(data) {
     const res = await octokit.request("POST /repos/{owner}/{repo}/issues", {
       owner: data.owner,
@@ -134,6 +168,7 @@ const api = {
       body: data?.body,
       assignees: data?.assignees,
       state: data?.state,
+      state_reason: data?.stateReason,
       labels: data?.labels,
     });
   },

@@ -35,6 +35,9 @@ export default function TextArea({ newComment }) {
   const [inputValue, setInputValue] = useContext(IssueContext)["inputValue"];
   const createComment = useContext(IssueContext)["createComment"];
   const [editData, setEditData] = useContext(IssueContext)["editData"];
+  const [issueCommentsData, setIssueCommentsData] =
+    useContext(IssueContext)["issueCommentsData"];
+
   const handleUpload = async (e) => {
     if (e.target.files[0] == null) return;
 
@@ -300,7 +303,16 @@ export default function TextArea({ newComment }) {
         {newComment ? (
           <div className="flex flex-auto justify-end md:p-2">
             <div className="flex">
-              <SubmitBtn btnText={"Close issue"} isCloseIssue={true} />
+              <SubmitBtn
+                btnText={
+                  issueCommentsData?.state === "open" ? "Close issue" : "Reopen"
+                }
+                isCloseIssue={true}
+                closeState={{
+                  state: issueCommentsData?.state,
+                  reason: issueCommentsData?.state_reason,
+                }}
+              />
             </div>
             <div
               className="ml-1"
@@ -309,7 +321,11 @@ export default function TextArea({ newComment }) {
                 await setInputValue({});
               }}
             >
-              <SubmitBtn btnText={"Comment"} isCloseIssue={false} />
+              <SubmitBtn
+                btnText={"Comment"}
+                isCloseIssue={false}
+                closeState={{}}
+              />
             </div>
           </div>
         ) : (
@@ -324,7 +340,11 @@ export default function TextArea({ newComment }) {
               </span>
             </a>
             <div>
-              <SubmitBtn btnText={"Submit new issue"} isCloseIssue={false} />
+              <SubmitBtn
+                btnText={"Submit new issue"}
+                isCloseIssue={false}
+                closeState={{}}
+              />
             </div>
           </div>
         )}
