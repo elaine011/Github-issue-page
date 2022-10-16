@@ -39,7 +39,6 @@ export default function IssueTitle({
       observer.current.observe(node);
     }
   }, []);
-  console.log(stateReason);
 
   return (
     <div>
@@ -106,19 +105,19 @@ export default function IssueTitle({
           ref={headerBottom}
         >
           {state === "open" ? (
-            <div className="mr-2 mb-2 self-start rounded-[2em] bg-[#2da44e] px-3 py-[5px] text-center text-[14px] font-medium leading-5 text-[#fff]">
+            <div className="mr-2 mb-2 flex flex-nowrap items-center self-start rounded-[2em] bg-[#2da44e] px-3 py-[5px] text-center text-[14px] font-medium leading-5 text-[#fff]">
               <IssueOpenedIcon size={16} />
-              <span className="ml-1">{state}</span>
+              <span className="ml-1 h-6">{state}</span>
             </div>
           ) : stateReason === "completed" ? (
-            <div className="mr-2 mb-2 self-start rounded-[2em] bg-[#8250df] px-3 py-[5px] text-center text-[14px] font-medium leading-5 text-[#fff]">
+            <div className="mr-2 mb-2 flex flex-nowrap items-center self-start rounded-[2em] bg-[#8250df] px-3 py-[5px] text-center text-[14px] font-medium leading-5 text-[#fff]">
               <IssueClosedIcon size={16} />
-              <span className="ml-1">{state}</span>
+              <span className="ml-1 h-6">{state}</span>
             </div>
           ) : (
-            <div className="mr-2 mb-2 self-start rounded-[2em] bg-[#6e7781] px-3 py-[5px] text-center text-[14px] font-medium leading-5 text-[#fff]">
+            <div className="mr-2 mb-2 flex flex-nowrap items-center self-start rounded-[2em] bg-[#6e7781] px-3 py-[5px] text-center text-[14px] font-medium leading-5 text-[#fff]">
               <SkipIcon size={16} />
-              <span className="ml-1">{state}</span>
+              <span className="ml-1 h-6">{state}</span>
             </div>
           )}
           <span className="mb-2 flex-auto text-[14px] text-[#57606a]">

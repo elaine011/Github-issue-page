@@ -18,6 +18,7 @@ export default function IssuePage() {
   const { issueId } = useParams();
   const [issueCommentsData, setIssueCommentsData] = useState(null);
   const [timelineData, setTimelineData] = useState(null);
+  const [reactionsData, setReactionsData] = useState([]);
   const [inputValue, setInputValue] = useState({
     title: "",
     assignees: [],
@@ -46,6 +47,10 @@ export default function IssuePage() {
       const data = await api.getListComments(commentsData);
       setIssueCommentsData(data);
     }
+    async function getListCommentsReactions() {
+      const data = await api.getListCommentsReactions(editData);
+      setReactionsData(data);
+    }
     async function getTimeline() {
       const data = await api.getTimeline(commentsData);
       setTimelineData(data);
@@ -61,6 +66,7 @@ export default function IssuePage() {
       });
     }
     getListComment();
+    getListCommentsReactions();
     getTimeline();
     getDropDownData();
   }, []);
@@ -101,6 +107,24 @@ export default function IssuePage() {
     getTimeline();
   }
 
+  async function createListCommentsReactions() {
+    await api.createListCommentsReactions(editData);
+    async function getTimeline() {
+      const data = await api.getTimeline(commentsData);
+      setTimelineData(data);
+    }
+    getTimeline();
+  }
+
+  async function createissueCommentReactions() {
+    await api.createissueCommentReactions(editData);
+    async function getListCommentsReactions() {
+      const data = await api.getListCommentsReactions(editData);
+      setReactionsData(data);
+    }
+    getListCommentsReactions();
+  }
+
   async function getSideBarApi() {
     const assigneesData = await api.getAssignees(commentsData);
     const labelsData = await api.getLabels();
@@ -133,6 +157,9 @@ export default function IssuePage() {
           createComment,
           deleteComment,
           updateIssue,
+          createListCommentsReactions,
+          createissueCommentReactions,
+          reactionsData: [reactionsData, setReactionsData],
         }}
       >
         {issueCommentsData && timelineData && (

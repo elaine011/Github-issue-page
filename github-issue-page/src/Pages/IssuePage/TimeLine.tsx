@@ -22,6 +22,7 @@ export default function TimeLine() {
             actorImg={issueCommentsData.user.avatar_url}
             reactions={issueCommentsData.reactions}
             commentId={issueCommentsData.id}
+            header={true}
           />
 
           {timelineData &&
@@ -38,6 +39,7 @@ export default function TimeLine() {
                   reactions={item.reactions}
                   commentId={item.id}
                   key={item.id}
+                  header={false}
                 />
               ) : (
                 <></>

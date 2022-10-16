@@ -1,6 +1,6 @@
 import { KebabHorizontalIcon, SmileyIcon } from "@primer/octicons-react";
 import { marked } from "marked";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { IssueContext } from "../../utils/SelectContext";
 import EditSection from "./EditSection";
 import "../../utils/prose.css";
@@ -16,10 +16,13 @@ export default function Comment({
   actorImg,
   reactions,
   commentId,
+  header,
 }) {
   const [isDisplayEdit, setIsDisplayEdit] = useState(false);
   const deleteComment = useContext(IssueContext)["deleteComment"];
   const [editData, setEditData] = useContext(IssueContext)["editData"];
+  const [reactionsData, setReactionsData] =
+    useContext(IssueContext)["reactionsData"];
 
   const editDropDownMenu = [
     ["Copy Link", "Quote reply"],
@@ -31,17 +34,69 @@ export default function Comment({
   const param = {
     boxBlue: true,
     reactions: {
-      good: { number: reactions["good"], isClicked: true },
-      bad: { number: reactions["bad"], isClicked: true },
-      confused: { number: reactions["confused"], isClicked: false },
-      eyes: { number: reactions["eyes"], isClicked: true },
-      heart: { number: reactions["heart"], isClicked: true },
-      hooray: { number: reactions["hooray"], isClicked: true },
-      laugh: { number: reactions["laugh"], isClicked: true },
-      rocket: { number: reactions["rocket"], isClicked: true },
-      total_count: reactions["total_count"],
+      good: {
+        number: reactionsData.filter((item) => item.content === "+1").length,
+        isClicked: reactionsData
+          .filter((item) => item.content === "+1")
+          .map((item) => item.user.login)
+          .includes("elaine011"),
+      },
+      bad: {
+        number: reactionsData.filter((item) => item.content === "-1").length,
+        isClicked: reactionsData
+          .filter((item) => item.content === "-1")
+          .map((item) => item.user.login)
+          .includes("elaine011"),
+      },
+      confused: {
+        number: reactionsData.filter((item) => item.content === "confused")
+          .length,
+        isClicked: reactionsData
+          .filter((item) => item.content === "confused")
+          .map((item) => item.user.login)
+          .includes("elaine011"),
+      },
+      eyes: {
+        number: reactionsData.filter((item) => item.content === "eyes").length,
+        isClicked: reactionsData
+          .filter((item) => item.content === "eyes")
+          .map((item) => item.user.login)
+          .includes("elaine011"),
+      },
+      heart: {
+        number: reactionsData.filter((item) => item.content === "heart").length,
+        isClicked: reactionsData
+          .filter((item) => item.content === "heart")
+          .map((item) => item.user.login)
+          .includes("elaine011"),
+      },
+      hooray: {
+        number: reactionsData.filter((item) => item.content === "hooray")
+          .length,
+        isClicked: reactionsData
+          .filter((item) => item.content === "hooray")
+          .map((item) => item.user.login)
+          .includes("elaine011"),
+      },
+      laugh: {
+        number: reactionsData.filter((item) => item.content === "laugh").length,
+        isClicked: reactionsData
+          .filter((item) => item.content === "laugh")
+          .map((item) => item.user.login)
+          .includes("elaine011"),
+      },
+      rocket: {
+        number: reactionsData.filter((item) => item.content === "rocket")
+          .length,
+        isClicked: reactionsData
+          .filter((item) => item.content === "rocket")
+          .map((item) => item.user.login)
+          .includes("elaine011"),
+      },
+      total_count: reactionsData.length,
     },
   };
+
   const renderer = {
     listitem(text: string, booleantask: boolean, checked: boolean) {
       if (checked !== undefined) {
@@ -121,7 +176,7 @@ export default function Comment({
                     Author
                   </span>
                 )}
-                <details className="relative hidden md:mx-2 md:block md:py-2 md:px-1">
+                <details className="relative hidden cursor-pointer md:mx-2 md:block md:py-2 md:px-1">
                   <summary className="list-none focus:text-[#0969da]">
                     <SmileyIcon size={16} />
                   </summary>
@@ -286,7 +341,11 @@ export default function Comment({
                 ></p>
               )}
               <div className="flex">
-                <Reactions reactions={reactions} />
+                <Reactions
+                  reactions={reactions}
+                  header={header}
+                  commentId={commentId}
+                />
               </div>
             </div>
           </div>
