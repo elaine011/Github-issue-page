@@ -219,7 +219,6 @@ export default function DropdownList({
                           ...editData,
                           labels: labelsArr,
                         });
-                      console.log(editData);
                     }}
                   >
                     <div className="mr-2 flex items-center">

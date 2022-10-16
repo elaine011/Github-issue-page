@@ -283,7 +283,11 @@ export default function Sidebar({ newComment, getSideBarApi, listContent }) {
         )}
         <div className="mt-4 border-t border-t-[hsla(210,18%,87%,1)] pt-4"></div>
         <div className={`mt-6 w-full md:hidden ${newComment ? "hidden" : ""}`}>
-          <SubmitBtn btnText={"Submit new issue"} isCloseIssue={false} />
+          <SubmitBtn
+            btnText={"Submit new issue"}
+            isCloseIssue={false}
+            closeState={{}}
+          />
         </div>
       </>
     </div>

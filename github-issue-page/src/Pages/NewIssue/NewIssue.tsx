@@ -15,6 +15,7 @@ export default function NewIssue() {
   const [labelQuery, setLabelQuery] = useState([]);
   const [searchQuery, setSearchQuery] = useState(["is:issue is:open"]);
   const [inputValue, setInputValue] = useState({ title: "" });
+  const [issueCommentsData, setIssueCommentsData] = useState(null);
   const [editData, setEditData] = useState();
   const [query, setQuery] = useState({
     owner: "elaine011",
@@ -69,6 +70,7 @@ export default function NewIssue() {
           inputValue: [inputValue, setInputValue],
           createIssue,
           handleSubmitBtn,
+          issueCommentsData: [issueCommentsData, setIssueCommentsData],
           editData: [editData, setEditData],
         }}
       >
