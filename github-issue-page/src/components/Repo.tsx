@@ -33,13 +33,15 @@ export default function Repo() {
                   });
                   navigate("/issues");
                 }}
-                key={index}
               >
                 <div className="flex items-center">
                   <h1 className="cursor-pointer text-[20px] font-semibold text-[#0969da] hover:underline">
                     {item.name}
                   </h1>
-                  <span className="ml-1 grid place-items-center rounded-[2em] border border-solid border-[#d0d7de] px-[7px] text-[12px] font-medium text-[#57606a]">
+                  <span
+                    className="ml-1 grid place-items-center rounded-[2em] border border-solid border-[#d0d7de] px-[7px] text-[12px] font-medium text-[#57606a]"
+                    key={index}
+                  >
                     {item.visibility}
                   </span>
                 </div>
