@@ -78,7 +78,8 @@ export default function SubmitBtn({ btnText, isCloseIssue, closeState }) {
     if (
       btn === "Reopen" ||
       btn === "Close as completed" ||
-      btn === "Close as not planned"
+      btn === "Close as not planned" ||
+      btn === "Close with comment"
     ) {
       await updateIssue();
     }
