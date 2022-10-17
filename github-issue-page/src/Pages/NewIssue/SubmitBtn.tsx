@@ -91,6 +91,8 @@ export default function SubmitBtn({ btnText, isCloseIssue, closeState }) {
       setEditData({ ...editData, state: "open", stateReason: "reopend" });
     } else if (btn === "Close issue") {
       setEditData({ ...editData, state: "closed", stateReason: "completed" });
+    } else if (btn === "Close with comment") {
+      setEditData({ ...editData, state: "closed", stateReason: "completed" });
     }
   }
   // console.log(editData);
