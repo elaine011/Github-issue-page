@@ -11,9 +11,11 @@ import { actionType } from "../../redux/reducer";
 import { useContext, useState } from "react";
 import { IssueContext } from "../../utils/SelectContext";
 import StateBtn from "./StateBtn";
+import { useNavigate } from "react-router-dom";
 
 export default function ({ issuesLength }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [userData, setUserData] = useContext(IssueContext)["userData"];
   const filters = useSelector((state) => state["filter"]);
   const [hoverClearQuery, setHoverClearQuery] = useState(false);
@@ -48,13 +50,12 @@ export default function ({ issuesLength }) {
               </button>
             </div>
           </div>
-          <button className="ml-4 whitespace-nowrap rounded-md border border-solid border-secondary-border bg-btn-primary-bg py-5px px-4 font-medium text-white hover:bg-[#2c974b]">
-            <a href="/newissue" className="hidden md:block">
-              New issue
-            </a>
-            <a href="/newissue" className="md:hidden">
-              New
-            </a>
+          <button
+            className="ml-4 whitespace-nowrap rounded-md border border-solid border-secondary-border bg-btn-primary-bg py-5px px-4 font-medium text-white hover:bg-[#2c974b]"
+            onClick={() => navigate("/newissue")}
+          >
+            <a className="hidden md:block">New issue</a>
+            <a className="md:hidden">New</a>
           </button>
         </div>
         <div className="my-6 flex w-full md:order-first md:mt-0 md:w-auto md:grow">
@@ -92,8 +93,7 @@ export default function ({ issuesLength }) {
         query.mentioned ||
         query.state) && (
         <a
-          href="/issues"
-          className="mx-auto mb-4 flex w-full max-w-7xl items-center font-semibold text-fg-muted hover:fill-inherit hover:text-[#0969da]"
+          className="mx-auto mb-4 flex w-full max-w-7xl cursor-pointer items-center font-semibold text-fg-muted hover:fill-inherit hover:text-[#0969da]"
           onMouseEnter={() => setHoverClearQuery(true)}
           onMouseLeave={() => setHoverClearQuery(false)}
         >
