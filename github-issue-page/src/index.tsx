@@ -9,6 +9,7 @@ import Labels from "./Pages/Labels/Labels";
 import "./index.css";
 import NewIssue from "./Pages/NewIssue/NewIssue";
 import IssuePage from "./Pages/IssuePage/IssuePage";
+import Repo from "./components/Repo";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -19,19 +20,18 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 `;
-
 root.render(
   <BrowserRouter>
     <GlobalStyle />
     <Routes>
-      <Route path="/labels" element={<App />}></Route>
-      <Route path="/labels" element={<Labels />}></Route>
-      <Route path="/" element={<Issues />}>
-        <Route path="/issues/:id" element={<Issues />}></Route>
-        <Route path="/issues/new" element={<Issues />}></Route>
+      <Route path="/" element={<App />}>
+        <Route path="/" element={<Repo />} />
+        <Route path="/labels" element={<Labels />}></Route>
+        <Route path="/issues" element={<Issues />}></Route>
+        <Route path="/newissue" element={<NewIssue />}></Route>
+        <Route path="/issuePage/:issueId" element={<IssuePage />}></Route>
+        <Route path="*" element={<Repo />}></Route>
       </Route>
-      <Route path="/newissue" element={<NewIssue />}></Route>
-      <Route path="/issuePage/:issueId" element={<IssuePage />}></Route>
     </Routes>
   </BrowserRouter>
 );

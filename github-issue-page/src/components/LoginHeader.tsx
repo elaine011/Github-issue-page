@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { MarkGithubIcon } from "@primer/octicons-react";
 
 import { supabase } from "../utils/client";
+import api from "../utils/api";
 
 const Header = styled.header`
   background-color: #24292f;
@@ -88,8 +89,8 @@ function Login({ setTokenFn }) {
     <Header>
       <MarkGithubIcon size={32} fill={"#fff"} />
       <SignInBtn
-        onClick={() => {
-          signInWithGithub();
+        onClick={async () => {
+          await signInWithGithub();
         }}
       >
         Sign in

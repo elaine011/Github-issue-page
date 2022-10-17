@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { IssueContext } from "../../utils/SelectContext";
 
 export default function Reactions({ reactions, header, commentId }) {
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const [reactionsData, setReactionsData] =
     useContext(IssueContext)["reactionsData"];
   const createListCommentsReactions =
@@ -19,14 +20,14 @@ export default function Reactions({ reactions, header, commentId }) {
         isClicked: reactionsData
           .filter((item) => item.content === "+1")
           .map((item) => item.user.login)
-          .includes("elaine011"),
+          .includes(userData.userName),
       },
       bad: {
         number: reactionsData.filter((item) => item.content === "-1").length,
         isClicked: reactionsData
           .filter((item) => item.content === "-1")
           .map((item) => item.user.login)
-          .includes("elaine011"),
+          .includes(userData.userName),
       },
       confused: {
         number: reactionsData.filter((item) => item.content === "confused")
@@ -34,21 +35,21 @@ export default function Reactions({ reactions, header, commentId }) {
         isClicked: reactionsData
           .filter((item) => item.content === "confused")
           .map((item) => item.user.login)
-          .includes("elaine011"),
+          .includes(userData.userName),
       },
       eyes: {
         number: reactionsData.filter((item) => item.content === "eyes").length,
         isClicked: reactionsData
           .filter((item) => item.content === "eyes")
           .map((item) => item.user.login)
-          .includes("elaine011"),
+          .includes(userData.userName),
       },
       heart: {
         number: reactionsData.filter((item) => item.content === "heart").length,
         isClicked: reactionsData
           .filter((item) => item.content === "heart")
           .map((item) => item.user.login)
-          .includes("elaine011"),
+          .includes(userData.userName),
       },
       hooray: {
         number: reactionsData.filter((item) => item.content === "hooray")
@@ -56,14 +57,14 @@ export default function Reactions({ reactions, header, commentId }) {
         isClicked: reactionsData
           .filter((item) => item.content === "hooray")
           .map((item) => item.user.login)
-          .includes("elaine011"),
+          .includes(userData.userName),
       },
       laugh: {
         number: reactionsData.filter((item) => item.content === "laugh").length,
         isClicked: reactionsData
           .filter((item) => item.content === "laugh")
           .map((item) => item.user.login)
-          .includes("elaine011"),
+          .includes(userData.userName),
       },
       rocket: {
         number: reactionsData.filter((item) => item.content === "rocket")
@@ -71,7 +72,7 @@ export default function Reactions({ reactions, header, commentId }) {
         isClicked: reactionsData
           .filter((item) => item.content === "rocket")
           .map((item) => item.user.login)
-          .includes("elaine011"),
+          .includes(userData.userName),
       },
       total_count: reactionsData.length,
     },

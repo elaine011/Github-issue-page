@@ -7,6 +7,7 @@ import { IssueContext } from "../../utils/SelectContext";
 
 export default function FiltersMenu() {
   const dispatch = useDispatch();
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const isDisplayFilters = useSelector((state) => state["filter"]);
   const [query, setQuery] = useContext(IssueContext)["query"];
 
@@ -48,25 +49,25 @@ export default function FiltersMenu() {
                   onClick={() =>
                     element === "Your issues"
                       ? setQuery({
-                          owner: "elaine011",
-                          repo: "test-issue",
-                          created: "elaine011",
+                          owner: userData.userName,
+                          repo: userData.repo,
+                          created: userData.userName,
                           perPage: 10,
                           page: 1,
                         })
                       : element === "Everything assigned to you"
                       ? setQuery({
-                          owner: "elaine011",
-                          repo: "test-issue",
-                          assignee: "elaine011",
+                          owner: userData.userName,
+                          repo: userData.repo,
+                          assignee: userData.userName,
                           perPage: 10,
                           page: 1,
                         })
                       : element === "Everything mentioned to you"
                       ? setQuery({
-                          owner: "elaine011",
-                          repo: "test-issue",
-                          mentioned: "elaine011",
+                          owner: userData.userName,
+                          repo: userData.repo,
+                          mentioned: userData.userName,
                           perPage: 10,
                           page: 1,
                         })

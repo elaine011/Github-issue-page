@@ -6,6 +6,7 @@ import DropdownList from "./DropdownList";
 import SubmitBtn from "./SubmitBtn";
 
 export default function Sidebar({ newComment, getSideBarApi, listContent }) {
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useContext(IssueContext)["inputValue"];
   const updateIssue = useContext(IssueContext)["updateIssue"];
@@ -82,14 +83,14 @@ export default function Sidebar({ newComment, getSideBarApi, listContent }) {
                     onClick={() => {
                       let assigneesArr = [
                         ...(inputValue?.assignees ?? []),
-                        "elaine011",
+                        userData.userName,
                       ];
-                      if (assigneesArr.includes("elaine011")) {
+                      if (assigneesArr.includes(userData.userName)) {
                         assigneesArr = assigneesArr.filter(
-                          (element) => element !== "elaine011"
+                          (element) => element !== userData.userName
                         );
                       }
-                      assigneesArr = [...assigneesArr, "elaine011"];
+                      assigneesArr = [...assigneesArr, userData.userName];
 
                       let assigneesImgArr = [
                         ...(inputValue?.assigneesImg ?? []),

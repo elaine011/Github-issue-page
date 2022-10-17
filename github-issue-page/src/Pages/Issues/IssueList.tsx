@@ -54,7 +54,7 @@ export default function IssueList({
               </span>
             );
           })}
-          <div className="text-text mt-2 text-xs hover:cursor-pointer">
+          <div className="mt-2 text-xs text-[#57606a] hover:cursor-pointer">
             #{issueNumber} opened on {createdTime} agos by {author}
           </div>
         </div>

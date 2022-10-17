@@ -14,6 +14,7 @@ import StateBtn from "./StateBtn";
 
 export default function ({ issuesLength }) {
   const dispatch = useDispatch();
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const filters = useSelector((state) => state["filter"]);
   const [hoverClearQuery, setHoverClearQuery] = useState(false);
   const [query, setQuery] = useContext(IssueContext)["query"];
@@ -91,7 +92,7 @@ export default function ({ issuesLength }) {
         query.mentioned ||
         query.state) && (
         <a
-          href="/"
+          href="/issues"
           className="mx-auto mb-4 flex w-full max-w-7xl items-center font-semibold text-fg-muted hover:fill-inherit hover:text-[#0969da]"
           onMouseEnter={() => setHoverClearQuery(true)}
           onMouseLeave={() => setHoverClearQuery(false)}
@@ -104,7 +105,12 @@ export default function ({ issuesLength }) {
           />
           <span
             onClick={() => {
-              setQuery({ owner: "elaine011", repo: "test-issue" });
+              setQuery({
+                owner: userData.userName,
+                repo: userData.repo,
+                perPage: 10,
+                page: 1,
+              });
               setLabelQuery([]);
               setSearchQuery(["is:issue is:open"]);
             }}

@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Provider } from "react-redux";
 
 import { IssueContext } from "../../utils/SelectContext";
 import { store } from "../../redux/store";
-import Login from "../../components/LoginHeader";
 import Footer from "../../components/Footer";
 import Pagination from "../../components/Pagination";
 import RepoHeader from "../../components/RepoHeader";
@@ -14,19 +13,24 @@ import IssueList from "./IssueList";
 import NoIssue from "./NoIssue";
 
 export default function Labels() {
-  const [token, setToken] = useState("");
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const [issueData, setIssueData] = useState(null);
   const [labelQuery, setLabelQuery] = useState([]);
   const [searchQuery, setSearchQuery] = useState(["is:issue is:open"]);
   const [inputValue, setInputValue] = useState("");
   const [query, setQuery] = useState({
-    owner: "elaine011",
-    repo: "test-issue",
+    owner: userData?.userName,
+    repo: userData?.repo,
     perPage: 10,
     page: 1,
   });
 
   const now = new Date().getTime();
+
+  useEffect(() => {
+    userData?.repo &&
+      localStorage.setItem("userData", JSON.stringify(userData));
+  }, []);
 
   useEffect(() => {
     async function getLabels() {
@@ -64,7 +68,6 @@ export default function Labels() {
 
   return (
     <>
-      <Login setTokenFn={setToken} />
       <IssueContext.Provider
         value={{
           query: [query, setQuery],
@@ -72,6 +75,7 @@ export default function Labels() {
           label: [labelQuery, setLabelQuery],
           searchQuery: [searchQuery, setSearchQuery],
           input: [inputValue, setInputValue],
+          userData: [userData, setUserData],
         }}
       >
         <Provider store={store}>

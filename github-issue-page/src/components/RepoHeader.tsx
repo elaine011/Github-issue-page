@@ -13,6 +13,8 @@ import {
   GraphIcon,
   GearIcon,
 } from "@primer/octicons-react";
+import { useContext } from "react";
+import { IssueContext } from "../utils/SelectContext";
 
 const Container = styled.div`
   background-color: #f6f8fa;
@@ -117,6 +119,8 @@ const IssuesNumber = styled.span`
 `;
 
 export default function RepoHeader() {
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
+
   return (
     <>
       <Container>
@@ -124,12 +128,12 @@ export default function RepoHeader() {
           <div>
             <RepoIcon size={16} fill="#57606a" />
           </div>
-          <User>elaine011</User>
+          <User>{userData.userName}</User>
           <Seperate>/</Seperate>
           <Strong>
-            <Repo>test-issue</Repo>
+            <Repo>{userData.repo}</Repo>
           </Strong>
-          <Private>Public</Private>
+          <Private>{userData.visibility}</Private>
         </Header>
         <RepoProjectNav>
           <RepoProject>
@@ -139,7 +143,7 @@ export default function RepoHeader() {
               </RepoProjectLink>
               Code
             </RepoProjectList>
-            <Link to="/">
+            <Link to="/issues">
               <RepoProjectList>
                 <RepoProjectLink>
                   <IssueOpenedIcon size={16} fill="#57606a" />

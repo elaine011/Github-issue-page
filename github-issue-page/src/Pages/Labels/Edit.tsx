@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { SyncIcon } from "@primer/octicons-react";
 import { useContext, useState } from "react";
 
-import { SelectContext } from "../../utils/SelectContext";
+import { IssueContext, SelectContext } from "../../utils/SelectContext";
 import api from "../../utils/api";
 import ColorMenuBar from "./ColorMenu";
 
@@ -148,13 +148,14 @@ export default function Edit({
   LableTagName,
   LabelDesc,
 }) {
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const [inputFocus, setInputFocus] = useState<Boolean>(false);
   const [inputDes, setInputDes] = useState("");
   const token = JSON.parse(localStorage.getItem("loginToken"));
   const [labels, setLabels] = useContext(SelectContext).labels;
   const updateInfo = {
-    owner: "elaine011",
-    repo: "test-issue",
+    owner: userData.userName,
+    repo: userData.repo,
     userToken: token,
     name: LableTagName,
     description: inputDes,

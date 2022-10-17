@@ -1,5 +1,6 @@
 import { Octokit } from "octokit";
 const auth = JSON.parse(localStorage.getItem("loginToken")) ?? "";
+const userData = JSON.parse(localStorage.getItem("userData")) ?? "";
 
 const octokit = new Octokit({
   auth: auth,
@@ -32,13 +33,17 @@ const api = {
       );
     }
   },
+  async getRepo() {
+    const res = await octokit.request("GET /user/repos", {});
+    return res.data;
+  },
   async getSearch(data) {
     try {
       const response = await getOctokit.request(
         "GET /search/issues?q=repo:{owner}/{repo} {query}",
         {
-          owner: "elaine011",
-          repo: "test-issue",
+          owner: userData.userName,
+          repo: userData.repo,
           query: data,
         }
       );
@@ -50,8 +55,8 @@ const api = {
     }
   },
   async getLabels() {
-    const owner = "elaine011";
-    const repo = "test-issue";
+    const owner = userData.userName;
+    const repo = userData.repo;
     const githubToken = localStorage.getItem("loginToken");
     const response = await fetch(
       `${this.githubHostname}/repos/${owner}/${repo}/labels`,

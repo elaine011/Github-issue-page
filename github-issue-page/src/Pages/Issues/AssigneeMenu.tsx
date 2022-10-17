@@ -11,14 +11,15 @@ export default function AssigneeMenu({
   isDisplayFullScreen,
 }) {
   const dispatch = useDispatch();
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const [assignees, setAssignees] = useState([]);
   const [query, setQuery] = useContext(IssueContext)["query"];
   const [searchQuery, setSearchQuery] = useContext(IssueContext)["searchQuery"];
   const [filter, setFilter] = useState("");
 
   const userInfo = {
-    owner: "elaine011",
-    repo: "test-issue",
+    owner: userData.userName,
+    repo: userData.repo,
   };
 
   useEffect(() => {

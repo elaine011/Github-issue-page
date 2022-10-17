@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import { SyncIcon } from "@primer/octicons-react";
 
-import { SelectContext } from "../../utils/SelectContext";
+import { IssueContext, SelectContext } from "../../utils/SelectContext";
 import LabelTag from "../../components/LabelTag";
 import api from "../../utils/api";
 import ColorMenuBar from "./ColorMenu";
@@ -143,6 +143,7 @@ const Submit = styled(Cancel)`
 `;
 
 export default function NewLabel() {
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const [createLabel, setCreateLabel] = useContext(SelectContext).create;
   const token = JSON.parse(localStorage.getItem("loginToken"));
   const [inputTagName, setInputTagName] = useState("");
@@ -153,8 +154,8 @@ export default function NewLabel() {
   const [labels, setLabels] = useContext(SelectContext).labels;
 
   const createInfo = {
-    owner: "elaine011",
-    repo: "test-issue",
+    owner: userData.userName,
+    repo: userData.repo,
     userToken: token,
     name: inputTagName,
     description: inputDes,

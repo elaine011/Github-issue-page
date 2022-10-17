@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
-import Login from "../../components/LoginHeader";
 import RepoHeader from "../../components/RepoHeader";
 import api from "../../utils/api";
 import { handleCreateTime } from "../../utils/handleTime";
@@ -14,8 +13,8 @@ import StickyHeader from "./StickyHeader";
 import TimeLine from "./TimeLine";
 import { Issue } from "../../utils/type";
 export default function IssuePage() {
-  const [token, setToken] = useState("");
   const { issueId } = useParams();
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const [issueCommentsData, setIssueCommentsData] = useState(null);
   const [timelineData, setTimelineData] = useState(null);
   const [reactionsData, setReactionsData] = useState([]);
@@ -28,13 +27,13 @@ export default function IssuePage() {
   });
   const [displayStickHeader, setDisplayStickyHeader] = useState(false);
   const [editData, setEditData] = useState({
-    owner: "elaine011",
-    repo: "test-issue",
+    owner: userData.userName,
+    repo: userData.repo,
     issue_number: issueId,
   });
   const [commentsData, setCommentsData] = useState({
-    owner: "elaine011",
-    repo: "test-issue",
+    owner: userData.userName,
+    repo: userData.repo,
     issue_number: issueId,
   });
   const [listContent, setListContent] = useState({
@@ -143,10 +142,10 @@ export default function IssuePage() {
 
   return (
     <>
-      <Login setTokenFn={setToken} />
       <RepoHeader />
       <IssueContext.Provider
         value={{
+          userData: [userData, setUserData],
           timelineData: [timelineData, setTimelineData],
           issueCommentsData: [issueCommentsData, setIssueCommentsData],
           inputValue: [inputValue, setInputValue],

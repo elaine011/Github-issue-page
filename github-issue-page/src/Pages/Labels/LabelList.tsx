@@ -6,7 +6,7 @@ import LabelTag from "../../components/LabelTag";
 import Edit from "./Edit";
 import Delete from "./Delete";
 import api from "../../utils/api";
-import { SelectContext } from "../../utils/SelectContext";
+import { IssueContext, SelectContext } from "../../utils/SelectContext";
 
 type SelectedProps = {
   selected: string;
@@ -197,6 +197,7 @@ export default function LabelList({
   LabelDesc,
   defaultState,
 }) {
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const [selectedEditBtn, setSelectedEditBtn] = useState<Boolean>(false);
   const [selectedMobileEditBtn, setSelectedMobileEditBtn] =
     useState<Boolean>(false);
@@ -212,8 +213,8 @@ export default function LabelList({
   };
 
   const deleteInfo = {
-    owner: "elaine011",
-    repo: "test-issue",
+    owner: userData.userName,
+    repo: userData.repo,
     userToken: token,
     labelName: LableTagName,
   };

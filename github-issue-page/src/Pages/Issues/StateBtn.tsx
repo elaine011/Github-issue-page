@@ -3,13 +3,15 @@ import { useContext } from "react";
 import { IssueContext } from "../../utils/SelectContext";
 
 export default function StateBtn() {
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const [query, setQuery] = useContext(IssueContext)["query"];
-
   return (
     <div className="order-last mb-4 lg:hidden">
       <a
         href="#/"
-        onClick={() => setQuery({ owner: "elaine011", repo: "test-issue" })}
+        onClick={() =>
+          setQuery({ owner: userData.userName, repo: userData.repo })
+        }
       >
         <IssueOpenedIcon size={16} className="mr-1" />
         <span className="font-semibold text-primary-text">Open</span>

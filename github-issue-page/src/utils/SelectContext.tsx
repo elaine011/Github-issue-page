@@ -19,3 +19,5 @@ type ContextState = {
 export const SelectContext = createContext({} as ContextState);
 
 export const IssueContext = createContext({});
+
+export const UserContext = createContext({});

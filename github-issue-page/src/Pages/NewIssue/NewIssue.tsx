@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Provider } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
@@ -11,15 +11,15 @@ import Content from "./Content";
 import Sidebar from "./Sidebar";
 
 export default function NewIssue() {
-  const [token, setToken] = useState("");
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const [labelQuery, setLabelQuery] = useState([]);
   const [searchQuery, setSearchQuery] = useState(["is:issue is:open"]);
   const [inputValue, setInputValue] = useState({ title: "" });
   const [issueCommentsData, setIssueCommentsData] = useState(null);
   const [editData, setEditData] = useState();
   const [query, setQuery] = useState({
-    owner: "elaine011",
-    repo: "test-issue",
+    owner: userData.userName,
+    repo: userData.repo,
     perPage: 10,
     page: 1,
   });
@@ -29,8 +29,8 @@ export default function NewIssue() {
   });
   const Navigate = useNavigate();
   const userInfo = {
-    owner: "elaine011",
-    repo: "test-issue",
+    owner: userData.userName,
+    repo: userData.repo,
     title: inputValue["title"],
     body: inputValue["body"],
     assignees: inputValue["assignees"],
@@ -39,7 +39,7 @@ export default function NewIssue() {
 
   async function createIssue() {
     const res = await api.createIssue(userInfo);
-    if (res) Navigate("/");
+    if (res) Navigate("/issues");
   }
 
   const handleSubmitBtn = () => {
@@ -60,7 +60,6 @@ export default function NewIssue() {
 
   return (
     <>
-      <LoginHeader setTokenFn={setToken} />
       <RepoHeader />
       <IssueContext.Provider
         value={{

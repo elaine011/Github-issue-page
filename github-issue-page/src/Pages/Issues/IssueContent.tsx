@@ -10,6 +10,7 @@ import { IssueContext } from "../../utils/SelectContext";
 
 export default function LabelContent() {
   const dispatch = useDispatch();
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
   const isDisplayAssignee = useSelector((state) => state["assignee"]);
   const isDisplayLabels = useSelector((state) => state["label"]);
   const isDisplaySort = useSelector((state) => state["sort"]);
@@ -21,7 +22,9 @@ export default function LabelContent() {
         <div className="hidden text-sm lg:block">
           <a
             href="#/"
-            onClick={() => setQuery({ owner: "elaine011", repo: "test-issue" })}
+            onClick={() =>
+              setQuery({ owner: userData.userName, repo: userData.repo })
+            }
           >
             <IssueOpenedIcon size={16} className="mr-1" />
             <span className="font-semibold text-primary-text">Open</span>
