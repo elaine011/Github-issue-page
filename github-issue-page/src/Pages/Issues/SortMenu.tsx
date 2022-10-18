@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
-import { CheckIcon, XIcon } from "@primer/octicons-react";
 import { useContext, useState } from "react";
 
+import { CheckIcon, XIcon } from "@primer/octicons-react";
 import { actionType } from "../../redux/reducer";
 import { IssueContext } from "../../utils/SelectContext";
 

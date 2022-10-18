@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import styled from "styled-components";
-import { MarkGithubIcon } from "@primer/octicons-react";
-
-import { supabase } from "../utils/client";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+import { MarkGithubIcon } from "@primer/octicons-react";
+import { supabase } from "../utils/client";
 
 const Header = styled.header`
   background-color: #24292f;

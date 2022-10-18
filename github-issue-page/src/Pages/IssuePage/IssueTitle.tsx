@@ -1,9 +1,10 @@
+import { useCallback, useContext, useRef, useState } from "react";
+
 import {
   IssueClosedIcon,
   IssueOpenedIcon,
   SkipIcon,
 } from "@primer/octicons-react";
-import { useCallback, useContext, useRef, useState } from "react";
 import { IssueContext } from "../../utils/SelectContext";
 
 export default function IssueTitle({

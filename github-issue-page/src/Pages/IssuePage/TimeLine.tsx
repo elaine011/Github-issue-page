@@ -1,4 +1,5 @@
 import { useContext } from "react";
+
 import { handleCreateTime } from "../../utils/handleTime";
 import { IssueContext } from "../../utils/SelectContext";
 import Comment from "./Comment";
@@ -38,8 +39,8 @@ export default function TimeLine() {
                   actorImg={item.actor.avatar_url}
                   reactions={item.reactions}
                   commentId={item.id}
-                  key={item.id}
                   header={false}
+                  key={item.id}
                 />
               ) : (
                 <></>

@@ -1,5 +1,6 @@
-import { SmileyIcon } from "@primer/octicons-react";
 import { useContext } from "react";
+
+import { SmileyIcon } from "@primer/octicons-react";
 import { IssueContext } from "../../utils/SelectContext";
 
 export default function Reactions({ reactions, header, commentId }) {

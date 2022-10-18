@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { XIcon, CheckIcon } from "@primer/octicons-react";
 
+import { XIcon, CheckIcon } from "@primer/octicons-react";
 import { actionType } from "../../redux/reducer";
-import api from "../../utils/api";
 import { IssueContext, Labels } from "../../utils/SelectContext";
+import api from "../../utils/api";
 
 export default function LabelsMenu({ isDisplayLabels, isDisplayFullScreen }) {
   const dispatch = useDispatch();

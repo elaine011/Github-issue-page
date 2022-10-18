@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import styled from "styled-components";
-import { SyncIcon } from "@primer/octicons-react";
 
+import { SyncIcon } from "@primer/octicons-react";
 import { IssueContext, SelectContext } from "../../utils/SelectContext";
 import LabelTag from "../../components/LabelTag";
 import api from "../../utils/api";
-import ColorMenuBar from "./ColorMenu";
+import ColorMenu from "./ColorMenu";
 
 type DisplayProps = {
   display: string;
@@ -253,7 +253,7 @@ export default function NewLabel() {
                 }}
                 color={inputColor.length < 6 ? "red" : "#24292f"}
               />
-              <ColorMenuBar
+              <ColorMenu
                 inputFocus={inputFocus}
                 setInputColor={setInputColor}
               />

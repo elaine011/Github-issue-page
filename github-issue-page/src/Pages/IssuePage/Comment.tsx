@@ -1,6 +1,7 @@
-import { KebabHorizontalIcon, SmileyIcon } from "@primer/octicons-react";
+import { useContext, useRef, useState } from "react";
 import { marked } from "marked";
-import { useContext, useEffect, useRef, useState } from "react";
+
+import { KebabHorizontalIcon, SmileyIcon } from "@primer/octicons-react";
 import { IssueContext } from "../../utils/SelectContext";
 import EditSection from "./EditSection";
 import "../../utils/prose.css";
@@ -408,7 +409,6 @@ export default function Comment({
             body={body}
             commentId={commentId}
             header={header}
-            ref={editDropDownRef}
           />
         </div>
       </div>

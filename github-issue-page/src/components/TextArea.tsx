@@ -1,12 +1,13 @@
 import { useContext, useRef, useState } from "react";
-import { IssueContext } from "../utils/SelectContext";
 import TextareaMarkdown, {
   TextareaMarkdownRef,
 } from "textarea-markdown-editor";
 import { marked } from "marked";
+import { ref, uploadBytes } from "firebase/storage";
+
+import { IssueContext } from "../utils/SelectContext";
 import "../utils/prose.css";
 import storage from "../utils/firebase";
-import { ref, uploadBytes } from "firebase/storage";
 import {
   ChevronUpIcon,
   TypographyIcon,
@@ -27,6 +28,7 @@ import {
   MarkdownIcon,
 } from "@primer/octicons-react";
 import SubmitBtn from "../Pages/NewIssue/SubmitBtn";
+
 export default function TextArea({ newComment }) {
   const [isDisplayWrite, setIsDisplayWrite] = useState(false);
   const [isDisplayMarkdown, setIsDisplayMarkdown] = useState(false);
@@ -249,11 +251,9 @@ export default function TextArea({ newComment }) {
                 newComment ? "min-h-[100px]" : "min-h-[200px]"
               }`}
               dangerouslySetInnerHTML={{
-                __html: marked(inputValue?.body ?? ""),
+                __html: marked(inputValue?.body ?? "Noting to preview"),
               }}
-            >
-              {/* <p>Noting to preview</p> */}
-            </div>
+            ></div>
           ) : (
             <div
               className={`md:group md:relative md:rounded-md md:border-[2px] md:border-solid  md:bg-[#f6f8fa] ${

@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { CheckIcon } from "@primer/octicons-react";
 import { useContext } from "react";
 
+import { CheckIcon } from "@primer/octicons-react";
 import { SelectContext } from "../utils/SelectContext";
 
 type DisplayProps = {
@@ -100,15 +100,12 @@ export default function SortList() {
             <SortText>Alphabetically</SortText>
           </SortLink>
           <SortLink href="#/">
-            {/* <CheckIcon size={16} /> */}
             <SortText>Reverse alphabetically</SortText>
           </SortLink>
           <SortLink href="#/">
-            {/* <CheckIcon size={16} /> */}
             <SortText>Most issues</SortText>
           </SortLink>
           <SortLink href="#/">
-            {/* <CheckIcon size={16} /> */}
             <SortText>Fewest issues</SortText>
           </SortLink>
         </SortListMenu>

@@ -1,10 +1,10 @@
-import { CheckIcon, XIcon } from "@primer/octicons-react";
 import { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
+import { CheckIcon, XIcon } from "@primer/octicons-react";
 import { actionType } from "../../redux/reducer";
-import api from "../../utils/api";
 import { IssueContext } from "../../utils/SelectContext";
+import api from "../../utils/api";
 
 export default function AssigneeMenu({
   isDisplayAssignee,

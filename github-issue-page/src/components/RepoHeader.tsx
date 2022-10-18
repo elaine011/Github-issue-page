@@ -1,5 +1,6 @@
-import styled from "styled-components";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 import {
   RepoIcon,
@@ -13,7 +14,6 @@ import {
   GraphIcon,
   GearIcon,
 } from "@primer/octicons-react";
-import { useContext } from "react";
 import { IssueContext } from "../utils/SelectContext";
 
 const Container = styled.div`

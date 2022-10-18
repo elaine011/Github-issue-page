@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { SearchIcon } from "@primer/octicons-react";
 
 const LabelSearch = styled.input`

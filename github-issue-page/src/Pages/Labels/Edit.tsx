@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { SyncIcon } from "@primer/octicons-react";
 import { useContext, useState } from "react";
 
+import { SyncIcon } from "@primer/octicons-react";
 import { IssueContext, SelectContext } from "../../utils/SelectContext";
 import api from "../../utils/api";
 import ColorMenuBar from "./ColorMenu";

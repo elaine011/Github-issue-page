@@ -1,5 +1,6 @@
-import { CheckIcon, PencilIcon, XIcon } from "@primer/octicons-react";
 import { useContext, useState } from "react";
+
+import { CheckIcon, PencilIcon, XIcon } from "@primer/octicons-react";
 import { IssueContext } from "../../utils/SelectContext";
 
 export default function DropdownList({

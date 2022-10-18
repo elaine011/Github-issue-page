@@ -1,12 +1,13 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   CommentIcon,
   IssueClosedIcon,
   IssueOpenedIcon,
   SkipIcon,
 } from "@primer/octicons-react";
-import { useContext } from "react";
 import { IssueContext } from "../../utils/SelectContext";
-import { useNavigate } from "react-router-dom";
 import { lightOrDark } from "../../utils/lightOrDark";
 
 export default function IssueList({

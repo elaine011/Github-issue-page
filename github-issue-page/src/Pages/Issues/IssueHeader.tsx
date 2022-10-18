@@ -1,4 +1,6 @@
+import { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import {
   MilestoneIcon,
@@ -8,10 +10,8 @@ import {
 } from "@primer/octicons-react";
 import FiltersMenu from "./FiltersMenu";
 import { actionType } from "../../redux/reducer";
-import { useContext, useState } from "react";
 import { IssueContext } from "../../utils/SelectContext";
 import StateBtn from "./StateBtn";
-import { useNavigate } from "react-router-dom";
 
 export default function ({ issuesLength }) {
   const dispatch = useDispatch();

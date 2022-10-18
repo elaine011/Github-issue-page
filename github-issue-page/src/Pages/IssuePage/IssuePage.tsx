@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import Footer from "../../components/Footer";
 import RepoHeader from "../../components/RepoHeader";
 import api from "../../utils/api";
@@ -12,6 +13,7 @@ import IssueTitle from "./IssueTitle";
 import StickyHeader from "./StickyHeader";
 import TimeLine from "./TimeLine";
 import { Issue } from "../../utils/type";
+
 export default function IssuePage() {
   const { issueId } = useParams();
   const [userData, setUserData] = useContext(IssueContext)["userData"];

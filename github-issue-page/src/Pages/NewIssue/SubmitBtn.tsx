@@ -1,9 +1,10 @@
+import { useContext, useState } from "react";
+
 import {
   IssueClosedIcon,
   IssueReopenedIcon,
   SkipIcon,
 } from "@primer/octicons-react";
-import { useContext, useState } from "react";
 import { IssueContext } from "../../utils/SelectContext";
 
 export default function SubmitBtn({ btnText, isCloseIssue, closeState }) {

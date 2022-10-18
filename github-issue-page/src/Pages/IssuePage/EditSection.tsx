@@ -1,10 +1,11 @@
-import { useContext, useRef, useState, forwardRef } from "react";
+import { useContext, useRef, useState } from "react";
 import TextareaMarkdown, {
   TextareaMarkdownRef,
 } from "textarea-markdown-editor";
-import { marked } from "marked";
-import "../../utils/prose.css";
 import { ref, uploadBytes } from "firebase/storage";
+import { marked } from "marked";
+
+import "../../utils/prose.css";
 import storage from "../../utils/firebase";
 import {
   ChevronUpIcon,
@@ -26,10 +27,13 @@ import {
   MarkdownIcon,
 } from "@primer/octicons-react";
 import { IssueContext } from "../../utils/SelectContext";
-function EditSection(
-  { setIsDisplayEdit, body, commentId, header },
-  editDropDownRef
-) {
+
+export default function EditSection({
+  setIsDisplayEdit,
+  body,
+  commentId,
+  header,
+}) {
   const [isDisplayWrite, setIsDisplayWrite] = useState(false);
   const [isDisplayMarkdown, setIsDisplayMarkdown] = useState(false);
   const [isFocusTextArea, setIsFocusTextArea] = useState(false);
@@ -233,11 +237,9 @@ function EditSection(
             <div
               className="prose min-h-[100px] border-b border-solid border-[#d0d7de] p-2 pt-0 text-[14px] text-[#24292f]"
               dangerouslySetInnerHTML={{
-                __html: marked(inputValue?.body ?? ""),
+                __html: marked(inputValue?.body ?? "Noting to preview"),
               }}
-            >
-              {/* <p>Noting to preview</p> */}
-            </div>
+            ></div>
           ) : (
             <div
               className={`md:group md:relative md:rounded-md md:border-[2px] md:border-solid  md:bg-[#f6f8fa] ${
@@ -311,5 +313,3 @@ function EditSection(
     </div>
   );
 }
-
-export default forwardRef(EditSection);

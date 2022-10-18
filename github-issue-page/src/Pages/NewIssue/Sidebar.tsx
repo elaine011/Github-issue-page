@@ -1,6 +1,6 @@
-import { GearIcon } from "@primer/octicons-react";
 import { useContext, useEffect, useRef, useState } from "react";
-import api from "../../utils/api";
+
+import { GearIcon } from "@primer/octicons-react";
 import { lightOrDark } from "../../utils/lightOrDark";
 import { IssueContext } from "../../utils/SelectContext";
 import DropdownList from "./DropdownList";

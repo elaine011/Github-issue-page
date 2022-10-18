@@ -1,6 +1,7 @@
-import { CheckIcon, IssueOpenedIcon } from "@primer/octicons-react";
-import * as _ from "lodash";
 import { useContext } from "react";
+import * as _ from "lodash";
+
+import { CheckIcon, IssueOpenedIcon } from "@primer/octicons-react";
 import { IssueContext } from "../../utils/SelectContext";
 
 export default function StateBtn() {

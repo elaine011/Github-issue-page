@@ -1,9 +1,10 @@
+import { useContext } from "react";
+
 import {
   IssueClosedIcon,
   IssueOpenedIcon,
   SkipIcon,
 } from "@primer/octicons-react";
-import { useContext } from "react";
 import { IssueContext } from "../../utils/SelectContext";
 
 export default function StickyHeader({

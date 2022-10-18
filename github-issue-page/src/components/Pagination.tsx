@@ -1,5 +1,6 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@primer/octicons-react";
 import { useContext } from "react";
+
+import { ChevronLeftIcon, ChevronRightIcon } from "@primer/octicons-react";
 import { IssueContext } from "../utils/SelectContext";
 
 export default function Pagination() {

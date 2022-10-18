@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import { TagIcon, MilestoneIcon } from "@primer/octicons-react";
 
+import { TagIcon, MilestoneIcon } from "@primer/octicons-react";
 import RepoHeader from "../../components/RepoHeader";
 import SearchBar from "../../components/SearchBar";
 import NewLabel from "./NewLabel";

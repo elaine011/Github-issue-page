@@ -52,13 +52,12 @@ export default function IssuesContent() {
           <SortList />
         </LabelsHeader>
         {labels &&
-          labels.map((item, index) => {
+          labels.map((item) => {
             return (
               <LabelList
                 LabelTagColor={item.color}
                 LableTagName={item.name}
                 LabelDesc={item.description}
-                defaultState={defaultState}
               />
             );
           })}

@@ -1,7 +1,4 @@
-import { useContext } from "react";
 import styled from "styled-components";
-
-import { SelectContext } from "../../utils/SelectContext";
 
 type MarginProps = {
   margin: string;

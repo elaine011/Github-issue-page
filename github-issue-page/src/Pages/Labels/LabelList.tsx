@@ -8,9 +8,6 @@ import Delete from "./Delete";
 import api from "../../utils/api";
 import { IssueContext, SelectContext } from "../../utils/SelectContext";
 
-type SelectedProps = {
-  selected: string;
-};
 type DisplayProps = {
   display: string;
 };
@@ -103,29 +100,6 @@ const ReviseBtnMenu = styled.summary`
   display: flex;
   justify-content: flex-end;
 `;
-const MenuBtn = styled(KebabHorizontalIcon)<SelectedProps>`
-  @media screen and (max-width: 1011.9px) {
-    fill: ${(props) => props.selected};
-    &:hover {
-      fill: #fff;
-    }
-  }
-`;
-const ReviseMenu = styled.div<DisplayProps>`
-  display: none;
-
-  @media screen and (max-width: 1011.9px) {
-    width: 158px;
-    margin-top: 2px;
-    padding: 0 4px;
-    line-height: 1.5;
-    position: absolute;
-    font-size: 12px;
-    top: 100%;
-    display: ${(props) => props.display};
-    z-index: 100;
-  }
-`;
 const ReviseMenuContainer = styled.div`
   @media screen and (max-width: 1011.9px) {
     width: 158px;
@@ -205,12 +179,7 @@ const DeleteBtn = styled.button`
   }
 `;
 
-export default function LabelList({
-  LabelTagColor,
-  LableTagName,
-  LabelDesc,
-  defaultState,
-}) {
+export default function LabelList({ LabelTagColor, LableTagName, LabelDesc }) {
   const [userData, setUserData] = useContext(IssueContext)["userData"];
   const [selectedEditBtn, setSelectedEditBtn] = useState<Boolean>(false);
   const [selectedMobileEditBtn, setSelectedMobileEditBtn] =

@@ -9,7 +9,6 @@ import { IssueContext } from "../utils/SelectContext";
 export default function Repo() {
   const [repo, setRepo] = useState(null);
   const [userData, setUserData] = useContext(IssueContext)["userData"];
-  const [token, setToken] = useContext(IssueContext)["token"];
   const navigate = useNavigate();
 
   useEffect(() => {
