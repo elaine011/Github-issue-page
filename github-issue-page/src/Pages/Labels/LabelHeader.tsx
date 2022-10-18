@@ -71,6 +71,8 @@ const NewLabelBtn = styled.button`
   font-size: 14px;
   box-shadow: 0 1px 0 rgba(27, 31, 36, 0.1);
   cursor: pointer;
+  display: flex;
+  align-items: center;
 `;
 
 export default function IssueHeader() {

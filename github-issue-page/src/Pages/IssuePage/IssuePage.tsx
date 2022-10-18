@@ -126,7 +126,7 @@ export default function IssuePage() {
 
   async function getSideBarApi() {
     const assigneesData = await api.getAssignees(commentsData);
-    const labelsData = await api.getLabels();
+    const labelsData = await api.getLabels(userData);
     setListContent({
       ...listContent,
       assignees: assigneesData,

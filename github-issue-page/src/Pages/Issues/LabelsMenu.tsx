@@ -14,10 +14,11 @@ export default function LabelsMenu({ isDisplayLabels, isDisplayFullScreen }) {
   const [searchQuery, setSearchQuery] = useContext(IssueContext)["searchQuery"];
   const [check, setCheck] = useState(false);
   const [filter, setFilter] = useState("");
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
 
   useEffect(() => {
     async function getLabels() {
-      const data = await api.getLabels();
+      const data = await api.getLabels(userData);
       setLabelslist(data);
     }
     getLabels();

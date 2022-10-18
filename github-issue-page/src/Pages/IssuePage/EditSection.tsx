@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef, useState, forwardRef } from "react";
 import TextareaMarkdown, {
   TextareaMarkdownRef,
 } from "textarea-markdown-editor";
@@ -26,7 +26,10 @@ import {
   MarkdownIcon,
 } from "@primer/octicons-react";
 import { IssueContext } from "../../utils/SelectContext";
-export default function TextArea({ setIsDisplayEdit, body, commentId }) {
+function EditSection(
+  { setIsDisplayEdit, body, commentId, header },
+  editDropDownRef
+) {
   const [isDisplayWrite, setIsDisplayWrite] = useState(false);
   const [isDisplayMarkdown, setIsDisplayMarkdown] = useState(false);
   const [isFocusTextArea, setIsFocusTextArea] = useState(false);
@@ -34,6 +37,7 @@ export default function TextArea({ setIsDisplayEdit, body, commentId }) {
   const [inputValue, setInputValue] = useState({ body: body });
   const [editData, setEditData] = useContext(IssueContext)["editData"];
   const updateComment = useContext(IssueContext)["updateComment"];
+  const updateIssue = useContext(IssueContext)["updateIssue"];
   const handleUpload = async (e) => {
     if (e.target.files[0] == null) return;
 
@@ -295,7 +299,7 @@ export default function TextArea({ setIsDisplayEdit, body, commentId }) {
             <button
               className="flex h-full w-full cursor-pointer items-center rounded-md border border-solid border-[rgba(27,31,36,0.15)] bg-[#2da44e] px-4 py-[5px] text-center text-[14px] font-medium text-[#fff] shadow-[0_1px_0_rgba(27,31,36,0.1),inset_0_1px_0_rgba(255,255,255,0.03)]"
               onClick={() => {
-                updateComment();
+                header ? updateIssue() : updateComment();
                 setIsDisplayEdit(false);
               }}
             >
@@ -307,3 +311,5 @@ export default function TextArea({ setIsDisplayEdit, body, commentId }) {
     </div>
   );
 }
+
+export default forwardRef(EditSection);

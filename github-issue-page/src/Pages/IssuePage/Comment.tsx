@@ -1,6 +1,6 @@
 import { KebabHorizontalIcon, SmileyIcon } from "@primer/octicons-react";
 import { marked } from "marked";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { IssueContext } from "../../utils/SelectContext";
 import EditSection from "./EditSection";
 import "../../utils/prose.css";
@@ -24,6 +24,7 @@ export default function Comment({
   const [editData, setEditData] = useContext(IssueContext)["editData"];
   const [reactionsData, setReactionsData] =
     useContext(IssueContext)["reactionsData"];
+  const editDropDownRef = useRef<HTMLDetailsElement>();
 
   const editDropDownMenu = [
     ["Copy Link", "Quote reply"],
@@ -115,6 +116,9 @@ export default function Comment({
     },
   };
   marked.use({ renderer });
+  const closeDetailsMenu = () => {
+    editDropDownRef.current.open = false;
+  };
 
   return (
     <>
@@ -246,7 +250,10 @@ export default function Comment({
                     </button>
                   </div>
                 </details>
-                <details className="relative ml-2 md:ml-0">
+                <details
+                  className="relative ml-2 md:ml-0"
+                  ref={editDropDownRef}
+                >
                   <summary className="cursor-pointer list-none px-1 py-2 focus:text-[#0969da]">
                     <KebabHorizontalIcon size={16} />
                   </summary>
@@ -257,6 +264,7 @@ export default function Comment({
                             <li
                               className="cursor-pointer p-2 pl-4 hover:bg-[#0969da] hover:text-[#fff]"
                               key={index}
+                              onClick={() => closeDetailsMenu()}
                             >
                               {item}
                             </li>
@@ -265,23 +273,37 @@ export default function Comment({
                             <li
                               className="cursor-pointer p-2 pl-4 hover:bg-[#0969da] hover:text-[#fff]"
                               key={index}
+                              onClick={() => closeDetailsMenu()}
                             >
                               {item}
                             </li>
                           ))}
                       <div className="my-2 border-t border-solid border-[#d0d7de]"></div>
                       {authorComment
-                        ? editDropDownMenu[1].map((item, index) => (
-                            <li
-                              className="cursor-pointer p-2 pl-4 hover:bg-[#0969da] hover:text-[#fff]"
-                              key={index}
-                              onClick={() =>
-                                item === "Edit" ? setIsDisplayEdit(true) : ""
-                              }
-                            >
-                              {item}
-                            </li>
-                          ))
+                        ? editDropDownMenu[1].map((item, index) =>
+                            item === "Edit" ? (
+                              <li
+                                className="cursor-pointer p-2 pl-4 hover:bg-[#0969da] hover:text-[#fff]"
+                                key={index}
+                                onClick={() => {
+                                  setIsDisplayEdit(true);
+                                  closeDetailsMenu();
+                                }}
+                              >
+                                {item}
+                              </li>
+                            ) : (
+                              <li
+                                className="cursor-pointer p-2 pl-4 hover:bg-[#0969da] hover:text-[#fff]"
+                                key={index}
+                                onClick={() => {
+                                  closeDetailsMenu();
+                                }}
+                              >
+                                {item}
+                              </li>
+                            )
+                          )
                         : editDropDownMenu[4].map((item, index) =>
                             item === "Delete" ? (
                               <li
@@ -298,6 +320,18 @@ export default function Comment({
                                     "Are you sure you want to delete this?"
                                   );
                                   deleteComment();
+                                  closeDetailsMenu();
+                                }}
+                              >
+                                {item}
+                              </li>
+                            ) : item === "Edit" ? (
+                              <li
+                                className="cursor-pointer p-2 pl-4 hover:bg-[#0969da] hover:text-[#fff]"
+                                key={index}
+                                onClick={() => {
+                                  setIsDisplayEdit(true);
+                                  closeDetailsMenu();
                                 }}
                               >
                                 {item}
@@ -306,9 +340,9 @@ export default function Comment({
                               <li
                                 className="cursor-pointer p-2 pl-4 hover:bg-[#0969da] hover:text-[#fff]"
                                 key={index}
-                                onClick={() =>
-                                  item === "Edit" ? setIsDisplayEdit(true) : ""
-                                }
+                                onClick={() => {
+                                  closeDetailsMenu();
+                                }}
                               >
                                 {item}
                               </li>
@@ -319,6 +353,7 @@ export default function Comment({
                         <li
                           className="cursor-pointer p-2 pl-4 hover:bg-[#0969da] hover:text-[#fff]"
                           key={index}
+                          onClick={() => closeDetailsMenu()}
                         >
                           {item}
                         </li>
@@ -372,6 +407,8 @@ export default function Comment({
             setIsDisplayEdit={setIsDisplayEdit}
             body={body}
             commentId={commentId}
+            header={header}
+            ref={editDropDownRef}
           />
         </div>
       </div>

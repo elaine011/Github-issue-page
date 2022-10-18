@@ -84,7 +84,7 @@ export default function Labels() {
             <>
               <IssueHeader issuesLength={issueData.length} />
               <IssueContent />
-              {issueData.map((item) => {
+              {issueData.map((item, index) => {
                 return (
                   <div
                     className=" px-0 sm:px-4 lg:mx-auto lg:max-w-[1280px]"
@@ -100,6 +100,7 @@ export default function Labels() {
                       commentNumber={item.comments}
                       state={item.state}
                       stateReason={item.state_reason}
+                      key={index}
                     />
                   </div>
                 );

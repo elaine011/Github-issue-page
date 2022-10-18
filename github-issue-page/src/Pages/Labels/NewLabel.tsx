@@ -125,11 +125,13 @@ const Cancel = styled.button`
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.25);
   border: 1px solid rgba(27, 31, 36, 0.15);
   cursor: pointer;
-  height: 29px;
+  height: auto;
   margin-top: 8px;
   margin-right: 8px;
   align-self: flex-end;
   font-weight: 500;
+  display: flex;
+  align-items: center;
 `;
 const Submit = styled(Cancel)`
   background-color: #2da44e;
@@ -149,7 +151,6 @@ export default function NewLabel() {
   const [inputTagName, setInputTagName] = useState("");
   const [inputDes, setInputDes] = useState("");
   const [inputColor, setInputColor] = useState("d73a4a");
-
   const [inputFocus, setInputFocus] = useState<Boolean>(false);
   const [labels, setLabels] = useContext(SelectContext).labels;
 
@@ -163,23 +164,28 @@ export default function NewLabel() {
   };
 
   async function getLabels() {
-    await api.createLabels(createInfo);
-    setCreateLabel(false);
-    const data = await api.getLabels();
+    const data = await api.getLabels(userData);
     setLabels(data);
   }
 
-  const lightOrDark = (bgcolor = "000080") => {
+  async function createLabels() {
+    await api.createLabels(createInfo);
+    setCreateLabel(false);
+    await getLabels();
+  }
+
+  const lightOrDark = (bgcolor) => {
     const r = parseInt(bgcolor.slice(0, 2), 16);
     const g = parseInt(bgcolor.slice(2, 4), 16);
     const b = parseInt(bgcolor.slice(4, 6), 16);
     const hsp = r * 0.3 + g * 0.6 + b * 0.1;
     if (hsp > 127.5) {
-      return "white";
-    } else {
       return "black";
+    } else {
+      return "white";
     }
   };
+
   const handleColor = () => {
     let randomColor = Math.floor(Math.random() * 16777215).toString(16);
     while (randomColor.length < 6) randomColor = handleColor();
@@ -232,7 +238,6 @@ export default function NewLabel() {
               </ColorBtn>
               <ColorInput
                 type="text"
-                defaultValue={`#d73a4a`}
                 value={`#` + inputColor}
                 name="label[color]"
                 maxLength={7}
@@ -256,7 +261,7 @@ export default function NewLabel() {
           </ColorBox>
           <CheckBtn>
             <Cancel onClick={() => setCreateLabel(false)}>Cancel</Cancel>
-            <Submit onClick={getLabels}>Create label</Submit>
+            <Submit onClick={() => createLabels()}>Create label</Submit>
           </CheckBtn>
         </EditMenu>
       </CreateLabel>

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   RepoIcon,
@@ -120,7 +120,7 @@ const IssuesNumber = styled.span`
 
 export default function RepoHeader() {
   const [userData, setUserData] = useContext(IssueContext)["userData"];
-
+  const navigate = useNavigate();
   return (
     <>
       <Container>
@@ -128,7 +128,7 @@ export default function RepoHeader() {
           <div>
             <RepoIcon size={16} fill="#57606a" />
           </div>
-          <User>{userData.userName}</User>
+          <User onClick={() => navigate("/")}>{userData.userName}</User>
           <Seperate>/</Seperate>
           <Strong>
             <Repo>{userData.repo}</Repo>

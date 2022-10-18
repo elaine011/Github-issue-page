@@ -1,6 +1,7 @@
 import { GearIcon } from "@primer/octicons-react";
 import { useContext, useEffect, useRef, useState } from "react";
 import api from "../../utils/api";
+import { lightOrDark } from "../../utils/lightOrDark";
 import { IssueContext } from "../../utils/SelectContext";
 import DropdownList from "./DropdownList";
 import SubmitBtn from "./SubmitBtn";
@@ -56,7 +57,7 @@ export default function Sidebar({ newComment, getSideBarApi, listContent }) {
                 <summary
                   className="cursor-pointer list-none text-[#57606a] hover:text-[#0969da]"
                   onClick={() =>
-                    assigneesDropDownRef.current.open === true && updateIssue()
+                    assigneesDropDownRef.current.open === false && updateIssue()
                   }
                 >
                   <span className="font-semibold">{item.title}</span>
@@ -153,7 +154,7 @@ export default function Sidebar({ newComment, getSideBarApi, listContent }) {
                 <summary
                   className="cursor-pointer list-none text-[#57606a] hover:text-[#0969da]"
                   onClick={() => {
-                    labelsDropDownRef.current.open === true && updateIssue();
+                    labelsDropDownRef.current.open === false && updateIssue();
                   }}
                 >
                   <span className="font-semibold">{item.title}</span>
@@ -189,6 +190,9 @@ export default function Sidebar({ newComment, getSideBarApi, listContent }) {
                             className="rounded-full px-[7px] py-[2px]"
                             style={{
                               backgroundColor: `#${inputValue?.labelsColor[index]}`,
+                              color: `${lightOrDark(
+                                inputValue?.labelsColor[index]
+                              )}`,
                             }}
                           >
                             {item}

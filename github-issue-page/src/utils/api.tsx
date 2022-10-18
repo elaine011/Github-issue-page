@@ -14,6 +14,9 @@ const api = {
       const response = await getOctokit.request(
         "GET /repos/{owner}/{repo}/issues?per_page={perPage}&page={page}",
         {
+          headers: {
+            "if-none-match": "",
+          },
           owner: data.owner,
           repo: data.repo,
           state: data?.state,
@@ -42,6 +45,9 @@ const api = {
       const response = await getOctokit.request(
         "GET /search/issues?q=repo:{owner}/{repo} {query}",
         {
+          headers: {
+            "if-none-match": "",
+          },
           owner: userData.userName,
           repo: userData.repo,
           query: data,
@@ -54,24 +60,23 @@ const api = {
       );
     }
   },
-  async getLabels() {
-    const owner = userData.userName;
-    const repo = userData.repo;
-    const githubToken = localStorage.getItem("loginToken");
-    const response = await fetch(
-      `${this.githubHostname}/repos/${owner}/${repo}/labels`,
-      {
-        headers: new Headers({
-          Accept: "application/vnd.github+json",
-        }),
-      }
-    );
-    return await response.json();
+  async getLabels(data) {
+    const response = await octokit.request("GET /repos/{owner}/{repo}/labels", {
+      headers: {
+        "if-none-match": "",
+      },
+      owner: data.userName,
+      repo: data.repo,
+    });
+    return await response.data;
   },
   async getAssignees(data) {
     const response = await getOctokit.request(
       "GET /repos/{owner}/{repo}/assignees",
       {
+        headers: {
+          "if-none-match": "",
+        },
         owner: data.owner,
         repo: data.repo,
       }
@@ -80,6 +85,9 @@ const api = {
   },
   async createLabels(data) {
     await octokit.request("POST /repos/{owner}/{repo}/labels", {
+      headers: {
+        "if-none-match": "",
+      },
       owner: data.owner,
       repo: data.repo,
       name: data.name,
@@ -109,6 +117,9 @@ const api = {
     const res = await octokit.request(
       "GET /repos/{owner}/{repo}/issues/{issue_number}",
       {
+        headers: {
+          "if-none-match": "",
+        },
         owner: data.owner,
         repo: data.repo,
         issue_number: data.issue_number,
@@ -120,6 +131,9 @@ const api = {
     const res = await octokit.request(
       "GET /repos/{owner}/{repo}/issues/{issue_number}/reactions",
       {
+        headers: {
+          "if-none-match": "",
+        },
         owner: data.owner,
         repo: data.repo,
         issue_number: data.issue_number,
@@ -225,6 +239,9 @@ const api = {
     const res = await octokit.request(
       "GET /repos/{owner}/{repo}/issues/{issue_number}/timeline?per_page={per_page}",
       {
+        headers: {
+          "if-none-match": "",
+        },
         owner: data.owner,
         repo: data.repo,
         issue_number: data.issue_number,

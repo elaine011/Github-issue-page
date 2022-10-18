@@ -7,6 +7,7 @@ import {
 import { useContext } from "react";
 import { IssueContext } from "../../utils/SelectContext";
 import { useNavigate } from "react-router-dom";
+import { lightOrDark } from "../../utils/lightOrDark";
 
 export default function IssueList({
   title,
@@ -42,18 +43,23 @@ export default function IssueList({
           <span className="text-4 mr-[5px] font-semibold leading-[21.6px] hover:cursor-pointer hover:text-[#0969da]">
             {title}
           </span>
-          {labels.map((item) => {
-            return (
-              <span className="mr-[5px] block md:inline" key={item.id}>
-                <div
-                  className={`inline-block h-5 rounded-[10px]  px-[7px] text-[12px] font-semibold leading-[20px] marker:mr-[5px] hover:cursor-pointer`}
-                  style={{ backgroundColor: `#${item.color}` }}
-                >
-                  {item.name}
-                </div>
-              </span>
-            );
-          })}
+          <div className="flex">
+            {labels.map((item) => {
+              return (
+                <span className="mr-[5px] block md:inline" key={item.id}>
+                  <div
+                    className={`inline-block h-5 rounded-[10px]  px-[7px] text-[12px] font-semibold leading-[20px] marker:mr-[5px] hover:cursor-pointer`}
+                    style={{
+                      backgroundColor: `#${item.color}`,
+                      color: `${lightOrDark(item.color)}`,
+                    }}
+                  >
+                    {item.name}
+                  </div>
+                </span>
+              );
+            })}
+          </div>
           <div className="mt-2 text-xs text-[#57606a] hover:cursor-pointer">
             #{issueNumber} opened on {createdTime} agos by {author}
           </div>

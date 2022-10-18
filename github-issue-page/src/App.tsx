@@ -4,23 +4,30 @@ import { Outlet } from "react-router-dom";
 import { IssueContext } from "./utils/SelectContext";
 
 function App() {
-  const [token, setToken] = useState("");
   const [userData, setUserData] = useState(null);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("supabase.auth.token")) ?? [];
     setUserData({
-      userName: data.currentSession?.user.identities[0].identity_data.user_name,
+      userName:
+        userData?.userName ??
+        JSON.parse(localStorage.getItem("userData"))?.userName,
       repo: JSON.parse(localStorage.getItem("userData"))?.repo ?? "",
       visibility:
         JSON.parse(localStorage.getItem("userData"))?.visibility ?? "",
     });
-  }, []);
+  }, [token]);
 
   return (
     <>
-      <LoginHeader setTokenFn={setToken} />
-      <IssueContext.Provider value={{ userData: [userData, setUserData] }}>
+      <LoginHeader
+        userData={userData}
+        setUserData={setUserData}
+        setToken={setToken}
+      />
+      <IssueContext.Provider
+        value={{ userData: [userData, setUserData], token: [token, setToken] }}
+      >
         {token && <Outlet />}
       </IssueContext.Provider>
     </>

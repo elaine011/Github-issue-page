@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { MarkGithubIcon } from "@primer/octicons-react";
 
 import { supabase } from "../utils/client";
+import { useNavigate } from "react-router-dom";
 
 const Header = styled.header`
   background-color: #24292f;
@@ -20,8 +21,9 @@ const SignInBtn = styled.button`
   font-size: 16px;
 `;
 
-export default function LoginHeader({ setTokenFn }) {
+export default function LoginHeader({ userData, setUserData, setToken }) {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     /* when the app loads, check to see if the user is signed in */
@@ -35,7 +37,15 @@ export default function LoginHeader({ setTokenFn }) {
   async function checkUser() {
     /* if a user is signed in, update local state */
     const user = supabase.auth.user();
+    const token = supabase.auth.session();
+
     setUser(user);
+    setToken(token?.provider_token);
+    setUserData({
+      ...userData,
+      userName: user?.user_metadata.user_name,
+      token: token?.provider_token,
+    });
   }
 
   async function signInWithGithub() {
@@ -60,7 +70,6 @@ export default function LoginHeader({ setTokenFn }) {
       "loginToken",
       JSON.stringify(testuser.currentSession.provider_token)
     );
-    setTokenFn(token);
   }
 
   async function signOut() {
@@ -76,7 +85,9 @@ export default function LoginHeader({ setTokenFn }) {
         <SignInBtn
           onClick={() => {
             signOut();
-            setTokenFn("");
+            navigate("/");
+            setToken();
+            setUserData({});
           }}
         >
           Sign out

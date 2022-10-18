@@ -25,6 +25,7 @@ const List = styled.div<WrapProps>`
   color: #57606a;
   flex-wrap: wrap;
   justify-content: space-between;
+  border-top: none;
 
   &:last-child {
     border-bottom-left-radius: 6px;
@@ -77,21 +78,30 @@ const ReviseSection = styled.div`
     justify-content: flex-end;
   }
 `;
-const ReviseBtn = styled.button<SelectedProps>`
+const ReviseBtn = styled.details`
   display: none;
+  cursor: pointer;
 
   @media screen and (max-width: 1011.9px) {
     display: block;
+    position: relative;
     border-radius: 6px;
     border: 1px solid rgba(27, 31, 60, 0.15);
+    background-color: #f6f8fa;
     padding: 3px 12px;
-    background-color: ${(props) => props.selected};
-    cursor: pointer;
+    box-shadow: 0 1px 0 rgba(27, 31, 36, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 255, 0.25);
 
     &:hover {
       background-color: #0969da;
+      color: #fff;
     }
   }
+`;
+const ReviseBtnMenu = styled.summary`
+  list-style: none;
+  display: flex;
+  justify-content: flex-end;
 `;
 const MenuBtn = styled(KebabHorizontalIcon)<SelectedProps>`
   @media screen and (max-width: 1011.9px) {
@@ -130,9 +140,13 @@ const ReviseMenuContainer = styled.div`
     border-radius: 6px;
     padding-top: 4px;
     padding-bottom: 4px;
+    position: absolute;
+    left: auto;
+    right: 0px;
+    top: 24px;
 
     &::after {
-      top: -10.7px;
+      top: -12.7px;
       right: 10px;
       left: auto;
       border: 7px solid transparent;
@@ -142,7 +156,7 @@ const ReviseMenuContainer = styled.div`
       content: "";
     }
     &::before {
-      top: -12px;
+      top: -14px;
       right: 10px;
       left: auto;
       border: 7px solid transparent;
@@ -166,11 +180,11 @@ const ReviseMenuBtn = styled.button<DisplayProps>`
     background-color: transparent;
     border: none;
     padding: 4px 8px 4px 16px;
-    display: ${(props) => props.display};
     justify-content: flex-end;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
+    display: ${(props) => props.display};
     cursor: pointer;
   }
 `;
@@ -224,15 +238,15 @@ export default function LabelList({
       "Are you sure? Deleting a label will remove it from all issues and pull requests"
     );
     await api.deleteLabels(deleteInfo);
-    const data = await api.getLabels();
+    const data = await api.getLabels(userData);
     setLabels(data);
     setSelectedMobileEditBtn(false);
   };
 
   const lightOrDark = (bgcolor) => {
-    const r = parseInt(bgcolor.slice(1, 3), 16);
-    const g = parseInt(bgcolor.slice(3, 5), 16);
-    const b = parseInt(bgcolor.slice(5, 7), 16);
+    const r = parseInt(bgcolor.slice(0, 2), 16);
+    const g = parseInt(bgcolor.slice(2, 4), 16);
+    const b = parseInt(bgcolor.slice(4, 6), 16);
     const hsp = r * 0.3 + g * 0.6 + b * 0.1;
     if (hsp > 127.5) {
       return "black";
@@ -256,9 +270,7 @@ export default function LabelList({
       </Description>
       <State
         display={selectedMobileEditBtn || selectedEditBtn ? "none" : "block"}
-      >
-        {defaultState.state}
-      </State>
+      ></State>
       <Edit
         selectedMobileEditBtn={selectedMobileEditBtn}
         setSelectedMobileEditBtn={setSelectedMobileEditBtn}
@@ -278,26 +290,20 @@ export default function LabelList({
       />
 
       <ReviseSection>
-        <ReviseBtn
-          onClick={() => setSelectedMobileEditBtn(true)}
-          selected={selectedMobileEditBtn ? "#0969da" : "none"}
-        >
-          <MenuBtn
-            size={16}
-            selected={selectedMobileEditBtn ? "#fff" : "#57606a"}
-          />
-        </ReviseBtn>
-        <ReviseMenu display={selectedMobileEditBtn ? "block" : "none"}>
-          <ReviseMenuContainer>
+        <ReviseBtn>
+          <ReviseBtnMenu>
+            <KebabHorizontalIcon size={16} />
+          </ReviseBtnMenu>
+          <ReviseMenuContainer className="z-10">
             <ReviseMenuBtn
-              onClick={() => setSelectedEditBtn(true)}
-              display={selectedEditBtn ? "block" : "none"}
+              onClick={() => setSelectedMobileEditBtn(true)}
+              display={selectedMobileEditBtn ? "none" : "block"}
             >
               Edit
             </ReviseMenuBtn>
             <DeleteBtn onClick={handleDelete}>Delete</DeleteBtn>
           </ReviseMenuContainer>
-        </ReviseMenu>
+        </ReviseBtn>
       </ReviseSection>
     </List>
   );

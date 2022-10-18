@@ -107,6 +107,7 @@ const Input = styled.input`
 `;
 const ColorInput = styled(Input)<ColorProps>`
   color: ${(props) => props.color};
+  width: 80%;
   @media screen and (max-width: 1011.9px) {
     width: 60%;
   }
@@ -122,11 +123,11 @@ const Cancel = styled.button`
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.25);
   border: 1px solid rgba(27, 31, 36, 0.15);
   cursor: pointer;
-  height: 29px;
-  margin-top: 8px;
   margin-right: 8px;
   align-self: flex-end;
   font-weight: 500;
+  display: flex;
+  align-items: center;
 `;
 const Change = styled(Cancel)`
   background-color: #2da44e;
@@ -166,7 +167,7 @@ export default function Edit({
   async function updateLabels() {
     await api.updateLabels(updateInfo);
     setSelectedMobileEditBtn(false);
-    const data = await api.getLabels();
+    const data = await api.getLabels(userData);
     setLabels(data);
   }
 
@@ -221,7 +222,6 @@ export default function Edit({
               </ColorBtn>
               <ColorInput
                 type="text"
-                defaultValue={"#" + `${LabelTagColor}`}
                 value={"#" + `${inputColor}`}
                 name="label[color]"
                 maxLength={7}

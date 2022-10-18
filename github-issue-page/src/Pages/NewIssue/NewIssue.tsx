@@ -49,7 +49,7 @@ export default function NewIssue() {
 
   async function getSideBarApi() {
     const assigneesData = await api.getAssignees(userInfo);
-    const labelsData = await api.getLabels();
+    const labelsData = await api.getLabels(userData);
     setListContent({
       ...listContent,
       assignees: assigneesData,

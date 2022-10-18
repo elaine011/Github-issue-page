@@ -95,7 +95,6 @@ export default function SubmitBtn({ btnText, isCloseIssue, closeState }) {
       setEditData({ ...editData, state: "closed", stateReason: "completed" });
     }
   }
-  // console.log(editData);
 
   return (
     <>
