@@ -6,7 +6,6 @@ import { IssueContext } from "../utils/SelectContext";
 export default function Pagination() {
   const [query, setQuery] = useContext(IssueContext)["query"];
   const [issueData, setIssueData] = useContext(IssueContext)["issues"];
-  console.log(query);
 
   return (
     <div className="mt-4 mb-6 flex items-center justify-center px-1 text-sm">

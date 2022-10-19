@@ -1,5 +1,5 @@
-import { useContext } from "react";
 import * as _ from "lodash";
+import { useContext } from "react";
 
 import { CheckIcon, IssueOpenedIcon } from "@primer/octicons-react";
 import { IssueContext } from "../../utils/SelectContext";
@@ -11,6 +11,11 @@ export default function StateBtn() {
   return (
     <div className="order-last mb-4 lg:hidden">
       <a
+        className={`cursor-pointer ${
+          searchQuery.includes("is:issue is:open")
+            ? "font-semibold text-[#24292f]"
+            : "text-[#57606a] hover:text-primary-text"
+        }`}
         onClick={() => {
           setQuery({ owner: userData.userName, repo: userData.repo });
           const searchArr = _.uniq(["is:issue is:open", ...searchQuery]);
@@ -18,10 +23,14 @@ export default function StateBtn() {
         }}
       >
         <IssueOpenedIcon size={16} className="mr-1" />
-        <span className="font-semibold text-primary-text">Open</span>
+        <span>Open</span>
       </a>
       <a
-        className="ml-2.5"
+        className={`ml-2.5 cursor-pointer ${
+          searchQuery.includes("is:issue is:closed")
+            ? "font-semibold text-[#24292f]"
+            : "text-[#57606a] hover:text-primary-text"
+        }`}
         onClick={() => {
           setQuery({ ...query, state: "closed" });
           const searchArr = _.uniq(["is:issue is:closed", ...searchQuery]);
@@ -29,7 +38,7 @@ export default function StateBtn() {
         }}
       >
         <CheckIcon size={16} className="mr-1 fill-fg-muted" />
-        <span className="text-fg-muted hover:text-primary-text">Closed</span>
+        <span>Closed</span>
       </a>
     </div>
   );
