@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { IssueContext } from "../utils/SelectContext";
 import Reactions from "../Pages/IssuePage/Reactions";
 import api from "../utils/api";
+import { IssueContext } from "../utils/SelectContext";
 
 export default {
   title: "IssuePage/Reactions",

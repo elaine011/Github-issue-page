@@ -1,11 +1,12 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { TagIcon, MilestoneIcon } from "@primer/octicons-react";
+import { MilestoneIcon, TagIcon } from "@primer/octicons-react";
 import RepoHeader from "../../components/RepoHeader";
 import SearchBar from "../../components/SearchBar";
-import NewLabel from "./NewLabel";
 import { SelectContext } from "../../utils/SelectContext";
+import NewLabel from "./NewLabel";
 
 const LabelsContainer = styled.div`
   display: flex;
@@ -77,18 +78,19 @@ const NewLabelBtn = styled.button`
 
 export default function IssueHeader() {
   const [createLabel, setCreateLabel] = useContext(SelectContext).create;
+  const navigate = useNavigate();
 
   return (
     <>
       <RepoHeader />
       <LabelsContainer>
         <LabelandSearch>
-          <LabelNav>
-            <LabelsBtn href="#/">
+          <LabelNav onClick={() => navigate("/labels")}>
+            <LabelsBtn>
               <TagIcon size={16} />
               <LabelsText>Labels</LabelsText>
             </LabelsBtn>
-            <MilestonesBtn href="#/">
+            <MilestonesBtn>
               <MilestoneIcon size={16} />
               <LabelsText>Milestones</LabelsText>
             </MilestonesBtn>

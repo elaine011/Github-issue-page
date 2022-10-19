@@ -2,9 +2,9 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 
 import { SyncIcon } from "@primer/octicons-react";
-import { IssueContext, SelectContext } from "../../utils/SelectContext";
 import LabelTag from "../../components/LabelTag";
 import api from "../../utils/api";
+import { IssueContext, SelectContext } from "../../utils/SelectContext";
 import ColorMenu from "./ColorMenu";
 
 type DisplayProps = {
@@ -157,7 +157,7 @@ export default function NewLabel() {
   const createInfo = {
     owner: userData.userName,
     repo: userData.repo,
-    userToken: token,
+    userToken: userData?.token ?? token,
     name: inputTagName,
     description: inputDes,
     color: inputColor,

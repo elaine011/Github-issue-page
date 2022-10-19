@@ -1,12 +1,12 @@
-import styled from "styled-components";
 import { KebabHorizontalIcon } from "@primer/octicons-react";
 import { useContext, useState } from "react";
+import styled from "styled-components";
 
 import LabelTag from "../../components/LabelTag";
-import Edit from "./Edit";
-import Delete from "./Delete";
 import api from "../../utils/api";
 import { IssueContext, SelectContext } from "../../utils/SelectContext";
+import Delete from "./Delete";
+import Edit from "./Edit";
 
 type DisplayProps = {
   display: string;
@@ -198,7 +198,7 @@ export default function LabelList({ LabelTagColor, LableTagName, LabelDesc }) {
   const deleteInfo = {
     owner: userData.userName,
     repo: userData.repo,
-    userToken: token,
+    userToken: userData.token ?? token,
     labelName: LableTagName,
   };
 

@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { IssueContext } from "../utils/SelectContext";
 import IssueTitle from "../Pages/IssuePage/IssueTitle";
 import api from "../utils/api";
+import { IssueContext } from "../utils/SelectContext";
 
 export default {
   title: "IssuePage/IssueTitle",

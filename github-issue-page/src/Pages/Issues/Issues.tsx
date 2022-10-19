@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { Provider } from "react-redux";
 
-import { IssueContext } from "../../utils/SelectContext";
-import { store } from "../../redux/store";
 import Footer from "../../components/Footer";
 import Pagination from "../../components/Pagination";
 import RepoHeader from "../../components/RepoHeader";
+import { store } from "../../redux/store";
+import api from "../../utils/api";
+import { IssueContext } from "../../utils/SelectContext";
 import IssueContent from "./IssueContent";
 import IssueHeader from "./IssueHeader";
-import api from "../../utils/api";
 import IssueList from "./IssueList";
 import NoIssue from "./NoIssue";
 

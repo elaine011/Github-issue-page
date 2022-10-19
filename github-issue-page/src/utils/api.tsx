@@ -36,8 +36,12 @@ const api = {
       );
     }
   },
-  async getRepo() {
-    const res = await octokit.request("GET /user/repos", {});
+  async getRepo(data) {
+    const res = await getOctokit.request("GET /user/repos", {
+      headers: {
+        authorization: `Bearer ${data}`,
+      },
+    });
     return res.data;
   },
   async getSearch(data) {
@@ -61,13 +65,17 @@ const api = {
     }
   },
   async getLabels(data) {
-    const response = await octokit.request("GET /repos/{owner}/{repo}/labels", {
-      headers: {
-        "if-none-match": "",
-      },
-      owner: data.userName,
-      repo: data.repo,
-    });
+    const response = await getOctokit.request(
+      "GET /repos/{owner}/{repo}/labels",
+      {
+        headers: {
+          "if-none-match": "",
+          authorization: `Bearer ${data.token}`,
+        },
+        owner: data.userName,
+        repo: data.repo,
+      }
+    );
     return await response.data;
   },
   async getAssignees(data) {
@@ -84,9 +92,10 @@ const api = {
     return response.data;
   },
   async createLabels(data) {
-    await octokit.request("POST /repos/{owner}/{repo}/labels", {
+    await getOctokit.request("POST /repos/{owner}/{repo}/labels", {
       headers: {
         "if-none-match": "",
+        authorization: `Bearer ${data.userToken}`,
       },
       owner: data.owner,
       repo: data.repo,
@@ -96,7 +105,10 @@ const api = {
     });
   },
   async updateLabels(data) {
-    await octokit.request("PATCH /repos/{owner}/{repo}/labels/{name}", {
+    await getOctokit.request("PATCH /repos/{owner}/{repo}/labels/{name}", {
+      headers: {
+        authorization: `Bearer ${data.userToken}`,
+      },
       owner: data.owner,
       repo: data.repo,
       name: data.name,
@@ -106,7 +118,10 @@ const api = {
     });
   },
   async deleteLabels(data) {
-    await octokit.request("DELETE /repos/{owner}/{repo}/labels/{name}", {
+    await getOctokit.request("DELETE /repos/{owner}/{repo}/labels/{name}", {
+      headers: {
+        authorization: `Bearer ${data.userToken}`,
+      },
       owner: data.owner,
       repo: data.repo,
       auth: process.env.REACT_APP_PASSWORD,
@@ -114,11 +129,12 @@ const api = {
     });
   },
   async getListComments(data) {
-    const res = await octokit.request(
+    const res = await getOctokit.request(
       "GET /repos/{owner}/{repo}/issues/{issue_number}",
       {
         headers: {
           "if-none-match": "",
+          authorization: `Bearer ${data.token}`,
         },
         owner: data.owner,
         repo: data.repo,
@@ -128,11 +144,12 @@ const api = {
     return res.data;
   },
   async getListCommentsReactions(data) {
-    const res = await octokit.request(
+    const res = await getOctokit.request(
       "GET /repos/{owner}/{repo}/issues/{issue_number}/reactions",
       {
         headers: {
           "if-none-match": "",
+          authorization: `Bearer ${data.token}`,
         },
         owner: data.owner,
         repo: data.repo,
@@ -142,9 +159,12 @@ const api = {
     return res.data;
   },
   async createissueCommentReactions(data) {
-    const res = await octokit.request(
+    const res = await getOctokit.request(
       "POST /repos/{owner}/{repo}/issues/{issue_number}/reactions",
       {
+        headers: {
+          authorization: `Bearer ${data.token}`,
+        },
         owner: data.owner,
         repo: data.repo,
         issue_number: data.issue_number,
@@ -154,9 +174,12 @@ const api = {
     return res.data;
   },
   async createListCommentsReactions(data) {
-    await octokit.request(
+    await getOctokit.request(
       "POST /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions",
       {
+        headers: {
+          authorization: `Bearer ${data.token}`,
+        },
         owner: data.owner,
         repo: data.repo,
         comment_id: data.commentId,
@@ -165,7 +188,10 @@ const api = {
     );
   },
   async createIssue(data) {
-    const res = await octokit.request("POST /repos/{owner}/{repo}/issues", {
+    const res = await getOctokit.request("POST /repos/{owner}/{repo}/issues", {
+      headers: {
+        authorization: `Bearer ${data.token}`,
+      },
       owner: data.owner,
       repo: data.repo,
       title: data.title,
@@ -176,27 +202,32 @@ const api = {
     return res;
   },
   async updateIssue(data) {
-    await octokit.request("PATCH /repos/{owner}/{repo}/issues/{issue_number}", {
-      headers: {
-        "if-none-match": "",
-      },
-      owner: data.owner,
-      repo: data.repo,
-      issue_number: data.issue_number,
-      title: data?.title,
-      body: data?.body,
-      assignees: data?.assignees,
-      state: data?.state,
-      state_reason: data?.stateReason,
-      labels: data?.labels,
-    });
+    await getOctokit.request(
+      "PATCH /repos/{owner}/{repo}/issues/{issue_number}",
+      {
+        headers: {
+          "if-none-match": "",
+          authorization: `Bearer ${data.token}`,
+        },
+        owner: data.owner,
+        repo: data.repo,
+        issue_number: data.issue_number,
+        title: data?.title,
+        body: data?.body,
+        assignees: data?.assignees,
+        state: data?.state,
+        state_reason: data?.stateReason,
+        labels: data?.labels,
+      }
+    );
   },
   async createComment(data) {
-    await octokit.request(
+    await getOctokit.request(
       "POST /repos/{owner}/{repo}/issues/{issue_number}/comments",
       {
         headers: {
           "if-none-match": "",
+          authorization: `Bearer ${data.token}`,
         },
         owner: data.owner,
         repo: data.repo,
@@ -206,11 +237,12 @@ const api = {
     );
   },
   async updateComment(data) {
-    const res = await octokit.request(
+    const res = await getOctokit.request(
       "PATCH /repos/{owner}/{repo}/issues/comments/{comment_id}",
       {
         headers: {
           "if-none-match": "",
+          authorization: `Bearer ${data.token}`,
         },
         owner: data.owner,
         repo: data.repo,
@@ -221,11 +253,12 @@ const api = {
     return res.data;
   },
   async deleteComment(data) {
-    const res = await octokit.request(
+    const res = await getOctokit.request(
       "DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}",
       {
         headers: {
           "if-none-match": "",
+          authorization: `Bearer ${data.token}`,
         },
         owner: data.owner,
         repo: data.repo,
@@ -236,11 +269,12 @@ const api = {
     return res.data;
   },
   async getTimeline(data) {
-    const res = await octokit.request(
+    const res = await getOctokit.request(
       "GET /repos/{owner}/{repo}/issues/{issue_number}/timeline?per_page={per_page}",
       {
         headers: {
           "if-none-match": "",
+          authorization: `Bearer ${data.token}`,
         },
         owner: data.owner,
         repo: data.repo,

@@ -1,10 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
-import LabelHeader from "./LabelHeader";
-import LabelContent from "./LabelContent";
 import Footer from "../../components/Footer";
-import { IssueContext, SelectContext } from "../../utils/SelectContext";
 import api from "../../utils/api";
+import { IssueContext, SelectContext } from "../../utils/SelectContext";
+import LabelContent from "./LabelContent";
+import LabelHeader from "./LabelHeader";
 
 export default function Issues() {
   const [selectedSort, setSelectedSort] = useState<Boolean>(false);

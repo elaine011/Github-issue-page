@@ -1,23 +1,27 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-
 import api from "../utils/api";
-import Footer from "./Footer";
+
 import { IssueContext } from "../utils/SelectContext";
+import Footer from "./Footer";
 
 export default function Repo() {
   const [repo, setRepo] = useState(null);
+  const [runAgain, setRunAgain] = useState(false);
   const [userData, setUserData] = useContext(IssueContext)["userData"];
   const navigate = useNavigate();
+  const token = JSON.parse(window.localStorage.getItem("loginToken"));
+  useEffect(() => {
+    setRunAgain(true);
+  }, []);
 
   useEffect(() => {
     async function getRepo() {
-      const repo = await api.getRepo();
+      const repo = await api.getRepo(token);
       setRepo(repo);
     }
     getRepo();
-  }, []);
+  }, [runAgain]);
 
   return (
     <>

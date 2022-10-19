@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import { MarkGithubIcon } from "@primer/octicons-react";
 import { supabase } from "../utils/client";
+import { IssueContext } from "../utils/SelectContext";
 
 const Header = styled.header`
   background-color: #24292f;
@@ -21,8 +22,10 @@ const SignInBtn = styled.button`
   font-size: 16px;
 `;
 
-export default function LoginHeader({ userData, setUserData, setToken }) {
+export default function LoginHeader({}) {
   const [user, setUser] = useState(null);
+  const [userData, setUserData] = useContext(IssueContext)["userData"];
+  const [token, setToken] = useContext(IssueContext)["token"];
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,7 +65,9 @@ export default function LoginHeader({ userData, setUserData, setToken }) {
     supabase.auth.session();
   }
 
-  const testuser = JSON.parse(localStorage.getItem("supabase.auth.token"));
+  const testuser = JSON.parse(
+    localStorage.getItem("supabase.auth.token") ?? null
+  );
 
   if (testuser) {
     const token = testuser.currentSession.provider_token;

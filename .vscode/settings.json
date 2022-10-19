@@ -1,0 +1,10 @@
+{
+  // tailwind classname suggested
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  // remove unused import
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  }
+}

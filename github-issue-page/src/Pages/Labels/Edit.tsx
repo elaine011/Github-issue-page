@@ -1,9 +1,9 @@
-import styled from "styled-components";
 import { useContext, useState } from "react";
+import styled from "styled-components";
 
 import { SyncIcon } from "@primer/octicons-react";
-import { IssueContext, SelectContext } from "../../utils/SelectContext";
 import api from "../../utils/api";
+import { IssueContext, SelectContext } from "../../utils/SelectContext";
 import ColorMenuBar from "./ColorMenu";
 
 type OrderProps = {
@@ -157,7 +157,7 @@ export default function Edit({
   const updateInfo = {
     owner: userData.userName,
     repo: userData.repo,
-    userToken: token,
+    userToken: userData?.token ?? token,
     name: LableTagName,
     description: inputDes,
     color: inputColor,

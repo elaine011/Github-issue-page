@@ -1,8 +1,7 @@
 import { useState } from "react";
 
-import { IssueContext } from "../utils/SelectContext";
 import StickyHeader from "../Pages/IssuePage/StickyHeader";
-import api from "../utils/api";
+import { IssueContext } from "../utils/SelectContext";
 
 export default {
   title: "IssuePage/StickyHeader",

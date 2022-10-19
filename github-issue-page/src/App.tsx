@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import LoginHeader from "./components/LoginHeader";
 import { Outlet } from "react-router-dom";
+import LoginHeader from "./components/LoginHeader";
 import { IssueContext } from "./utils/SelectContext";
 
 function App() {
@@ -15,22 +15,19 @@ function App() {
       repo: JSON.parse(localStorage.getItem("userData"))?.repo ?? "",
       visibility:
         JSON.parse(localStorage.getItem("userData"))?.visibility ?? "",
+      token: JSON.parse(localStorage.getItem("loginToken")) ?? token,
     });
   }, [token]);
 
   return (
-    <>
-      <LoginHeader
-        userData={userData}
-        setUserData={setUserData}
-        setToken={setToken}
-      />
-      <IssueContext.Provider
-        value={{ userData: [userData, setUserData], token: [token, setToken] }}
-      >
+    <IssueContext.Provider
+      value={{ userData: [userData, setUserData], token: [token, setToken] }}
+    >
+      <>
+        <LoginHeader />
         {token && <Outlet />}
-      </IssueContext.Provider>
-    </>
+      </>
+    </IssueContext.Provider>
   );
 }
 

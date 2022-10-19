@@ -6,13 +6,13 @@ import RepoHeader from "../../components/RepoHeader";
 import api from "../../utils/api";
 import { handleCreateTime } from "../../utils/handleTime";
 import { IssueContext } from "../../utils/SelectContext";
+import { Issue } from "../../utils/type";
 import Content from "../NewIssue/Content";
 import Sidebar from "../NewIssue/Sidebar";
 import AssignSection from "./AssignSection";
 import IssueTitle from "./IssueTitle";
 import StickyHeader from "./StickyHeader";
 import TimeLine from "./TimeLine";
-import { Issue } from "../../utils/type";
 
 export default function IssuePage() {
   const { issueId } = useParams();
@@ -32,11 +32,13 @@ export default function IssuePage() {
     owner: userData.userName,
     repo: userData.repo,
     issue_number: issueId,
+    token: userData.token,
   });
   const [commentsData, setCommentsData] = useState({
     owner: userData.userName,
     repo: userData.repo,
     issue_number: issueId,
+    token: userData.token,
   });
   const [listContent, setListContent] = useState({
     assignees: [],

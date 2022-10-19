@@ -101,7 +101,7 @@ export default function Reactions({ reactions, header, commentId }) {
             headerParam?.reactions?.total_count ? "block" : "hidden"
           } relative`}
         >
-          <summary className="inline-flex h-[26px] w-[26px] items-center rounded-[50%] border border-solid border-[hsla(210,18%,87%,1)] bg-[#f6f8fa]">
+          <summary className="inline-flex h-[26px] w-[26px] cursor-pointer items-center rounded-[50%] border border-solid border-[hsla(210,18%,87%,1)] bg-[#f6f8fa]">
             <SmileyIcon className="ml-1 fill-[#57606a]" />
           </summary>
           <div className="absolute bottom-[100%] left-[auto] top-auto z-10 my-2 mr-2 flex w-[auto] rounded-[6px] border border-solid border-[#d0d7de] bg-[#fff] py-0 px-[2px] shadow-[0_8px_24px_rgba(140,149,159,0.2)]">
@@ -425,7 +425,7 @@ export default function Reactions({ reactions, header, commentId }) {
             param?.reactions?.total_count ? "block" : "hidden"
           } relative`}
         >
-          <summary className="inline-flex h-[26px] w-[26px] items-center rounded-[50%] border border-solid border-[hsla(210,18%,87%,1)] bg-[#f6f8fa]">
+          <summary className="inline-flex h-[26px] w-[26px] cursor-pointer items-center rounded-[50%] border border-solid border-[hsla(210,18%,87%,1)] bg-[#f6f8fa]">
             <SmileyIcon className="ml-1 fill-[#57606a]" />
           </summary>
           <div className="absolute bottom-[100%] left-[auto] top-auto z-10 my-2 mr-2 flex w-[auto] rounded-[6px] border border-solid border-[#d0d7de] bg-[#fff] py-0 px-[2px] shadow-[0_8px_24px_rgba(140,149,159,0.2)]">

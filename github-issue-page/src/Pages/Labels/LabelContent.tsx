@@ -1,8 +1,8 @@
-import styled from "styled-components";
 import { useContext } from "react";
+import styled from "styled-components";
 
-import { SelectContext } from "../../utils/SelectContext";
 import SortList from "../../components/SortList";
+import { SelectContext } from "../../utils/SelectContext";
 import LabelList from "./LabelList";
 
 const Container = styled.div`
@@ -22,7 +22,6 @@ const LabelsHeader = styled.div`
   height: 54px;
   padding: 16px;
   border: 1px solid #d0d7de;
-  border-bottom: transparent;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   background-color: #f6f8fa;

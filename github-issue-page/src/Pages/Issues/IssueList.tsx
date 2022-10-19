@@ -7,8 +7,8 @@ import {
   IssueOpenedIcon,
   SkipIcon,
 } from "@primer/octicons-react";
-import { IssueContext } from "../../utils/SelectContext";
 import { lightOrDark } from "../../utils/lightOrDark";
+import { IssueContext } from "../../utils/SelectContext";
 
 export default function IssueList({
   title,
@@ -67,7 +67,7 @@ export default function IssueList({
         </div>
         <div className="ml-auto hidden min-w-[20%] sm:flex ">
           <div className="flex-1"></div>
-          <span className=" ml-auto flex min-w-[30%] hover:cursor-pointer">
+          <span className=" ml-auto flex min-w-[30%] cursor-pointer">
             {assignees
               .slice(0)
               .reverse()
@@ -80,7 +80,7 @@ export default function IssueList({
                         : index > 2
                         ? "mr-[-6px]"
                         : "mr-[-11px]"
-                    } h-[20px] w-[20px] rounded-[50%] z-${index} hover:-translate-x-6`}
+                    } h-[20px] w-[20px] rounded-[50%] z-${index} hover:first-of-type:-translate-x-6`}
                     src={img.avatar_url}
                     alt=""
                     key={index}

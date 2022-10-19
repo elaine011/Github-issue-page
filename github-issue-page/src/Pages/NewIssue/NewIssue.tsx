@@ -35,6 +35,7 @@ export default function NewIssue() {
     body: inputValue["body"],
     assignees: inputValue["assignees"],
     labels: inputValue["labels"],
+    token: userData.token,
   };
 
   async function createIssue() {
