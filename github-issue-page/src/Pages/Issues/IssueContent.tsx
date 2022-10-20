@@ -32,7 +32,7 @@ export default function LabelContent() {
               setQuery({ owner: userData.userName, repo: userData.repo });
               const searchArr = _.uniq(["is:issue is:open", ...searchQuery]);
               setSearchQuery(_.pull(searchArr, "is:issue is:closed"));
-              console.log(searchQuery.includes("is:issue is:open"));
+             
             }}
           >
             <IssueOpenedIcon size={16} className="mr-1" />

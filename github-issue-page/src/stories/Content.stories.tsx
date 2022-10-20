@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { IssueContext } from "../utils/SelectContext";
 import Content from "../Pages/NewIssue/Content";
+import { IssueContext } from "../utils/SelectContext";
 
 export default {
   title: "NewIssue/Content",
@@ -11,8 +11,21 @@ export default {
   decorators: [
     (Story) => {
       const [inputValue, setInputValue] = useState({});
+      const [issueCommentsData, setIssueCommentsData] = useState(null);
+      const [userData, setUserData] = useState({
+        userName: "elaine011",
+        repo: "test-issue",
+        visibility: "public",
+        token: process.env.REACT_APP_PASSWORD,
+      });
+      const [editData, setEditData] = useState({
+        owner: userData.userName,
+        repo: userData.repo,
+        issue_number: 51,
+        token: userData.token,
+      });
       const handleSubmitBtn = () => {
-        if (inputValue["title"] && inputValue["title"].length > 0) {
+        if (inputValue["body"] && inputValue["body"].length > 0) {
           return true;
         } else return false;
       };
@@ -20,6 +33,8 @@ export default {
         <IssueContext.Provider
           value={{
             inputValue: [inputValue, setInputValue],
+            editData: [editData, setEditData],
+            issueCommentsData: [issueCommentsData, setIssueCommentsData],
             handleSubmitBtn,
           }}
         >
@@ -33,4 +48,4 @@ export default {
 const Template = (args) => <Content {...args} />;
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = { newComment: true };

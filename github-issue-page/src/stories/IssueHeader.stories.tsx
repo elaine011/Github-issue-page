@@ -1,9 +1,9 @@
-import IssueHeader from "../Pages/Issues/IssueHeader";
 import { useState } from "react";
-import { IssueContext } from "../utils/SelectContext";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import IssueHeader from "../Pages/Issues/IssueHeader";
 import { store } from "../redux/store";
-import { Routes } from "@storybook/router/dist/ts3.9/_modules/react-router-index";
+import { IssueContext } from "../utils/SelectContext";
 
 export default {
   title: "Issue/IssueHeader",
@@ -23,21 +23,29 @@ export default {
         perPage: 10,
         page: 1,
       });
-
+      const [userData, setUserData] = useState({
+        userName: "elaine011",
+        repo: "test-issue",
+        visibility: "public",
+        token: "",
+      });
       return (
-        <IssueContext.Provider
-          value={{
-            query: [query, setQuery],
-            issues: [issueData, setIssueData],
-            label: [labelQuery, setLabelQuery],
-            searchQuery: [searchQuery, setSearchQuery],
-            input: [inputValue, setInputValue],
-          }}
-        >
-          <Provider store={store}>
-            <Story />
-          </Provider>
-        </IssueContext.Provider>
+        <BrowserRouter>
+          <IssueContext.Provider
+            value={{
+              query: [query, setQuery],
+              issues: [issueData, setIssueData],
+              label: [labelQuery, setLabelQuery],
+              searchQuery: [searchQuery, setSearchQuery],
+              input: [inputValue, setInputValue],
+              userData: [userData, setUserData],
+            }}
+          >
+            <Provider store={store}>
+              <Story />
+            </Provider>
+          </IssueContext.Provider>
+        </BrowserRouter>
       );
     },
   ],

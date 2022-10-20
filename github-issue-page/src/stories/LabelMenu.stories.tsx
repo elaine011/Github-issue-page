@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { IssueContext } from "../utils/SelectContext";
-import LabelsMenu from "../Pages/Issues/LabelsMenu";
 import { Provider } from "react-redux";
+import LabelsMenu from "../Pages/Issues/LabelsMenu";
 import { store } from "../redux/store";
+import { IssueContext } from "../utils/SelectContext";
 
 export default {
   title: "Issue/LabelsMenu",
@@ -22,7 +22,12 @@ export default {
         perPage: 10,
         page: 1,
       });
-
+      const [userData, setUserData] = useState({
+        userName: "elaine011",
+        repo: "test-issue",
+        visibility: "public",
+        token: process.env.REACT_APP_PASSWORD,
+      });
       return (
         <IssueContext.Provider
           value={{
@@ -31,6 +36,7 @@ export default {
             label: [labelQuery, setLabelQuery],
             searchQuery: [searchQuery, setSearchQuery],
             input: [inputValue, setInputValue],
+            userData: [userData, setUserData],
           }}
         >
           <Provider store={store}>
@@ -52,11 +58,11 @@ const Template = (args) => (
       width: "50%",
     }}
   >
-    <LabelsMenu {...args} />
+    <LabelsMenu {...args}/>
   </div>
 );
 
-export const Default = Template.bind({});
-Default.args = {
+export const Loading = Template.bind({});
+Loading.args = {
   isDisplayLabels: true,
 };

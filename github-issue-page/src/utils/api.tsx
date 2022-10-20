@@ -65,18 +65,15 @@ const api = {
     }
   },
   async getLabels(data) {
-    const response = await getOctokit.request(
-      "GET /repos/{owner}/{repo}/labels",
+    const response = await fetch(
+      `https://api.github.com/repos/${data.userName}/${data.repo}/labels`,
       {
-        headers: {
-          "if-none-match": "",
-          authorization: `Bearer ${data.token}`,
-        },
-        owner: data.userName,
-        repo: data.repo,
+        headers: new Headers({
+          Authorization: `Bearer ${data.token}`,
+        }),
       }
     );
-    return await response.data;
+    return await response.json();
   },
   async getAssignees(data) {
     const response = await getOctokit.request(

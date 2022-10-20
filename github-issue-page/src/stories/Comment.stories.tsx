@@ -36,6 +36,12 @@ export default {
         }
         getTimeline();
       }
+      const [userData, setUserData] = useState({
+        userName: "elaine011",
+        repo: "test-issue",
+        visibility: "public",
+        token: "",
+      });
       return (
         <IssueContext.Provider
           value={{
@@ -43,6 +49,7 @@ export default {
             updateIssue,
             deleteComment,
             reactionsData: [reactionsData, setReactionsData],
+            userData: [userData, setUserData],
           }}
         >
           <Story />

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { IssueContext } from "../utils/SelectContext";
-import AssigneeMenu from "../Pages/Issues/AssigneeMenu";
 import { Provider } from "react-redux";
+import AssigneeMenu from "../Pages/Issues/AssigneeMenu";
 import { store } from "../redux/store";
+import { IssueContext } from "../utils/SelectContext";
 
 export default {
   title: "Issue/AssigneeMenu",
@@ -21,6 +21,12 @@ export default {
         perPage: 10,
         page: 1,
       });
+      const [userData, setUserData] = useState({
+        userName: "elaine011",
+        repo: "test-issue",
+        visibility: "public",
+        token: "",
+      });
 
       return (
         <IssueContext.Provider
@@ -29,6 +35,7 @@ export default {
             issues: [issueData, setIssueData],
             label: [labelQuery, setLabelQuery],
             searchQuery: [searchQuery, setSearchQuery],
+            userData: [userData, setUserData],
           }}
         >
           <Provider store={store}>

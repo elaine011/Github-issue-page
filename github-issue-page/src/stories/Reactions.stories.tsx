@@ -37,6 +37,12 @@ export default {
         }
         getListCommentsReactions();
       }
+      const [userData, setUserData] = useState({
+        userName: "elaine011",
+        repo: "test-issue",
+        visibility: "public",
+        token: "",
+      });
       return (
         <IssueContext.Provider
           value={{
@@ -44,6 +50,7 @@ export default {
             reactionsData: [reactionsData, setReactionsData],
             createListCommentsReactions,
             createissueCommentReactions,
+            userData: [userData, setUserData],
           }}
         >
           <Story />

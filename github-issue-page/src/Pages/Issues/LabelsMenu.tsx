@@ -57,7 +57,6 @@ export default function LabelsMenu({ isDisplayLabels, isDisplayFullScreen }) {
               onChange={(e) => setFilter(e.target.value)}
             />
           </div>
-          {!labelslist && <Loading />}
           <div
             className={`max-h-[calc(100%-126px)] overflow-y-auto ${
               isDisplayFullScreen
@@ -71,6 +70,7 @@ export default function LabelsMenu({ isDisplayLabels, isDisplayFullScreen }) {
               </div>
               <span className="font-semibold">Unlabeled</span>
             </a>
+            {!labelslist && <Loading />}
             {labelslist &&
               labelslist.map((item, index) => {
                 if (filter && !item.name.includes(filter)) return <></>;

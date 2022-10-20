@@ -10,7 +10,19 @@ export default {
   },
   decorators: [
     (Story) => {
-      const [issueData, setIssueData] = useState(null);
+      const [issueData, setIssueData] = useState([
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {},
+      ]);
       const [labelQuery, setLabelQuery] = useState([]);
       const [searchQuery, setSearchQuery] = useState(["is:issue is:open"]);
       const [query, setQuery] = useState({

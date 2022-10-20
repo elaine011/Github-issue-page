@@ -54,6 +54,7 @@ export default function IssuesContent() {
           labels.map((item) => {
             return (
               <LabelList
+                key={item.id}
                 LabelTagColor={item.color}
                 LableTagName={item.name}
                 LabelDesc={item.description}

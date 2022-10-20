@@ -202,15 +202,18 @@ export default function LabelList({ LabelTagColor, LableTagName, LabelDesc }) {
     labelName: LableTagName,
   };
 
-  const handleDelete = async () => {
+  async function handleDelete() {
     alert(
       "Are you sure? Deleting a label will remove it from all issues and pull requests"
     );
+    function sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
     await api.deleteLabels(deleteInfo);
     const data = await api.getLabels(userData);
     setLabels(data);
     setSelectedMobileEditBtn(false);
-  };
+  }
 
   const lightOrDark = (bgcolor) => {
     const r = parseInt(bgcolor.slice(0, 2), 16);

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import IssueList from "../Pages/Issues/IssueList";
 import { store } from "../redux/store";
 import { IssueContext } from "../utils/SelectContext";
@@ -22,21 +23,30 @@ export default {
         perPage: 10,
         page: 1,
       });
+      const [userData, setUserData] = useState({
+        userName: "elaine011",
+        repo: "test-issue",
+        visibility: "public",
+        token: "",
+      });
 
       return (
-        <IssueContext.Provider
-          value={{
-            query: [query, setQuery],
-            issues: [issueData, setIssueData],
-            label: [labelQuery, setLabelQuery],
-            searchQuery: [searchQuery, setSearchQuery],
-            input: [inputValue, setInputValue],
-          }}
-        >
-          <Provider store={store}>
-            <Story />
-          </Provider>
-        </IssueContext.Provider>
+        <BrowserRouter>
+          <IssueContext.Provider
+            value={{
+              query: [query, setQuery],
+              issues: [issueData, setIssueData],
+              label: [labelQuery, setLabelQuery],
+              searchQuery: [searchQuery, setSearchQuery],
+              input: [inputValue, setInputValue],
+              userData: [userData, setUserData],
+            }}
+          >
+            <Provider store={store}>
+              <Story />
+            </Provider>
+          </IssueContext.Provider>
+        </BrowserRouter>
       );
     },
   ],

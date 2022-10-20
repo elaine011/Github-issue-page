@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { SelectContext } from "../../src/utils/SelectContext";
+import { IssueContext, SelectContext } from "../../src/utils/SelectContext";
 import LabelList from "../Pages/Labels/LabelList";
 
 export default {
@@ -17,17 +17,24 @@ export default {
       const [selectedSort, setSelectedSort] = useState(false);
       const [createLabel, setCreateLabel] = useState(false);
       const [labels, setLabels] = useState(null);
-
+      const [userData, setUserData] = useState({
+        userName: "elaine011",
+        repo: "test-issue",
+        visibility: "public",
+        token: "",
+      });
       return (
-        <SelectContext.Provider
-          value={{
-            sort: [selectedSort, setSelectedSort],
-            create: [createLabel, setCreateLabel],
-            labels: [labels, setLabels],
-          }}
-        >
-          <Story />
-        </SelectContext.Provider>
+        <IssueContext.Provider value={{ userData: [userData, setUserData] }}>
+          <SelectContext.Provider
+            value={{
+              sort: [selectedSort, setSelectedSort],
+              create: [createLabel, setCreateLabel],
+              labels: [labels, setLabels],
+            }}
+          >
+            <Story />
+          </SelectContext.Provider>
+        </IssueContext.Provider>
       );
     },
   ],
