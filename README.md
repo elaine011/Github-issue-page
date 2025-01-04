@@ -75,4 +75,3 @@
 
 ### 💫 RWD Page
 <img src='./public/RWD.gif' alt='Github Logo' height='450' />
-ˇ
